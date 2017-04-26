@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:background="#fff"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:id="@+id/background"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"/>
+     <de.hdodenhof.circleimageview.CircleImageView
+         android:layout_width="90dp"
+         android:layout_height="90dp"
+         android:src="@drawable/ic_account_circle_black_24dp"
+         tools:ignore="VectorDrawableCompat"
+         android:id="@+id/head"
+         android:layout_alignParentTop="true"
+         android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Surine"
+        android:textSize="27sp"
+        android:textColor="@color/Tust_White"
+        android:layout_below="@+id/head"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/Tust_White"
+        android:layout_marginTop="5dp"
+        android:text="物联网工程"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"/>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_below="@+id/background"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/cardView">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/student_info"
+            >
+
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

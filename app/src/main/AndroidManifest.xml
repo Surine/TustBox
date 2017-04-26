@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.surine.tustbox">
+   <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:name="org.litepal.LitePalApplication"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".Activity.SplashActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activity.MainActivity"
+            android:launchMode="singleTask"
+            >
+        </activity>
+        <activity android:name=".Activity.LoginActivity">
+        </activity>
+        <activity android:name=".Activity.Course_InfoActivity"/>
+        <activity android:name=".Activity.Box_info_Activty"/>
+        <activity android:name=".Activity.SettingActivity"/>
+
+
+
+        <!--来自：http://www.cnblogs.com/skywang12345/p/3264991.html Thanks to author-->
+        <receiver android:name=".Widget.WidgetProvider"
+            android:label="课表"
+            >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+
+                <action android:name="com.widget.surine.WidgetProvider.MY_UPDATA_CHANGE"/>
+                <!-- 接收点击列表的响应事件 -->
+                <action android:name="com.surine.tustbox.COLLECTION_VIEW_ACTION" />
+                <!-- 接收点击按钮_refresh的响应事件 -->
+                <action android:name="com.surine.tustbox.BT_REFRESH_ACTION" />
+                <action android:name="com.surine.tust_box.UPDATE_ALL"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/appwidget_info"/>
+        </receiver>
+
+        <service
+            android:name=".Widget.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false"
+            />
+
+        <service android:name=".Widget.MyTimeService"
+            >
+            <intent-filter>
+            <action android:name="android.appwidget.action.EXAMPLE_APP_WIDGET_SERVICE" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

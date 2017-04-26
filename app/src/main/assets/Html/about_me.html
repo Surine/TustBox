@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>HTML</title>
+    <style>
+        /*320px布局*/
+        html{font-size: 100px;}
+        body{font-size: 0.14rem;/*实际相当于14px*/}
+        body{
+            padding:0;
+            margin:0;
+        }
+        .div2{
+            font-size:0.2rem;
+        }
+        .div3{
+        	font-size: 0.12rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="div2">天津科技大学学生学籍管理规定</div>
+    <br />
+    <div class="div3">
+        各类课程的考核成绩一般按百分制评定（60分为及格），
+        各种实践环节、通识教育选修课成绩也可按优、良、中、及格、不及格五级制评定。
+        考试课的成绩，一般以期末考试成绩为准，需要评定平时成绩的课程，
+        可以期末考试成绩为主，平时学习成绩为辅，具体比例由开课单位根据课程的特点确定。
+        平时学习成绩由任课教师在课程考核前，根据学生听课、实验、作业、平时测验、
+        考勤等情况综合评定，并向学生公布。学生体育课为必修课，成绩根据考勤、课内教学和
+        课外锻炼活动的情况综合评定，评定办法详见体育部的有关规定。
+        对生理有障碍或因伤病无法参加体育活动者，由学生本人向学院提
+        出申请并填写相应表格。凡免修体育课程的，均在成绩单上如实记载。
+        学校采用平均学分绩点来衡量学生的学习质量。
+        <br><br><br>
+        各阶段对应绩点：<br>
+        100	     -----    5<br>
+        90—99	 -----  4.0-4.9<br>
+        80—89	 -----  3.0-3.9<br>
+        70-79	 -----  2.0-2.9<br>
+        60-69	 -----  1.0-1.9<br>
+        60以下	 -----    0    <br>
+        优	   -----     4.5<br>
+        良	   -----     3.5<br>
+        中	   -----     2.5<br>
+        及格	   -----     1.5<br>
+        不及格  -----	  0<br>
+
+        <p>
+
+
+        平均学分绩点 =∑（ 课程学分绩点×课程学分× K ）/∑ 修读课程学分
+
+       </p>
+    </div>
+</body>
+
+<script>
+// 该代码来自http://www.ghugo.com/mobile-h5-fluid-layout-for-iphone6/
+(function (doc, win) {
+    // 分辨率Resolution适配
+    var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+            var clientWidth = docEl.clientWidth;
+            if (!clientWidth) return;
+            docEl.style.fontSize = 100 * (clientWidth / 320) + 'px';
+        };
+
+    // Abort if browser does not support addEventListener
+    if (!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+    doc.addEventListener('DOMContentLoaded', recalc, false);
+    
+    // 一物理像素在不同屏幕的显示效果不一样。要根据devicePixelRatio来修改meta标签的scale,要注释上面的meta标签
+    (function(){
+        return;
+        var dpr = scale =1;
+         var isIPhone = win.navigator.appVersion.match(/iphone/gi);
+        var devicePixelRatio = win.devicePixelRatio;
+        if (isIPhone) {
+            // iOS下，对于2和3的屏，用2倍的方案，其余的用1倍方案
+            if (devicePixelRatio >= 3 && (!dpr || dpr >= 3)) {                
+                dpr = 3;
+            } else if (devicePixelRatio >= 2 && (!dpr || dpr >= 2)){
+                dpr = 2;
+            } else {
+                dpr = 1;
+            }
+        } else {
+            // 其他设备下，仍旧使用1倍的方案
+            dpr = 1;
+        }
+           scale = 1 / dpr;
+           
+           // 
+           var metaEl = "";
+           metaEl = doc.createElement('meta');
+        metaEl.setAttribute('name', 'viewport');
+        metaEl.setAttribute('content', 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+        if (docEl.firstElementChild) {
+            docEl.firstElementChild.appendChild(metaEl);
+        } else {
+            var wrap = doc.createElement('div');
+            wrap.appendChild(metaEl);
+            doc.write(wrap.innerHTML);
+        }
+    })();
+        
+})(document, window);    
+</script>
+</html>

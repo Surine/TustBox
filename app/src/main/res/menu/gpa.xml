@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+   <item
+       android:title="@string/gpa"
+       android:id="@+id/gpa"
+       />
+   <item
+       android:title="@string/calculate_file"
+       android:id="@+id/file"
+       />
+   <item
+       android:title="@string/share_my_score"
+       android:id="@+id/share"
+       />
+   <item
+       android:title="@string/learn_info"
+       android:id="@+id/learn_info"
+      />
+</menu>

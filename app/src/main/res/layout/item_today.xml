@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="85dp">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@color/colorPrimary"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="18dp"
+        android:id="@+id/today_course_background"/>
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/Tust_White"
+        android:text="JAVA"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:id="@+id/today_course_name_little"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/today_course_background"/>
+
+    <TextView
+        android:id="@+id/today_course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:textSize="18sp"
+        android:text="Java应用开发"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_alignTop="@+id/today_course_background"
+        android:layout_toEndOf="@+id/today_course_background"/>
+
+    <TextView
+        android:id="@+id/today_courese_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LOCATION"
+        android:layout_alignBottom="@+id/today_course_background"
+        android:layout_alignStart="@+id/today_course_name"/>
+
+    <TextView
+        android:id="@+id/today_course_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="时间"
+        android:layout_alignBottom="@+id/today_courese_location"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_alignTop="@+id/today_courese_location"/>
+</RelativeLayout>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_margin="10dp"
+                                    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/book_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="12dp"
+            android:layout_toStartOf="@+id/renew"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingEnd="10dp"
+            android:text="书名"
+            android:textAllCaps="true"
+            android:textSize="24sp"
+            android:textStyle="bold|italic"/>
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/book_name"
+            android:layout_below="@+id/book_name"
+            android:layout_marginTop="28dp"
+            android:text="作者：  "/>
+
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView25"
+            android:layout_below="@+id/textView25"
+            android:layout_marginTop="19dp"
+            android:text="到期日期：  "/>
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView26"
+            android:layout_below="@+id/textView26"
+            android:layout_marginTop="19dp"
+            android:text="状态：  "/>
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/textView27"
+            android:layout_below="@+id/textView27"
+            android:layout_marginBottom="21dp"
+            android:layout_marginTop="19dp"
+            android:text="欠款："/>
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView26"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/textView26"
+            android:text="TUST"/>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView26"
+            android:layout_alignBottom="@+id/textView26"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/textView26"
+            android:text="2016"/>
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView27"
+            android:layout_alignBottom="@+id/textView27"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/textView26"
+            android:text="无"/>
+
+        <TextView
+            android:id="@+id/money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView28"
+            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/status"
+            android:text="无"/>
+
+        <Button
+            android:id="@+id/renew"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/book_name"
+            android:layout_alignBottom="@+id/book_name"
+            android:layout_alignParentEnd="true"
+            android:text="续借"
+            android:textColor="@color/colorPrimary"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

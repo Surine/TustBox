@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:orientation="vertical"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="11dp"
+                android:text="网络状态"
+                android:textColor="@color/colorPrimary"/>
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textView4"
+                android:layout_below="@+id/textView4"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="13dp"
+                android:text="正在登录校园网……"/>
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textView6"
+                android:layout_below="@+id/textView6"
+                android:layout_marginTop="10dp"
+                android:text="WIFI_SSID:"/>
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView7"
+                android:layout_alignBottom="@+id/textView7"
+                android:layout_marginStart="35dp"
+                android:layout_toEndOf="@+id/textView7"
+                android:text="TUST"/>
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textView7"
+                android:layout_below="@+id/textView7"
+                android:layout_marginTop="10dp"
+                android:text="IP地址:"/>
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView9"
+                android:layout_alignBottom="@+id/textView9"
+                android:layout_alignEnd="@+id/textView8"
+                android:text="59.67.0.245"/>
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textView9"
+                android:layout_below="@+id/textView9"
+                android:layout_marginTop="10dp"
+                android:text="已用时长："/>
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView11"
+                android:layout_alignBottom="@+id/textView11"
+                android:layout_alignEnd="@+id/textView10"
+                android:text="1小时"/>
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textView11"
+                android:layout_below="@+id/textView11"
+                android:layout_marginTop="10dp"
+                android:text="已用流量："/>
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView13"
+                android:layout_alignBottom="@+id/textView13"
+                android:layout_alignEnd="@+id/textView12"
+                android:text="233MB"/>
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textView13"
+                android:layout_below="@+id/textView13"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:text="帐号余额："/>
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView15"
+                android:layout_alignBottom="@+id/textView15"
+                android:layout_alignEnd="@+id/textView14"
+                android:text="0RMB"/>
+
+            <Button
+                android:id="@+id/exit_network"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:layout_below="@+id/textView15"
+                android:layout_marginBottom="20dp"
+                android:layout_toStartOf="@+id/textView12"
+                android:background="@drawable/login_shape"
+                android:text="注销"
+                android:textColor="@color/Tust_White"
+                />
+
+            <Button
+                android:id="@+id/login_network"
+                android:layout_width="100dp"
+                android:layout_height="45dp"
+                android:layout_below="@+id/textView15"
+                android:layout_marginBottom="20dp"
+                android:layout_toStartOf="@+id/textView12"
+                android:background="@drawable/login_shape"
+                android:text="登录"
+                android:textColor="@color/Tust_White"/>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+</android.support.constraint.ConstraintLayout>

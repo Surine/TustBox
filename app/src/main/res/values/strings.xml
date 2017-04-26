@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">小天盒子</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="name">小天盒子 开发版2.0 @surine</string>
+    <string name="version">开发版2.0</string>
+    <string name="about">关于登录</string>
+    <string name="warning_text">注意</string>
+    <string name="note">1.\t\t为了确保您的帐号安全，主要功能仅限使用校园网，
+        因此登录之前请检查您的网络是否连接至校园网，
+        包括校园TUST无线网络或者宿舍网络接口路由器，
+        如果未连接校园网可能会产生登录不上的情况。\n
+        2.\t\t由于Cookies问题，可能存在获取信息失败的情况，
+        遇到此情况时请重新点击登录按钮将获取准确数据，不影响其他功能使用。\n
+        3.\t\tAPP是采用模拟登陆方式获得数据，已考虑数据安全性处理，在一定程度
+        上保证了数据的安全性，本APP不会以各种方式获取用户的隐私数据。\n
+        4.登录成功后显示的课程可能不准确，请切换周才能显示正常数据。
+        5.默认登录密码是身份证后六位，如果身份证包含X，则X大写
+    </string>
+    <string name="ok">确定</string>
+    <string name="wrong">帐号或者密码错误！</string>
+    <string name="success">请求成功！</string>
+    <string name="manager_">学分制综合教务</string>
+    <string name="fail">请求超时！</string>
+    <string name="get">获取</string>
+    <string name="get_info">正在获取个人信息</string>
+    <string name="login">登录</string>
+    <string name="login_info">正在登录教务处……</string>
+    <string name="id1">IDToken1</string>
+    <string name="id2">IDToken2</string>
+    <string name="save_success">个人信息储存成功</string>
+    <string name="title_course">课表</string>
+    <string name="box">盒子</string>
+    <string name="me">我</string>
+    <string name="unknow_error">未知错误</string>
+    <string name="school_network">校园网</string>
+    <string name="id3">myusername</string>
+    <string name="id4">smartdot</string>
+    <string name="id5">username</string>
+    <string name="no_class">今天没有课，快去约吧！</string>
+    <string name="i_know">朕知道啦！</string>
+    <string name="happy">^_^ HAPPY！</string>
+    <string name="close_dialog_summ">打开后每天的课程将不会弹窗提醒</string>
+    <string name="today_course_title">关闭每日课程提醒</string>
+    <string name="setting_background_summ">选择一张喜欢的图片作为课表背景</string>
+    <string name="setting_back_title">课表背景图片</string>
+    <string name="about_app">关于</string>
+    <string name="setting">设置</string>
+    <string name="score">成绩</string>
+    <string name="login_success">登录成功</string>
+    <string name="gpa">GPA计算</string>
+    <string name="calculate_file">计算文件</string>
+    <string name="share_my_score">给妈妈发成绩单！</string>
+    <string name="loading">正在加载数据，请稍后……</string>
+    <string name="library">图书馆</string>
+    <string name="exit">退出</string>
+    <string name="exit_info">退出账号将清除本用户全部数据！</string>
+    <string name="cancel">取消</string>
+    <string name="choose_week">选择当前周</string>
+    <string name="choose_">选择了</string>
+    <string name="f1">优秀</string>
+    <string name="f2">良好</string>
+    <string name="f3">中</string>
+    <string name="f4">及格</string>
+    <string name="f5">不及格</string>
+    <string name="this_term_gpa">本学期绩点：</string>
+    <string name="share_your_score_to">把您的成绩分享到？</string>
+    <string name="course_info">课程详情</string>
+    <string name="null_number_and_pswd">学号或者密码为空</string>
+    <string name="plan">培养方案</string>
+    <string name="error_information">错误信息</string>
+    <string name="get_error">获取信息失败，请重新登录</string>
+    <string name="get_success">信息获取成功</string>
+    <string name="clear_success">数据清除成功</string>
+    <string name="album_view">选择课表背景图片</string>
+    <string name="image_view">单击选择图片</string>
+    <string name="add">确定</string>
+    <string name="selected">已选</string>
+    <string name="limit_exceeded">最多能选 %d 张哦！</string>
+    <string name="email_surine223450_gmail_com">Email: surine223450@gmail.com</string>
+    <string name="surine">开发者：Surine</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="clear_sunmmy">清除选择壁纸留下的缓存，清除后请重新选择背景图片</string>
+    <string name="error_get_data">数据获取错误，请重新获取或者联系开发者</string>
+    <string name="learn_info">修读信息</string>
+    <string name="no_more_info">没有取得有价值信息</string>
+    <string name="gp">GP下载平台</string>
+
+</resources>
