@@ -34,7 +34,7 @@
 
         <!--来自：http://www.cnblogs.com/skywang12345/p/3264991.html Thanks to author-->
         <receiver android:name=".Widget.WidgetProvider"
-            android:label="课表"
+            android:label="小天课表"
             >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -55,13 +55,6 @@
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false"
             />
-
-        <service android:name=".Widget.MyTimeService"
-            >
-            <intent-filter>
-            <action android:name="android.appwidget.action.EXAMPLE_APP_WIDGET_SERVICE" />
-            </intent-filter>
-        </service>
     </application>
 
 </manifest>

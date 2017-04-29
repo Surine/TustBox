@@ -79,7 +79,7 @@ public class Me_Fragment extends Fragment {
 
     private void loadHead() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-        boolean value = prefs.getBoolean("setting_close_show_picture", true);
+        boolean value = prefs.getBoolean("setting_close_show_picture", false);
         if(value) {
             Glide.with(getActivity()).load(R.drawable.head).into(head);
         }else{

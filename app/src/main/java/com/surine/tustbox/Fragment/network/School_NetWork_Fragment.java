@@ -143,7 +143,7 @@ public class School_NetWork_Fragment extends Fragment {
                 Log.d("the_link", "onResponse: "+last);
                 last_string = get_number2.substring(last,get_number2.length());
                 Log.d("the_link", "onResponse: "+last_string);
-                Login_Test("15104413","20quli@cover16");
+                Login_Test("xxx","xxx");
             }
         });
     }

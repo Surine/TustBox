@@ -15,8 +15,8 @@
         遇到此情况时请重新点击登录按钮将获取准确数据，不影响其他功能使用。\n
         3.\t\tAPP是采用模拟登陆方式获得数据，已考虑数据安全性处理，在一定程度
         上保证了数据的安全性，本APP不会以各种方式获取用户的隐私数据。\n
-        4.登录成功后显示的课程可能不准确，请切换周才能显示正常数据。
-        5.默认登录密码是身份证后六位，如果身份证包含X，则X大写
+        4.\t\t登录成功后显示的课程可能不准确，请切换周才能显示正常数据。\n
+        5.\t\t默认登录密码是身份证后六位，如果身份证包含X，则X大写
     </string>
     <string name="ok">确定</string>
     <string name="wrong">帐号或者密码错误！</string>
@@ -78,7 +78,7 @@
     <string name="add">确定</string>
     <string name="selected">已选</string>
     <string name="limit_exceeded">最多能选 %d 张哦！</string>
-    <string name="email_surine223450_gmail_com">Email: surine223450@gmail.com</string>
+    <string name="email_surine223450_gmail_com">QQ group: 635622188</string>
     <string name="surine">开发者：Surine</string>
     <string name="clear_cache">清除缓存</string>
     <string name="clear_sunmmy">清除选择壁纸留下的缓存，清除后请重新选择背景图片</string>

@@ -67,6 +67,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:textIsSelectable="true"
             android:text="@string/email_surine223450_gmail_com"
             android:layout_below="@+id/lin1"
             android:layout_alignParentStart="true"/>
