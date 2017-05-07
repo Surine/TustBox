@@ -15,12 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cooltechworks.views.ScratchTextView;
 import com.surine.tustbox.Bean.Score_Info;
 import com.surine.tustbox.Fragment.gp_download.GP_download_Fragment;
 import com.surine.tustbox.Fragment.library.Library_Fragment;
-import com.surine.tustbox.Fragment.network.School_NetWork_Fragment;
 import com.surine.tustbox.Fragment.score.Score_Fragment;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
@@ -42,6 +42,7 @@ public class Box_info_Activty extends TustBaseActivity {
     private String my_score_report = "成绩列表：";
     private List<Score_Info> mscore_infos = new ArrayList<>();
     private List<Score_Info> mLastScore_infos = new ArrayList<>();
+    private int Flag = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,20 +64,25 @@ public class Box_info_Activty extends TustBaseActivity {
     private void initFragment(int box_item) {
        switch (box_item){
            case 0:
+               Flag = 0;
                //loading score fragment
                setTitle(getString(R.string.loading));
                replaceFragment(Score_Fragment.getInstance("School_Score"));
                break;
            case 1:
+               Flag = 1;
                replaceFragment(Library_Fragment.getInstance("Library"));
                break;
            case 2:
+               Flag = 2;
                setTitle(getString(R.string.loading));
                replaceFragment(GP_download_Fragment.getInstance("GP_download"));
                break;
            case 3:
+               Flag = 3;
                setTitle(getString(R.string.school_network));
-               replaceFragment(School_NetWork_Fragment.getInstance("School_NetWork"));
+               Toast.makeText(this,"出现了一点小问题，哎哟！",Toast.LENGTH_SHORT).show();
+             //  replaceFragment(School_NetWork_Fragment.getInstance("School_NetWork"));
                break;
        }
     }
@@ -114,8 +120,20 @@ public class Box_info_Activty extends TustBaseActivity {
             case R.id.learn_info:
                 show_learn_info_Dialog();
                 break;
+            case R.id.gp_info:
+                show_gp_info_Dialog();
+                break;
         }
         return true;
+    }
+
+    private void show_gp_info_Dialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.about_gp);
+        builder.setMessage(
+                getString(R.string.info_gp));
+        builder.setPositiveButton(R.string.ok,null);
+        builder.show();
     }
 
     private void show_learn_info_Dialog() {
@@ -223,5 +241,30 @@ public class Box_info_Activty extends TustBaseActivity {
             e.printStackTrace();
         }
         return score/credit_add;
+    }
+
+
+    //the method is a control menu update
+    //we can use the supportInvalidateOptionsMenu() to update our menu
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem gpa = menu.findItem(R.id.gpa);
+        MenuItem share = menu.findItem(R.id.share);
+        MenuItem file = menu.findItem(R.id.file);
+        MenuItem learn_info = menu.findItem(R.id.learn_info);
+        MenuItem gp_info = menu.findItem(R.id.gp_info);
+        if(Flag == 0) {
+            gp_info.setVisible(false);
+        }else if(Flag == 1){
+
+        }else if(Flag == 2){
+            gpa.setVisible(false);
+            share.setVisible(false);
+            file.setVisible(false);
+            learn_info.setVisible(false);
+        }else if(Flag == 3){
+
+        }
+        return true;
     }
 }

@@ -8,9 +8,17 @@ android {
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
-        versionName "2.0"
+        versionName "2.0.2"
         testInstrumentationRunner "android.support.widget.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        ndk{
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "2791c8d7ff1f7480db215fdb", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
     }
     buildTypes {
         release {
@@ -37,5 +45,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:10.2.0'
     compile 'com.github.cooltechworks:ScratchView:v1.1'
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
+    compile 'cn.jiguang.sdk:jpush:3.0.3'
+    compile 'cn.jiguang.sdk:jcore:1.1.1'
 
 }

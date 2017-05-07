@@ -147,6 +147,7 @@ public class Course_Fragment extends Fragment {
         });
         builder.setCancelable(false);
         builder.show();
+
     }
 
     private void startQQ() {
@@ -167,33 +168,37 @@ public class Course_Fragment extends Fragment {
     //init today course's hashmap
     private ArrayList<HashMap<String, Object>> initListViewData() {
         ArrayList<HashMap<String, Object>> arrayList = new ArrayList<HashMap<String,Object>>();
-        for(int i = week_number_for_todays_course-1;i<mLastList.size();i++) {
-            Course_Info course_info = mLastList.get(i);
-                if (mLastList.get(i)!= null) {
-                HashMap<String, Object> today_hasmap = new HashMap<String, Object>();
-                today_hasmap.put("id",course_info.getId());
-                today_hasmap.put("background", course_info.getColor());
-                today_hasmap.put("location", course_info.getBuilding() + course_info.getClassroom());
-                today_hasmap.put("name", course_info.getCourse_name());
-                today_hasmap.put("name_little", course_info.getCourse_name().substring(1, 3));
-                if (course_info.getClass_().contains("一")) {
-                    today_hasmap.put("time", "8:20-10:00");
-                } else if (course_info.getClass_().contains("二")) {
-                    today_hasmap.put("time", "10:20-12:00");
-                } else if (course_info.getClass_().contains("三")) {
-                    today_hasmap.put("time", "2:00-3:40");
-                } else if (course_info.getClass_().contains("四")) {
-                    today_hasmap.put("time", "4:00-5:40");
+        try {
+            for(int i = week_number_for_todays_course-1;i<mLastList.size();i++) {
+                Course_Info course_info = mLastList.get(i);
+                    if (mLastList.get(i)!= null) {
+                    HashMap<String, Object> today_hasmap = new HashMap<String, Object>();
+                    today_hasmap.put("id",course_info.getId());
+                    today_hasmap.put("background", course_info.getColor());
+                    today_hasmap.put("location", course_info.getBuilding() + course_info.getClassroom());
+                    today_hasmap.put("name", course_info.getCourse_name());
+                    today_hasmap.put("name_little", course_info.getCourse_name().substring(1, 3));
+                    if (course_info.getClass_().contains("一")) {
+                        today_hasmap.put("time", "8:20-10:00");
+                    } else if (course_info.getClass_().contains("二")) {
+                        today_hasmap.put("time", "10:20-12:00");
+                    } else if (course_info.getClass_().contains("三")) {
+                        today_hasmap.put("time", "2:00-3:40");
+                    } else if (course_info.getClass_().contains("四")) {
+                        today_hasmap.put("time", "4:00-5:40");
+                    }
+                    arrayList.add(today_hasmap);
                 }
+                i = i + 6;
+            }
+            if(arrayList.size()==0){
+                HashMap<String, Object> today_hasmap = new HashMap<String, Object>();
+                today_hasmap.put("name", getString(R.string.no_class));
+                today_hasmap.put("location", getString(R.string.happy));
                 arrayList.add(today_hasmap);
             }
-            i = i + 6;
-        }
-        if(arrayList.size()==0){
-            HashMap<String, Object> today_hasmap = new HashMap<String, Object>();
-            today_hasmap.put("name", getString(R.string.no_class));
-            today_hasmap.put("location", getString(R.string.happy));
-            arrayList.add(today_hasmap);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return arrayList;
     }

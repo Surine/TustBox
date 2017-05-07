@@ -4,7 +4,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="name">小天盒子 开发版2.0 @surine</string>
-    <string name="version">开发版2.0</string>
+    <string name="version">开发版 2.0.2</string>
     <string name="about">关于登录</string>
     <string name="warning_text">注意</string>
     <string name="note">1.\t\t为了确保您的帐号安全，主要功能仅限使用校园网，
@@ -46,6 +46,7 @@
     <string name="setting_background_summ">选择一张喜欢的图片作为课表背景</string>
     <string name="setting_back_title">课表背景图片</string>
     <string name="about_app">关于</string>
+    <string name="about_tustbox">关于小天盒子</string>
     <string name="setting">设置</string>
     <string name="score">成绩</string>
     <string name="login_success">登录成功</string>
@@ -78,13 +79,50 @@
     <string name="add">确定</string>
     <string name="selected">已选</string>
     <string name="limit_exceeded">最多能选 %d 张哦！</string>
-    <string name="email_surine223450_gmail_com">QQ group: 635622188</string>
-    <string name="surine">开发者：Surine</string>
+    <string name="qq">· 企鹅群: 635622188</string>
+    <string name="surine">· 开发者：Surine</string>
     <string name="clear_cache">清除缓存</string>
     <string name="clear_sunmmy">清除选择壁纸留下的缓存，清除后请重新选择背景图片</string>
     <string name="error_get_data">数据获取错误，请重新获取或者联系开发者</string>
     <string name="learn_info">修读信息</string>
     <string name="no_more_info">没有取得有价值信息</string>
     <string name="gp">GP下载平台</string>
+    <string name="bug_or">· Bug反馈 OR 吐槽</string>
+    <string name="share">· 分享小天</string>
+    <string name="support">支持</string>
+    <string name="check_update">· 检查更新</string>
+    <string name="notice">· 免责声明</string>
+    <string name="notice2">免责声明</string>
+    <string name="app">一个优秀的APP都是要有底线的！</string>
+    <string name="osl">· 开源许可</string>
+    <string name="osl2">开源许可</string>
+    <string name="help">· 赞助开发者</string>
+    <string name="surine_is_me">新世纪的Android爱好者，xiaxiaxia~</string>
+    <string name="qq_number">635622188</string>
+    <string name="qq_is_copy">QQ已经复制到剪贴板</string>
+    <string name="welcome">欢迎使用小天盒子：surine.cn/download/app-release.apk</string>
+    <string name="more_share">让更多人遇见小天</string>
+    <string name="type">你要使用什么方式联系盒子呢？</string>
+    <string name="what_do_you_want_to_say">想说点什么？</string>
+    <string name="welcome_send_bug">欢迎给盒子提出意见：</string>
+    <string name="qq_email">2234503567@qq.com</string>
+    <string name="qq_email_mo">mailto:2234503567@qq.com</string>
+    <string name="log">日志</string>
+    <string name="new_log">· 小天--2.0.2，每一个小需求都应被实现\n
+        · 新增： GP下载平台\n
+        · 新增： 课程推送（使用JPush SDK实现推送，后端使用JAVA进行简单处理，暂时没有加入课表后端数据库
+        所以提醒不了今天上什么呀！！！宝宝们！不过我会在不久的将来做更人性化的处理的，期待ing！）\n
+        · 优化：更轻巧的UI界面。
+    </string>
+    <string name="hide">隐藏证件照</string>
+    <string name="hide_summary">开启后将替换您的证件照</string>
+    <string name="safe">安全</string>
+    <string name="pswd">信息加密</string>
+    <string name="pswd_summary">您所填写所有表单信息或者隐私数据都保存在本地 ，并使用Base64进行加密，在Root条件下也可以保证相对安全，但由于学校教务属于明文登录系统 请在使用软件时保证网络环境安全（如网络嗅探威胁等）</string>
+    <string name="nothing">什么都木有啊！！</string>
+    <string name="about_gp">关于GP</string>
+    <string name="info_gp">该平台是公司根据校园正版化（GP）项目在我国高校中的具体使用需求自行研发的软件管理平台系统,
+                同时也是我国第一套针对校园正版化软件如何正确有效安全使用的解决方案。\n
+                本软件只是将TUST官网所列举的软件做了信息整合，提供给还不知道到有这个平台的同学，如果你需要更多的软件资源，可以去GP官网查看。此外，考虑到这些软件属于电脑软件，下载到手机上转起来也比较麻烦，而且挺占内存，所以直接以链接的方式分享！</string>
 
 </resources>

@@ -112,26 +112,33 @@ public class GP_download_Fragment extends Fragment {
 
     private void Jsoup_the_Html(String str) {
             Document doc = Jsoup.parse(str);
+           //get h2 tag
             Elements content = doc.select("h2");
             for (int i = 0; i < content.size(); i++) {
                 Log.d(ARG_, i+"H2标签" + content.get(i).text());
             }
+            //get ul tag
             Elements content2 = doc.select("ul");
             for (int l = 0; l < 10; l++) {
                 Log.d(ARG_, l+"UL标签: " + content2.get(l).text());
             }
+            //get img
             Elements content3= doc.getElementsByTag("img");
             for (int j = 0; j < content3.size(); j++) {
                 Log.d(ARG_, j+"IMG: " + content3.get(j).attr("src"));
             }
-
+            //get link
+            Elements content4= doc.select("a");
+            for (int j = 0; j < content4.size(); j++) {
+            Log.d(ARG_, j+"HREF: " + content4.get(j).attr("href"));
+            }
             //loadinfo
             for(int k = 0;k<9;k++){
-                GpInfo gpinfo = new GpInfo(content3.get(k).attr("src"),content.get(k).text(),content2.get(k+1).text(),null);
+                GpInfo gpinfo = new GpInfo(content3.get(k).attr("src"),content.get(k).text(),content2.get(k+1).text(),UrlData.gp_download_short+content4.get((k*2)+6).attr("href"));
                 mgpinfos.add(gpinfo);
             }
-        for(int k = 10;k<content3.size();k++){
-            GpInfo gpinfo = new GpInfo(content3.get(k).attr("src"),content.get(k).text(),"无相关简介",null);
+        for(int k = 9;k<content3.size();k++){
+            GpInfo gpinfo = new GpInfo(content3.get(k).attr("src"),content.get(k).text(),"无相关简介",UrlData.gp_download_short+content4.get((k*2)+6).attr("href"));
             mgpinfos.add(gpinfo);
         }
 

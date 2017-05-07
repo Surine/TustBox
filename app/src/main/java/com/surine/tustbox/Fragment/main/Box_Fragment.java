@@ -55,12 +55,13 @@ public class Box_Fragment extends Fragment {
 
     private void initData() {
         Box box = new Box(R.drawable.ic_action_score,"成绩",getData(4),R.color.Tust_Green);
-        Box box4 = new Box(R.drawable.ic_action_network,getString(R.string.school_network),"暂时查询不到\n校园网信息",R.color.colorAccent);
+        Box box4 = new Box(R.drawable.ic_action_network,getString(R.string.school_network),"暂时查询不到\n校园网信息",R.color.colorPrimary);
         Box box3 = new Box(R.drawable.ic_action_library,"图书馆","暂时查询不到\n图书馆信息",R.color.Tust_Red);
         Box box5 = new Box(R.drawable.ic_action_score,"GP下载平台","暂时查询不到信息",R.color.Tust_more_color_1);
         mboxs.add(box);
         mboxs.add(box3);
         mboxs.add(box5);
+        mboxs.add(box4);
     }
 
     private String getData(int i) {

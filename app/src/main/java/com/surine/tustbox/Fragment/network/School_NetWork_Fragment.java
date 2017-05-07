@@ -3,7 +3,10 @@ package com.surine.tustbox.Fragment.network;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -13,7 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.surine.tustbox.Adapter.ViewPager.SimpleFragmentPagerAdapter;
 import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.NetWork.JavaNetCookieJar;
@@ -47,6 +52,7 @@ public class School_NetWork_Fragment extends Fragment {
     private static final String ARG_ ="School_NetWork_Fragment" ;
     private TabLayout tab;
     private ViewPager viewpager;
+    private String random;
     EditText e2;
     EditText e1;
     String last_string;
@@ -55,6 +61,7 @@ public class School_NetWork_Fragment extends Fragment {
     private List<String> titles =new ArrayList<>();
     private OkHttpClient.Builder builder;
     private OkHttpClient okHttpClient;
+    private int flag = 0;
 
     public static School_NetWork_Fragment getInstance(String title) {
         School_NetWork_Fragment fra = new School_NetWork_Fragment();
@@ -75,13 +82,7 @@ public class School_NetWork_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_viewpager, container, false);
         initOKhttp();
-        SharedPreferences pref = getActivity().getSharedPreferences("data",MODE_PRIVATE);
-        if(!pref.getBoolean("is_login_network",false)) {
-            initLogin(v);   //初始化登录
-        }else {
-            //初始化数据
-            initData(v);
-        }
+        initLogin(v);   //初始化登录
         return v;
 
     }
@@ -101,7 +102,7 @@ public class School_NetWork_Fragment extends Fragment {
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //TODO:加密？，储存帐号密码
+                //TODO:加密，储存帐号密码
                 SaveData(e1.getText().toString(),e2.getText().toString(),v);
             }
         });
@@ -110,15 +111,16 @@ public class School_NetWork_Fragment extends Fragment {
 
     private void SaveData(String s, String s1,View v) {
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("data", MODE_PRIVATE).edit();
-       // editor.putBoolean("is_login_network", true);
+       //TODO：保存登录状态
+        // editor.putBoolean("is_login_network", true);
 
-        //TODO:储存密码
+        //TODO:加密密码
         editor.putString("password_",s1);
         editor.putString("user_name",s);
         editor.apply();
         Login_prepare();
         //初始化数据
-       // initData(v);
+        initData(v);
     }
 
     private void Login_prepare() {
@@ -148,6 +150,8 @@ public class School_NetWork_Fragment extends Fragment {
         });
     }
 
+
+
     private void Login_Test(String s, String s1) {
 
         FormBody formBody = new FormBody.Builder()
@@ -155,7 +159,6 @@ public class School_NetWork_Fragment extends Fragment {
                 .add("Submit","%E7%99%BB+%E5%BD%95")
                 .add("checkcode",last_string)
                 .add("password", getMD5Str(s1))
-                .add("code","")
                 .build();
         Request request = new Request.Builder().post(formBody).url(UrlData.login_net_post_url).build();
         okHttpClient.newCall(request).enqueue(new Callback() {
@@ -169,7 +172,39 @@ public class School_NetWork_Fragment extends Fragment {
 
                 String str = response.body().string().toString();
                 //TODO:结束后删除LOG
-                Log.d("jieguo", "onResponse: " + str);
+               if(flag <= 3) {
+                   flag = flag + 1;
+                   Login_Test("xxx","xxx");
+               }else{
+                   Message mess = new Message();
+                   mess.what = 1;
+                   myHandler.sendMessage(mess);
+               }
+            }
+        });
+    }
+
+    private void Login_Test_Again(String s, String s1) {
+        FormBody formBody = new FormBody.Builder()
+                .add("account", s)
+                .add("Submit","%E7%99%BB+%E5%BD%95")
+                .add("checkcode",last_string)
+                .add("password", getMD5Str(s1))
+                .add("code",random)
+                .build();
+        Request request = new Request.Builder().post(formBody).url(UrlData.login_net_post_url).build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String str = response.body().string().toString();
+                //TODO:结束后删除LOG
+                Log.d("jieguo", "onResponse: "+str);
             }
         });
     }
@@ -270,5 +305,42 @@ public class School_NetWork_Fragment extends Fragment {
         //16位加密，从第9位到25位
         return md5StrBuff.toString().toLowerCase();
     }
+
+
+    //use handler to change ui
+    private Handler myHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    initDialog();
+                case 2:
+
+                    break;
+                case 3:
+                    Snackbar.make(getView(), R.string.login_success,Snackbar.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+
+    private void initDialog() {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.test,null);
+        final EditText ed = (EditText) view.findViewById(R.id.get_random);
+        ImageView im = (ImageView) view.findViewById(R.id.imageView7);
+        Glide.with(getActivity()).load(UrlData.random_code).into(im);
+      AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(view);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                 random = ed.getText().toString();
+                Log.d("shuju", "onClick: "+random);
+                Login_Test_Again("xxx","xxx");
+            }
+        });
+        builder.show();
+    }
+
 
 }

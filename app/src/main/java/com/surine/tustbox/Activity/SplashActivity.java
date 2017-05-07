@@ -39,4 +39,6 @@ public class SplashActivity extends TustBaseActivity {
         }
         finish();
     }
+
+
 }

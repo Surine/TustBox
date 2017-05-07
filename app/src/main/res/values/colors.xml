@@ -6,9 +6,9 @@
     <color name="colorAccent">#5b6076</color>
     <color name="Tust_White">#fff</color>
     <color name="Tust_Grey">#4e4242</color>
-    <color name="Tust_Green">#3b9c1e</color>
-    <color name="Tust_Red">#dc2055</color>
-    <color name="Tust_more_color_1">#1bbe88</color>
+    <color name="Tust_Green">#f33b9c1e</color>
+    <color name="Tust_Red">#ebdc2055</color>
+    <color name="Tust_more_color_1">#ef1bbe88</color>
     <color name="Tran">#00ffffff</color>
     <color name="Tust_1">#aaff0000</color>
     <color name="Tust_2">#a5ff2f00</color>
@@ -27,4 +27,6 @@
     <color name="Tust_15">#96ff00c8</color>
     <color name="Tust_16">#a5ff003b</color>
     <color name="color1">#d4d3d3</color>
+    <color name="color2">#f5f5f5</color>
+    <color name="color3">#e6e5e5</color>
 </resources>

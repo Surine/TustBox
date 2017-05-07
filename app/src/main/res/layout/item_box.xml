@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_margin="5dp"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/box_background"
-        android:background="@color/colorPrimary"
-        >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/box_background"
+    android:layout_margin="1dp"
+    android:background="@color/colorPrimary"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
         <TextView
             android:id="@+id/box_text"
@@ -48,5 +44,3 @@
             android:textColor="@color/Tust_White"
            />
     </RelativeLayout>
-
-</android.support.v7.widget.CardView>

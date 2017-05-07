@@ -45,6 +45,8 @@ public class BoxAdapter extends RecyclerView.Adapter<BoxAdapter.ViewHolder> {
 
                 }else if(pos == 2){
                     mContext.startActivity(new Intent(mContext, Box_info_Activty.class).putExtra("item_box",2));
+                }else if(pos == 3){
+                    mContext.startActivity(new Intent(mContext, Box_info_Activty.class).putExtra("item_box",3));
                 }
             }
         });

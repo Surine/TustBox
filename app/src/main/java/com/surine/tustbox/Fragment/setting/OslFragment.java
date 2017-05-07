@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.R;
 
 /**
@@ -22,15 +23,16 @@ public class OslFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_osl, container, false);
+        getActivity().setTitle(getString(R.string.osl2));
         WebView webView = (WebView) view.findViewById(R.id.gpa_file_Webview);
         //WebView :load url at assets
-        webView.loadUrl("file:///android_asset/Html/osl.html");
+        webView.loadUrl(UrlData.osl_url);
         FloatingActionButton mfab;
         mfab = (FloatingActionButton) view.findViewById(R.id.floatingActionButton2);
         mfab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri= Uri.parse("https://github.com/surine");   //指定网址
+                Uri uri= Uri.parse(UrlData.github_url);   //指定网址
                 Intent intent=new Intent();
                 intent.setAction(Intent.ACTION_VIEW);           //指定Action
                 intent.setData(uri);                            //设置Uri

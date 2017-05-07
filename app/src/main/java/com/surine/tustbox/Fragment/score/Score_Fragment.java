@@ -83,6 +83,12 @@ public class Score_Fragment extends Fragment{
         return v;
     }
 
+    //初始化okhttp
+    private void initOKhttp() {
+        builder = new OkHttpClient.Builder().connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS);;
+        okHttpClient = builder.cookieJar(new JavaNetCookieJar()).build();
+    }
+
     //初始化布局
     private void initLayout() {
 
@@ -210,6 +216,46 @@ public class Score_Fragment extends Fragment{
         });
     }
 
+    private void getScore() {
+        //删除数据
+        DataSupport.deleteAll(Score_Info.class);
+        Request request = new Request.Builder().
+                url(UrlData.socre_get_url).build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message mess = new Message();
+                mess.what = 2;
+                myHandler.sendMessage(mess);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String str = response.body().string().toString();
+                Jsoup_the_Html(str);
+            }
+        });
+    }
+    //解析并储存
+    private void Jsoup_the_Html(String str) {
+        Document doc = Jsoup.parse(str);
+        Elements content2 = doc.select("tr");
+        for (int i = 7; i < content2.size(); i++) {
+            content_Text = content2.get(i).select("td");
+            Score_Info score_info = new Score_Info();
+            score_info.setType("THIS");
+            score_info.setName(content_Text.get(2).text());
+            score_info.setEnglish_name(content_Text.get(3).text());
+            score_info.setScore(content_Text.get(9).text());
+            score_info.setCredit(content_Text.get(4).text());
+            score_info.setRanking(content_Text.get(10).text());
+            score_info.setAve(content_Text.get(8).text());
+            score_info.save();
+        }
+        Log.d(ARG_, "Jsoup_the_Html: 解析成功");
+        getAllScore();
+    }
+
     private void getAllScore() {
         Request request = new Request.Builder().
                 url(UrlData.all_socre_get_url).build();
@@ -254,46 +300,8 @@ public class Score_Fragment extends Fragment{
         myHandler.sendMessage(mess);
     }
 
-    private void getScore() {
-        //删除数据
-        DataSupport.deleteAll(Score_Info.class);
-        Request request = new Request.Builder().
-                url(UrlData.socre_get_url).build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message mess = new Message();
-                mess.what = 2;
-                myHandler.sendMessage(mess);
-            }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String str = response.body().string().toString();
-                Jsoup_the_Html(str);
-            }
-        });
-    }
-
-    //解析并储存
-    private void Jsoup_the_Html(String str) {
-        Document doc = Jsoup.parse(str);
-        Elements content2 = doc.select("tr");
-        for (int i = 7; i < content2.size(); i++) {
-            content_Text = content2.get(i).select("td");
-            Score_Info score_info = new Score_Info();
-            score_info.setType("THIS");
-            score_info.setName(content_Text.get(2).text());
-            score_info.setEnglish_name(content_Text.get(3).text());
-            score_info.setScore(content_Text.get(9).text());
-            score_info.setCredit(content_Text.get(4).text());
-            score_info.setRanking(content_Text.get(10).text());
-            score_info.setAve(content_Text.get(8).text());
-            score_info.save();
-        }
-        Log.d(ARG_, "Jsoup_the_Html: 解析成功");
-        getAllScore();
-    }
+    //use handler to change ui
     private Handler myHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -317,9 +325,5 @@ public class Score_Fragment extends Fragment{
         }
     };
 
-    //初始化okhttp
-        private void initOKhttp() {
-        builder = new OkHttpClient.Builder().connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS);;
-        okHttpClient = builder.cookieJar(new JavaNetCookieJar()).build();
-    }
+
 }

@@ -16,4 +16,7 @@
        android:title="@string/learn_info"
        android:id="@+id/learn_info"
       />
+   <item
+      android:title="@string/about_gp"
+      android:id="@+id/gp_info"/>
 </menu>

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.R;
 
 /**
@@ -19,9 +20,10 @@ public class NoticFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_view_gpa_calculate_file, container, false);
+        getActivity().setTitle(getString(R.string.notice2));
         WebView webView = (WebView) view.findViewById(R.id.gpa_file_Webview);
         //WebView :load url at assets
-        webView.loadUrl("file:///android_asset/Html/notic.html");
+        webView.loadUrl(UrlData.notice_url);
         return view;
     }
 }

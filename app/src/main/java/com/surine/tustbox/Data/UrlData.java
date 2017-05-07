@@ -17,6 +17,8 @@ public class UrlData {
     public static String login_net_post_url = "http://uss.tust.edu.cn/LoginAction.action";
     //网络地址准备地址
     public static String login_net_prepare_url = "http://uss.tust.edu.cn/nav_login";
+    //网络验证码地址
+    public static String random_code = "http://uss.tust.edu.cn/RandomCodeAction.action?randomNum=" + Math.random();
     //成绩地址
     public static String socre_get_url = "http://jwxt.tust.edu.cn/bxqcjcxAction.do";
     //所有成绩
@@ -27,6 +29,15 @@ public class UrlData {
 
     //GP下载平台
     public static String gp_download = "http://tust.gp.tust.edu.cn/download.html";
+    public static String gp_download_short = "http://tust.gp.tust.edu.cn/";
     //update
     public static String update_url = "http://surine.cn/update/update_log.html";
+    //download
+    public static String download_url = "http://surine.cn/download/app-release.apk";
+    //github
+    public static String github_url = "https://github.com/surine/TustBox";
+    //osl
+    public static String osl_url ="file:///android_asset/Html/osl.html";
+    //notice
+    public static String notice_url ="file:///android_asset/Html/notice.html";
 }

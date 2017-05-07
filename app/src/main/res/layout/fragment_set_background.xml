@@ -4,25 +4,35 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/cry"
+        android:layout_above="@+id/textView23"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="27dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:fontFamily="sans-serif"
-        android:text="什么都木有哦！"
+        android:text="@string/nothing"
         android:textSize="30sp"
+        android:gravity="center"
         android:textStyle="bold"
-        android:id="@+id/textView23"/>
+        android:id="@+id/textView23"
+        android:layout_above="@+id/relativeLayout"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="122dp"
+        android:layout_alignParentEnd="true"/>
         <ImageView
             android:id="@+id/my_choose_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:layout_marginBottom="100dp"
             android:background="#00ffffff"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"/>
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="50dp"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -32,34 +42,25 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/relativeLayout"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="21dp"
-        android:text="Tip:选择好背景后点击重启按钮重新启动APP，
-如果想恢复默认，请点击恢复按钮。"/>
+
 
     <Button
         android:id="@+id/restart"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="重启生效"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:text="重启"/>
+        android:layout_alignParentEnd="true"/>
 
     <Button
         android:id="@+id/reset"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView23"
-        android:layout_alignTop="@+id/restart"
-        android:text="恢复"/>
+        android:text="恢复默认"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/restart"/>
 </RelativeLayout>
 
 

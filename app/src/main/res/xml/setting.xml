@@ -19,30 +19,22 @@
           android:summary="@string/clear_sunmmy"
           />
    </PreferenceCategory>
-    <PreferenceCategory
-        android:title="@string/box"
-        >
-      <Preference
-          android:title="启用盒子功能"
-          />
-    </PreferenceCategory>
+
     <PreferenceCategory
         android:title="@string/me"
         >
         <SwitchPreference
             android:key="setting_close_show_picture"
-            android:title="隐藏证件照"
-            android:summary="开启后将替换您的证件照"
+            android:title="@string/hide"
+            android:summary="@string/hide_summary"
             />
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="安全"
+        android:title="@string/safe"
         >
         <Preference
-            android:title="信息加密"
-            android:summary="您所填写所有表单信息或者隐私数据都保存在本地
-，并使用Base64进行加密，在Root条件下也可以保证相对安全，但由于学校教务属于明文登录系统
-请在使用软件时保证网络环境安全（如网络嗅探威胁等）"
+            android:title="@string/pswd"
+            android:summary="@string/pswd_summary"
             />
     </PreferenceCategory>
     <PreferenceCategory
@@ -50,27 +42,7 @@
         >
         <Preference
             android:key="about"
-            android:title="关于软件"
-            />
-        <Preference
-            android:key="check_update"
-            android:title="检查更新"
-            />
-        <Preference
-            android:key="notic"
-            android:title="免责声明"
-            />
-        <Preference
-            android:key="bug"
-            android:title="Bug反馈"
-            />
-        <Preference
-            android:key="orl"
-            android:title="开源许可"
-            />
-        <Preference
-            android:key="help"
-            android:title="赞助开发者"
+            android:title="@string/about_tustbox"
             />
     </PreferenceCategory>
 </PreferenceScreen>

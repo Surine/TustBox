@@ -64,7 +64,7 @@ public class This_School_Term_Score_Fragment extends Fragment{
         if(mLastScore_infos.size()!=0){
             initView();   //初始化view
         }else{
-            Toast.makeText(getActivity(),"本地没有数据哦！",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),"本地没有本学期的数据哦！",Toast.LENGTH_SHORT).show();
         }
     }
 
