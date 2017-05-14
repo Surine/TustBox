@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.surine.tustbox.Bean.Course_Info;
 import com.surine.tustbox.R;
-import com.surine.tustbox.Activity.Course_InfoActivity;
+import com.surine.tustbox.Activity.ToolbarActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public class Course_Table_Adapter extends RecyclerView.Adapter<Course_Table_Adap
             public void onClick(View view) {
                 int position = viewHolder.getAdapterPosition();
                 if (mCourseList.get(position) != null) {
-                    mContext.startActivity(new Intent(mContext, Course_InfoActivity.class).putExtra("course_id",mCourseList.get(position).getId()));
+                    mContext.startActivity(new Intent(mContext, ToolbarActivity.class).putExtra("course_id",mCourseList.get(position).getId()));
                 }
             }
         });

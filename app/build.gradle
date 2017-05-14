@@ -7,17 +7,17 @@ android {
         applicationId "com.surine.tustbox"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 1
+        versionCode 2
         versionName "2.0.2"
         testInstrumentationRunner "android.support.widget.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        ndk{
+        ndk {
             abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
         }
         manifestPlaceholders = [
-                JPUSH_PKGNAME : applicationId,
+                JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "2791c8d7ff1f7480db215fdb", //JPush上注册的包名对应的appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
     }
     buildTypes {
@@ -30,11 +30,11 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'
     compile 'com.android.support:support-vector-drawable:25.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
-    testCompile 'junit:junit:4.12'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'org.jsoup:jsoup:1.10.2'
@@ -47,5 +47,5 @@ dependencies {
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
     compile 'cn.jiguang.sdk:jpush:3.0.3'
     compile 'cn.jiguang.sdk:jcore:1.1.1'
-
+    testCompile 'junit:junit:4.12'
 }

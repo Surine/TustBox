@@ -26,6 +26,8 @@ import com.surine.tustbox.R;
 
 import org.litepal.crud.DataSupport;
 
+import java.io.File;
+
 public class MainActivity extends TustBaseActivity {
     int yourChoice;
     private int Flag = 1;
@@ -51,13 +53,22 @@ public class MainActivity extends TustBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //set the toolbar
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        initFragmentOne();
+
+        //init the first fragment
+        initFragmentOne("1");
+
+        //iadd all of the fragment to fragmenttransaction
         setFragment();
+
         //set the normal toolbar title
         SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
         setTitle("课表 [第"+(pref.getInt("choice_week",0)+1)+"周]");
+
+
         //init the BottomNavigationView and set linstener
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -81,7 +92,7 @@ public class MainActivity extends TustBaseActivity {
                         supportInvalidateOptionsMenu();
                         return true;
                     case R.id.navigation_notifications:
-                        setTitle("");
+                        setTitle(R.string.me);
                         Flag = 3;
                         setFragment_Show(Flag);
                         supportInvalidateOptionsMenu();
@@ -100,23 +111,27 @@ public class MainActivity extends TustBaseActivity {
             editor.putBoolean("is_login",true);
             editor.apply();
         }
+        //set first_fragment
         setFragment_Show(Flag);
     }
 
-    private void initFragmentOne() {
+    private void initFragmentOne(String flag) {
+        /*if fragment is null ,create it directly
+        * Otherwise,we have to remove the old one and create a new one
+        * */
         if (mFragment1 == null) {
-            mFragment1 = Course_Fragment.getInstance("1");
+            mFragment1 = Course_Fragment.getInstance(flag);
         }else{
             FragmentManager fm = getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction tran = fm.beginTransaction();
             tran.remove(mFragment1);
-            mFragment1 = Course_Fragment.getInstance("1");
+            mFragment1 = Course_Fragment.getInstance(flag);
             tran.add(R.id.content,mFragment1);
             tran.commit();
         }
     }
 
-    //init all of the fragment
+    //iadd all of the fragment to fragmenttransaction
     private void setFragment() {
         FragmentManager fm = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction tran = fm.beginTransaction();
@@ -167,6 +182,16 @@ public class MainActivity extends TustBaseActivity {
                 //go to the setting activity
                 startActivity(new Intent(MainActivity.this,SettingActivity.class));
                 break;
+            case R.id.other_user:
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                if(!pref.getBoolean("other_user_is_login",false)){
+                    Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                    intent.putExtra("other_user","other_user");
+                    startActivity(intent);
+                }else{
+                    initFragmentOne("other_user_signal");
+                }
+                break;
         }
         return true;
     }
@@ -186,22 +211,20 @@ public class MainActivity extends TustBaseActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                //1:delete all of the database
-               //2:delete some SharedPreferences
+               //2:delete SharedPreferences
                 //3.start the login activty
                 //4. make a toast
+
+                //TODO:我们期望在这里，删除所有用户数据，防止下面的用户登录产生的不同影响
                 DataSupport.deleteAll(Course_Info.class);
                 DataSupport.deleteAll(Student_info.class);
                 DataSupport.deleteAll(Score_Info.class);
                 DataSupport.deleteAll(Book_Info.class);
+                File file = new File(String.valueOf(getFilesDir()+"/head.jpg"));
+                deletefile(file);
+                file = new File("/data/data/com.surine.tustbox/shared_prefs/data.xml");
+                deletefile(file);
                 startActivity(new Intent(MainActivity.this,LoginActivity.class));
-                SharedPreferences.Editor editor = getSharedPreferences("data",MODE_PRIVATE).edit();
-                editor.putBoolean("is_login",false);
-                editor.putString("library_id","");
-                editor.putString("library_pswd","");
-                editor.putBoolean("login_success_about_library_pass",false);
-                editor.putString("tust_number","");
-                editor.putString("pswd","");
-                editor.apply();
                 Toast.makeText(MainActivity.this,
                         R.string.clear_success,
                         Toast.LENGTH_SHORT).show();
@@ -211,11 +234,20 @@ public class MainActivity extends TustBaseActivity {
         builder.show();
     }
 
+    private void deletefile(File file) {
+        if(file.exists()){
+            if(file.isFile()){
+                file.delete();   //delete the head or SharedPreferences
+            }
+        }
+    }
+
     private void show_Dialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.choose_week);
         yourChoice = -1;
         SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+        //default selection
         builder.setSingleChoiceItems(str, pref.getInt("choice_week",0), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -229,6 +261,7 @@ public class MainActivity extends TustBaseActivity {
 
                     //1.choose the week and make a SharedPreferences
                     //2.send a broadcase to the widget(update the widget)
+                    //3. load fragment
                     SharedPreferences.Editor editor = getSharedPreferences("data",MODE_PRIVATE).edit();
                     editor.putInt("choice_week",yourChoice);
                     editor.apply();
@@ -237,7 +270,7 @@ public class MainActivity extends TustBaseActivity {
                             Toast.LENGTH_SHORT).show();
                     SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
                     setTitle("课表 [第"+(pref.getInt("choice_week",0)+1)+"周]");
-                    initFragmentOne();
+                    initFragmentOne("1");
                     Intent updateIntent = new Intent("com.widget.surine.WidgetProvider.MY_UPDATA_CHANGE");
                     sendBroadcast(updateIntent);
                 }
@@ -246,20 +279,6 @@ public class MainActivity extends TustBaseActivity {
         builder.show();
     }
 
-    private void replaceFragment() {
-        FragmentManager fm = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction tran = fm.beginTransaction();
-        tran.remove(mFragment1);
-        tran.remove(mFragment2);
-        tran.remove(mFragment3);
-        tran.add(R.id.content,Course_Fragment.getInstance("1"));
-        tran.add(R.id.content,Box_Fragment.getInstance("2"));
-        tran.add(R.id.content,Me_Fragment.getInstance("3"));
-        tran.commit();
-        setFragment_Show(1);
-    }
-
-
     //the method is a control menu update
     //we can use the supportInvalidateOptionsMenu() to update our menu
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -267,18 +286,22 @@ public class MainActivity extends TustBaseActivity {
         MenuItem week = menu.findItem(R.id.week);
         MenuItem exit = menu.findItem(R.id.exit);
         MenuItem setting = menu.findItem(R.id.setting);
+        MenuItem other_user = menu.findItem(R.id.other_user);
         if(Flag == 1) {
             week.setVisible(true);
             exit.setVisible(false);
             setting.setVisible(false);
+            other_user.setVisible(true);
         }else if(Flag == 2){
             week.setVisible(false);
             exit.setVisible(false);
             setting.setVisible(false);
+            other_user.setVisible(false);
         }else{
             week.setVisible(false);
             exit.setVisible(true);
             setting.setVisible(true);
+            other_user.setVisible(false);
         }
         return true;
     }

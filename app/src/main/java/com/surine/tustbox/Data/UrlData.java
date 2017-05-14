@@ -31,9 +31,9 @@ public class UrlData {
     public static String gp_download = "http://tust.gp.tust.edu.cn/download.html";
     public static String gp_download_short = "http://tust.gp.tust.edu.cn/";
     //update
-    public static String update_url = "http://surine.cn/update/update_log.html";
+    public static String update_url = "http://123.207.236.107/update/update_log.html";
     //download
-    public static String download_url = "http://surine.cn/download/app-release.apk";
+    public static String download_url = "http://123.207.236.107/download/app-release.apk";
     //github
     public static String github_url = "https://github.com/surine/TustBox";
     //osl

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dbname value="TustStore" ></dbname>
-    <version value="7" ></version>
+    <version value="8" ></version>
 
     <list>
         <mapping class="com.surine.tustbox.Bean.Student_info"></mapping>

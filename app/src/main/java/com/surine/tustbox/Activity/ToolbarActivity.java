@@ -1,5 +1,6 @@
 package com.surine.tustbox.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.surine.tustbox.Fragment.Me.Me_info_fragment;
 import com.surine.tustbox.Fragment.course.Course_info_Fragment;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
@@ -16,20 +18,31 @@ import com.surine.tustbox.R;
  * the coure_infoActivty maked for the course information
  */
 
-public class Course_InfoActivity extends TustBaseActivity{
+public class ToolbarActivity extends TustBaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course_info);
+        setContentView(R.layout.activity_with_toolbar);
+
+        Intent intent = getIntent();
+        int flag = intent.getIntExtra("activity_flag", 0);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.course_info_toolbar);
         setSupportActionBar(toolbar);
-        setTitle(getString(R.string.course_info));
+
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar !=null){
-          actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        replaceFragment(Course_info_Fragment.getInstance(getString(R.string.course_info)));
+
+        if (flag == 0) {
+            setTitle(getString(R.string.course_info));
+            replaceFragment(Course_info_Fragment.getInstance(getString(R.string.course_info)));
+        }else{
+            setTitle(getString(R.string.my_info));
+            replaceFragment(Me_info_fragment.getInstance(getString(R.string.my_info)));
+        }
     }
 
 

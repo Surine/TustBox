@@ -1,5 +1,7 @@
 package com.surine.tustbox.Util;
 
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,6 +15,7 @@ public class TimeUtil {
         long time=System.currentTimeMillis();
         Date date=new Date(time);
         SimpleDateFormat format=new SimpleDateFormat("E");
+        Log.d("DEBUG", "GetWeek: "+format.format(date));
         return format.format(date);
     }
 }

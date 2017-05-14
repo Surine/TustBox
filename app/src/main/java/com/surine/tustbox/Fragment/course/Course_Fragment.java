@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.surine.tustbox.Activity.Course_InfoActivity;
+import com.surine.tustbox.Activity.ToolbarActivity;
 import com.surine.tustbox.Adapter.Recycleview.Course_Table_Adapter;
 import com.surine.tustbox.Bean.Course_Info;
 import com.surine.tustbox.R;
@@ -63,11 +64,14 @@ public class Course_Fragment extends Fragment {
     int week_number_for_todays_course = 0;
     private List<Course_Info> mCourseList = new ArrayList<>();
     private List<Course_Info> mLastList = new ArrayList<>();
-
+    int user;
+    static String other_user_string = "-1";
+    private static final String EXTRA = "other_user";
     public static Course_Fragment getInstance(String title) {
         Course_Fragment fra = new Course_Fragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARG_, title);
+        other_user_string = title;
         fra.setArguments(bundle);
         return fra;
     }
@@ -126,7 +130,7 @@ public class Course_Fragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (!initListViewData().get(i).get("name").equals(getString(R.string.no_class))) {
                     int id = (int) initListViewData().get(i).get("id");
-                    startActivity(new Intent(getActivity(), Course_InfoActivity.class).putExtra("course_id", id));
+                    startActivity(new Intent(getActivity(), ToolbarActivity.class).putExtra("course_id", id));
                 } else {
                     //start the qq
                     startQQ();
@@ -168,10 +172,11 @@ public class Course_Fragment extends Fragment {
     //init today course's hashmap
     private ArrayList<HashMap<String, Object>> initListViewData() {
         ArrayList<HashMap<String, Object>> arrayList = new ArrayList<HashMap<String,Object>>();
-        try {
+              //
             for(int i = week_number_for_todays_course-1;i<mLastList.size();i++) {
-                Course_Info course_info = mLastList.get(i);
+                Log.d("DEBUG", "initListViewData: "+week_number_for_todays_course);
                     if (mLastList.get(i)!= null) {
+                    Course_Info course_info = mLastList.get(i);
                     HashMap<String, Object> today_hasmap = new HashMap<String, Object>();
                     today_hasmap.put("id",course_info.getId());
                     today_hasmap.put("background", course_info.getColor());
@@ -189,7 +194,7 @@ public class Course_Fragment extends Fragment {
                     }
                     arrayList.add(today_hasmap);
                 }
-                i = i + 6;
+                i = i+6;
             }
             if(arrayList.size()==0){
                 HashMap<String, Object> today_hasmap = new HashMap<String, Object>();
@@ -197,9 +202,7 @@ public class Course_Fragment extends Fragment {
                 today_hasmap.put("location", getString(R.string.happy));
                 arrayList.add(today_hasmap);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         return arrayList;
     }
 
@@ -217,6 +220,21 @@ public class Course_Fragment extends Fragment {
 
     //load the Curriculum schedule
     private void initData() {
+
+        if(other_user_string.equals("1")){
+            user = 0;
+        }else{
+            SharedPreferences pref = getActivity().getSharedPreferences("data",MODE_PRIVATE);
+            SharedPreferences.Editor editor = getActivity().getSharedPreferences("data", MODE_PRIVATE).edit();
+            if(pref.getInt("user_flag",0)==0){
+                user = 0;
+                editor.putInt("user_flag",1);
+            }else{
+                user = 1;
+                editor.putInt("user_flag",0);
+            }
+            editor.apply();
+        }
         load_image();
         initWeek();  //init the week
         mCourseList = DataSupport.findAll(Course_Info.class);
@@ -229,13 +247,15 @@ public class Course_Fragment extends Fragment {
         for(int i = 0;i<mCourseList.size();i++){
             try {
                 course_info = mCourseList.get(i);
-                //out of some cases(they may cause App ANR,for example:network course,etc)
-                if(course_info.getMethod().contains("正常")&&!(course_info.getCourse_number().contains("WL"))) {
-                    position1 = Integer.parseInt(String.valueOf(course_info.getWeek_number().charAt(2))) - 1;
-                    position2 = (GetNumber(course_info.getClass_()) - 1) * 7;
-                    mLastList.set(position1 + position2, course_info);
-                    if (course_info.getClass_count().contains("4")) {
-                        mLastList.set(position1 + position2 + 7, course_info);
+                if(course_info.getUser()==user) {
+                    //out of some cases(they may cause App ANR,for example:network course,etc)
+                    if (course_info.getMethod().contains("正常") && !(course_info.getCourse_number().contains("WL"))) {
+                        position1 = Integer.parseInt(String.valueOf(course_info.getWeek_number().charAt(2))) - 1;
+                        position2 = (GetNumber(course_info.getClass_()) - 1) * 7;
+                        mLastList.set(position1 + position2, course_info);
+                        if (course_info.getClass_count().contains("4")) {
+                            mLastList.set(position1 + position2 + 7, course_info);
+                        }
                     }
                 }
             } catch (NumberFormatException e) {
@@ -304,32 +324,32 @@ public class Course_Fragment extends Fragment {
     //init Week view
     private void initWeek() {
        String week = TimeUtil.GetWeek();
-        if(week.equals("周一")){
+        if(week.equals("周一")||week.equals("Mon")){
             //set the today color
             tex1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             //give a flag
             week_number_for_todays_course = 1;
-        }else if(week.equals("周二")){
+        }else if(week.equals("周二")||week.equals("Tue")){
             tex2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             week_number_for_todays_course = 2;
 
-        }else if(week.equals("周三")){
+        }else if(week.equals("周三")||week.equals("Wed")){
             tex3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             week_number_for_todays_course = 3;
 
-        }else if(week.equals("周四")){
+        }else if(week.equals("周四")||week.equals("Thu")){
             tex4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             week_number_for_todays_course = 4;
 
-        }else if(week.equals("周五")){
+        }else if(week.equals("周五")||week.equals("Sat")){
             tex5.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             week_number_for_todays_course = 5;
 
-        }else if(week.equals("周六")){
+        }else if(week.equals("周六")||week.equals("Sun")){
             tex6.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             week_number_for_todays_course = 6;
 
-        }else if(week.equals("周日")){
+        }else if(week.equals("周日")||week.equals("Mon")){
             tex7.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
             week_number_for_todays_course = 7;
 

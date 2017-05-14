@@ -5,32 +5,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     tools:context="com.surine.tustbox.Activity.SplashActivity">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="270dp"
-        android:layout_height="220dp"
+        android:layout_width="290dp"
+        android:layout_height="290dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/tust"
+        android:src="@drawable/tust2"
+        android:transitionName="transitionImg"
         tools:ignore="MissingConstraints"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.228"/>
+        app:layout_constraintVertical_bias="0.342"
+        />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="31dp"
+        android:layout_marginBottom="106dp"
         android:fontFamily="monospace"
         android:padding="5dp"
         android:text="@string/app_name"
         android:textAlignment="center"
-        android:textColor="@color/Tust_White"
-        android:textSize="26sp"
+        android:textColor="@color/Tust_Grey2"
+        android:textSize="29sp"
         android:textStyle="bold"
         android:typeface="sans"
         app:layout_constraintBottom_toBottomOf="parent"

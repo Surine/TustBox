@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.surine.tustbox.Bean.Box;
 import com.surine.tustbox.R;
@@ -42,7 +43,7 @@ public class BoxAdapter extends RecyclerView.Adapter<BoxAdapter.ViewHolder> {
                     //score
                     mContext.startActivity(new Intent(mContext, Box_info_Activty.class).putExtra("item_box",0));
                 }else if(pos == 1){
-
+                    Toast.makeText(mContext,"没做，嗯，占个坑",Toast.LENGTH_SHORT).show();
                 }else if(pos == 2){
                     mContext.startActivity(new Intent(mContext, Box_info_Activty.class).putExtra("item_box",2));
                 }else if(pos == 3){

@@ -44,6 +44,7 @@ import okhttp3.Response;
 public class LoginActivity extends TustBaseActivity {
     private static final String TAG = "LoginActivity";
     private static final int CONNECT_TIMEOUT = 10;
+    private static final String EXTRA = "other_user";
     private EditText tust_number;
     private EditText pswd;
     private TextView warning;
@@ -83,12 +84,15 @@ public class LoginActivity extends TustBaseActivity {
     private OkHttpClient.Builder builder;
     private OkHttpClient okHttpClient;
     private int slec_color;
-
+    String intent_string = "-1";
+    int user=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Intent intent = getIntent();
+        intent_string = intent.getStringExtra(EXTRA);
         //full screen
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -106,7 +110,12 @@ public class LoginActivity extends TustBaseActivity {
         //set up the database
         Connector.getDatabase();
     }
-
+    private void initView() {
+        tust_number = (EditText) findViewById(R.id.tust_number);
+        pswd = (EditText) findViewById(R.id.pswd);
+        login_btn = (Button) findViewById(R.id.btn_login);
+        warning = (TextView) findViewById(R.id.warning);
+    }
     private void initOkHttp() {
         //init the okhttpclient and set the cookiejar for the data request
         builder = new OkHttpClient.Builder().connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS);//设置连接超时时间;
@@ -142,7 +151,83 @@ public class LoginActivity extends TustBaseActivity {
             }
         });
     }
+    //set dialog
+    private void setDialog(String string, String s) {
+        //create the dialog
+        pg = new ProgressDialog(LoginActivity.this);
+        pg.setTitle(string);
+        pg.setMessage(s);
+        pg.setCancelable(false);
+        pg.show();
+    }
+    //login
+    private int login(final String tust_number_string, final String pswd_string) {
+        //create the formbody
+        FormBody formBody = new FormBody.Builder()
+                .add(getString(R.string.id1), tust_number_string)
+                .add(getString(R.string.id2), pswd_string)
+                .build();
+        //start the request
+        Request request = new Request.Builder().post(formBody).url(UrlData.login_post_url).build();
+        //the callback of the request
+        okHttpClient
+                .newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                //callback:failure
+                pg.dismiss();
+                pg.cancel();
+                status_login = 0;
+                Snackbar.make(login_btn, R.string.fail, Snackbar.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //save the pswd and id
+                if(!intent_string.equals(EXTRA)) {
+                    saveUserInfo(tust_number_string, pswd_string);
+                }
+                String str = response.body().string().toString();
+                Document doc = Jsoup.parse(str);
+                String back_title = doc.title();
+                if (back_title.equals(getString(R.string.manager_))) {
+                    //request success
+                    Snackbar.make(login_btn, R.string.success, Snackbar.LENGTH_SHORT).show();
+                    //if the request is successful we should start the new same request
+                    //it can solve the problem about the cookies mismatching
+                    if (times == 2) {
+                        status_login = 1;
+                        Message mess = new Message();
+                        mess.what = 1;
+                        myHandler.sendMessage(mess);
+                    } else {
+                        login(tust_number_string, pswd_string);
+                        times = times + 1;
+                    }
+                } else {
+                    //pswd is wrong
+                    Snackbar.make(login_btn, R.string.wrong, Snackbar.LENGTH_SHORT).show();
+                    status_login = 0;
+                }
+                //dismiss
+                pg.dismiss();
+                pg.cancel();
+            }
+        });
+        return status_login;
+    }
+
+    //save user information
+    private void saveUserInfo(String tust_number_string, String pswd_string) {
+        // encodeToString will return string value
+        String enToStr = Base64.encodeToString(pswd_string.getBytes(), Base64.DEFAULT);
+        Log.i("Test", "encodeToString >>> " + enToStr);
+        //save
+        SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+        editor.putString("tust_number", tust_number_string);
+        editor.putString("pswd", enToStr);
+        editor.apply();
+    }
     private void GetStudentInfo() {
         //the method is a way to get data
         //and we should send an url and a flag to it,so it can use the method（savedata） to save
@@ -157,40 +242,49 @@ public class LoginActivity extends TustBaseActivity {
         *
         * */
         if (save_tag == 1) {
-            //get the save_tag and use the Jsoup to analyze the html  (td)
-            Document doc2 = Jsoup.parse(my_student_info_str);
-            content = doc2.select("td");
-            //save the name in another way
-            SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-            editor.putString("stu_name", this.content.get(20).text());
-            //save the school
-            editor.putString("part", this.content.get(70).text());
-            editor.apply();
-            SaveStudentInfo(this.content.get(19).text(),this.content.get(20).text());
-            SaveStudentInfo(this.content.get(17).text(),this.content.get(18).text());
-            SaveStudentInfo(this.content.get(25).text(),this.content.get(26).text());
+            if(!intent_string.equals(EXTRA)) {
+                //get the save_tag and use the Jsoup to analyze the html  (td)
+                Document doc2 = Jsoup.parse(my_student_info_str);
+                content = doc2.select("td");
+                //save the name in another way
+                SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                editor.putString("stu_name", this.content.get(20).text());
+                //save the school
+                editor.putString("part", this.content.get(70).text());
+                editor.apply();
+                SaveStudentInfo(this.content.get(19).text(), this.content.get(20).text());
+                SaveStudentInfo(this.content.get(17).text(), this.content.get(18).text());
+                SaveStudentInfo(this.content.get(25).text(), this.content.get(26).text());
 
-            SaveStudentInfo(this.content.get(31).text(),this.content.get(32).text());
-            SaveStudentInfo(this.content.get(33).text(),this.content.get(34).text());
-            SaveStudentInfo(this.content.get(37).text(),this.content.get(38).text());
-            SaveStudentInfo(this.content.get(41).text(),this.content.get(42).text());
-            SaveStudentInfo(this.content.get(45).text(),this.content.get(46).text());
-            SaveStudentInfo(this.content.get(47).text(),this.content.get(48).text());
-            SaveStudentInfo(this.content.get(49).text(),this.content.get(50).text());
-            SaveStudentInfo(this.content.get(67).text(),this.content.get(68).text());
-            SaveStudentInfo(this.content.get(69).text(),this.content.get(70).text());
-            SaveStudentInfo(this.content.get(71).text(),this.content.get(72).text());
-            SaveStudentInfo(this.content.get(77).text(),this.content.get(78).text());
-            SaveStudentInfo(this.content.get(79).text(),this.content.get(80).text());
-            SaveStudentInfo(this.content.get(83).text(),this.content.get(84).text());
-            SaveStudentInfo(this.content.get(115).text(),this.content.get(119).text());
+                SaveStudentInfo(this.content.get(31).text(), this.content.get(32).text());
+                SaveStudentInfo(this.content.get(33).text(), this.content.get(34).text());
+                SaveStudentInfo(this.content.get(37).text(), this.content.get(38).text());
+                SaveStudentInfo(this.content.get(41).text(), this.content.get(42).text());
+                SaveStudentInfo(this.content.get(45).text(), this.content.get(46).text());
+                SaveStudentInfo(this.content.get(47).text(), this.content.get(48).text());
+                SaveStudentInfo(this.content.get(49).text(), this.content.get(50).text());
+                SaveStudentInfo(this.content.get(67).text(), this.content.get(68).text());
+                SaveStudentInfo(this.content.get(69).text(), this.content.get(70).text());
+                SaveStudentInfo(this.content.get(71).text(), this.content.get(72).text());
+                SaveStudentInfo(this.content.get(77).text(), this.content.get(78).text());
+                SaveStudentInfo(this.content.get(79).text(), this.content.get(80).text());
+                SaveStudentInfo(this.content.get(83).text(), this.content.get(84).text());
+                SaveStudentInfo(this.content.get(115).text(), this.content.get(119).text());
+            }
         } else if (save_tag == 2) {
 
             //get the tr tag
             Document doc2 = Jsoup.parse(my_course_info_str);
             content2 = doc2.select("tr");
 
-            for (int i = 22; i < content2.size() - 1; i++) {
+            for (int i = 22; i < content2.size(); i++) {
+                Log.d(TAG, i+"TR" + content2.get(i).text());
+                //set the value of user(int)
+                if(intent_string.equals(EXTRA)) {
+                    user = 1;
+                }else if(intent_string.equals("no")){
+                    user = 0;
+                }
                /*
                *the data obtained are classifiled into two cases
                * full line & half a line
@@ -203,7 +297,10 @@ public class LoginActivity extends TustBaseActivity {
                     SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
                     content_Text = content2.get(i).select("td");
 
-                    //装载courese对象
+                    for(int a=0;a<content_Text.size();a++) {
+                        Log.d(TAG, i+"TR标签"+a+"TD标签" + content_Text.get(a).text());
+                    }
+                    //load courese object
                     help_course = creat_course(
                             pref.getString("0", "null"),
                             pref.getString("1", "null"),
@@ -223,13 +320,20 @@ public class LoginActivity extends TustBaseActivity {
                             content_Text.get(4).text(),
                             content_Text.get(5).text(),
                             content_Text.get(6).text(),
-                            pref.getInt("18_color", 0)
+                            pref.getInt("18_color", 0),
+                            user
                     );
 
                 } else {
-                    //生成颜色
-                    slec_color = colors[i % 22];
+
+                    //color
+                    slec_color = colors[i % 15];
+
                     content_Text = content2.get(i).select("td");
+                    for(int a=0;a<content_Text.size();a++) {
+                        Log.d(TAG, i+"TR标签"+a+"TD标签" + content_Text.get(a).text());
+                    }
+
                     help_course = creat_course(
                             content_Text.get(0).text(),
                             content_Text.get(1).text(),
@@ -248,7 +352,8 @@ public class LoginActivity extends TustBaseActivity {
                             content_Text.get(15).text(),
                             content_Text.get(16).text(),
                             content_Text.get(17).text(),
-                            slec_color
+                            slec_color,
+                            user
                     );
 
                     //save the data
@@ -290,7 +395,8 @@ public class LoginActivity extends TustBaseActivity {
                                      String school,
                                      String building,
                                      String classroom,
-                                     int color
+                                     int color,
+                                     int user
     ) {
         course_info = new Course_Info();
         course_info.setDev(dev);
@@ -311,6 +417,7 @@ public class LoginActivity extends TustBaseActivity {
         course_info.setBuilding(building);
         course_info.setClassroom(classroom);
         course_info.setColor(color);
+        course_info.setUser(user);
         course_info.save();
         return course_info;
     }
@@ -362,91 +469,20 @@ public class LoginActivity extends TustBaseActivity {
 
     //start intent
     private void Intent_Activity() {
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        finish();
-    }
-
-    //set dialog
-    private void setDialog(String string, String s) {
-        //create the dialog
-        pg = new ProgressDialog(LoginActivity.this);
-        pg.setTitle(string);
-        pg.setMessage(s);
-        pg.setCancelable(false);
-        pg.show();
-    }
-
-
-    //login
-    private int login(final String tust_number_string, final String pswd_string) {
-        //create the formbody
-        FormBody formBody = new FormBody.Builder()
-                .add(getString(R.string.id1), tust_number_string)
-                .add(getString(R.string.id2), pswd_string)
-                .build();
-        //start the request
-        Request request = new Request.Builder().post(formBody).url(UrlData.login_post_url).build();
-        //the callback of the request
-        okHttpClient
-                .newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                //callback:failure
-                pg.dismiss();
-                pg.cancel();
-                status_login = 0;
-                Snackbar.make(login_btn, R.string.fail, Snackbar.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                //save the pswd and id
-                saveUserInfo(tust_number_string, pswd_string);
-
-                String str = response.body().string().toString();
-
-
-                Document doc = Jsoup.parse(str);
-                String back_title = doc.title();
-
-                if (back_title.equals(getString(R.string.manager_))) {
-
-                    //request success
-                    Snackbar.make(login_btn, R.string.success, Snackbar.LENGTH_SHORT).show();
-                    //if the request is successful we should start the new same request
-                    //it can solve the problem about the cookies mismatching
-                    if (times == 2) {
-                        status_login = 1;
-                        Message mess = new Message();
-                        mess.what = 1;
-                        myHandler.sendMessage(mess);
-                    } else {
-                        login(tust_number_string, pswd_string);
-                        times = times + 1;
-                    }
-                } else {
-                    //pswd is wrong
-                    Snackbar.make(login_btn, R.string.wrong, Snackbar.LENGTH_SHORT).show();
-                    status_login = 0;
-                }
-                //dismiss
-                pg.dismiss();
-                pg.cancel();
-            }
-        });
-        return status_login;
-    }
-
-    //save user information
-    private void saveUserInfo(String tust_number_string, String pswd_string) {
-    // encodeToString will return string value
-        String enToStr = Base64.encodeToString(pswd_string.getBytes(), Base64.DEFAULT);
-        Log.i("Test", "encodeToString >>> " + enToStr);
-    //save
+        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
         SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-        editor.putString("tust_number", tust_number_string);
-        editor.putString("pswd", enToStr);
-        editor.apply();
+        if(!intent_string.equals(EXTRA)) {
+            intent.putExtra("other_user","no");
+            editor.apply();
+            startActivity(intent);
+            finish();
+        }else{
+            intent.putExtra("other_user","other_user");
+            editor.putBoolean("other_user_is_login",true);
+            editor.apply();
+            startActivity(intent);
+            finish();
+        }
     }
 
     private Handler myHandler = new Handler() {
@@ -460,8 +496,10 @@ public class LoginActivity extends TustBaseActivity {
                     GetStudentInfo();
                     //get
                     GetCourseInfo();
-                    //get
-                    GetHead();
+                    if(!intent_string.equals(EXTRA)) {
+                        //get
+                        GetHead();
+                    }
                     break;
             }
         }
@@ -495,11 +533,5 @@ public class LoginActivity extends TustBaseActivity {
         });
     }
 
-    private void initView() {
-        tust_number = (EditText) findViewById(R.id.tust_number);
-        pswd = (EditText) findViewById(R.id.pswd);
-        login_btn = (Button) findViewById(R.id.btn_login);
-        warning = (TextView) findViewById(R.id.warning);
-    }
 }
 

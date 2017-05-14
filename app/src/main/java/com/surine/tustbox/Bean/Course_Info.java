@@ -28,6 +28,15 @@ public class Course_Info extends DataSupport{
     private String note;  //备注
     private String homework;  //作业
     private int color;   //颜色
+    private int user;  //用户
+
+    public int getUser() {
+        return user;
+    }
+
+    public void setUser(int user) {
+        this.user = user;
+    }
 
     public int getColor() {
         return color;

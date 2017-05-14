@@ -15,4 +15,7 @@
           app:showAsAction="always"
           android:title="设置"
         />
+    <item android:id="@+id/other_user"
+          app:showAsAction="never"
+          android:title="多用户"/>
 </menu>

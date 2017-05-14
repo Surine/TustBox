@@ -4,7 +4,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="name">小天盒子 开发版2.0 @surine</string>
-    <string name="version">开发版 2.0.2</string>
+    <string name="version">小天盒子 2.0.2</string>
     <string name="about">关于登录</string>
     <string name="warning_text">注意</string>
     <string name="note">1.\t\t为了确保您的帐号安全，主要功能仅限使用校园网，
@@ -108,11 +108,12 @@
     <string name="qq_email">2234503567@qq.com</string>
     <string name="qq_email_mo">mailto:2234503567@qq.com</string>
     <string name="log">日志</string>
-    <string name="new_log">· 小天--2.0.2，每一个小需求都应被实现\n
+    <string name="new_log"> 小天--2.0.2，每一个小需求都应被实现\n
         · 新增： GP下载平台\n
-        · 新增： 课程推送（使用JPush SDK实现推送，后端使用JAVA进行简单处理，暂时没有加入课表后端数据库
-        所以提醒不了今天上什么呀！！！宝宝们！不过我会在不久的将来做更人性化的处理的，期待ing！）\n
-        · 优化：更轻巧的UI界面。
+        · 新增： 课表双用户(猜猜干嘛用的？)\n
+        · 新增： 上课提醒（后端太任性，指不定大半夜就发推送了，毕竟我刚学……）\n
+        · 优化：发现系统语言为非简体中文时无法实现initWeek()方法目标问题，临时补充English支持，正在努力想办法fix.\n
+        · 优化：UI界面和代码结构\n
     </string>
     <string name="hide">隐藏证件照</string>
     <string name="hide_summary">开启后将替换您的证件照</string>
@@ -124,5 +125,6 @@
     <string name="info_gp">该平台是公司根据校园正版化（GP）项目在我国高校中的具体使用需求自行研发的软件管理平台系统,
                 同时也是我国第一套针对校园正版化软件如何正确有效安全使用的解决方案。\n
                 本软件只是将TUST官网所列举的软件做了信息整合，提供给还不知道到有这个平台的同学，如果你需要更多的软件资源，可以去GP官网查看。此外，考虑到这些软件属于电脑软件，下载到手机上转起来也比较麻烦，而且挺占内存，所以直接以链接的方式分享！</string>
+    <string name="my_info">我的资料</string>
 
 </resources>

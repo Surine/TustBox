@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     tools:context="com.surine.tustbox.Activity.LoginActivity">
+
 
 
     <ImageView
@@ -15,7 +15,8 @@
         android:layout_height="184dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/tust"
+        android:src="@drawable/tust2"
+        android:transitionName="transitionImg"
         tools:ignore="MissingConstraints"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
@@ -32,7 +33,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/about"
-        android:textColor="@color/Tust_White"
+        android:textColor="@color/colorAccent"
         android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -41,15 +42,15 @@
     <Button
         android:id="@+id/btn_login"
         android:layout_width="0dp"
-        android:layout_height="42dp"
+        android:layout_height="44dp"
         android:layout_margin="30dp"
         android:background="@drawable/login_shape"
         android:text="登录"
         android:textColor="#fff"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         tools:ignore="MissingConstraints"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
@@ -67,8 +68,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -87,13 +88,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="8dp"
-            android:textColorHint="@color/Tust_White"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:hint="天津科技大学学号"
-            android:maxLines="1"
-            android:textColor="@color/Tust_White"
             android:inputType="text"
+            android:maxLines="1"
             app:layout_constraintBottom_toTopOf="@+id/button"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -106,8 +105,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -118,7 +117,7 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="0dp">
+        >
 
         <EditText
             android:id="@+id/pswd"
@@ -126,11 +125,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="7dp"
             android:layout_marginLeft="8dp"
-            android:textColorHint="@color/Tust_White"
             android:layout_marginRight="8dp"
             android:layout_marginTop="2dp"
             android:hint="教务登录密码(默认身份证6位)"
-            android:textColor="@color/Tust_White"
             android:inputType="textPassword"
             android:maxLines="1"
             app:layout_constraintBottom_toTopOf="@+id/button"
@@ -148,8 +145,9 @@
         android:layout_marginLeft="16dp"
         android:text="放假在家？"
         android:padding="5dp"
-        android:textColor="@color/Tust_White"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="16dp"/>
 
 </android.support.constraint.ConstraintLayout>

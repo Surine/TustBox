@@ -239,6 +239,7 @@ public class Box_info_Activty extends TustBaseActivity {
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
+            Toast.makeText(Box_info_Activty.this,"出了一些不可描述的错误",Toast.LENGTH_SHORT).show();
         }
         return score/credit_add;
     }
