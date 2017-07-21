@@ -9,19 +9,19 @@ import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.surine.tustbox.Bean.Course_Info;
 import com.surine.tustbox.Bean.Student_info;
+import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
+import com.surine.tustbox.Init.SystemUI;
 import com.surine.tustbox.Init.TustBaseActivity;
-import com.surine.tustbox.NetWork.JavaNetCookieJar;
 import com.surine.tustbox.R;
+import com.surine.tustbox.Util.HttpUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -32,7 +32,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -42,11 +41,11 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class LoginActivity extends TustBaseActivity {
-    private static final String TAG = "LoginActivity";
-    private static final int CONNECT_TIMEOUT = 10;
-    private static final String EXTRA = "other_user";
-    private EditText tust_number;
-    private EditText pswd;
+    private static final String TAG = "LoginActivity";  //tag for log
+    private static final int CONNECT_TIMEOUT = 10;   //network connect timeout(10s)
+    private static final String EXTRA = "other_user";   //more user intent flag
+    private EditText tust_number;    //input tust number
+    private EditText pswd;      //input tust password
     private TextView warning;
     private Button login_btn;
     String tust_number_string = null;
@@ -93,33 +92,28 @@ public class LoginActivity extends TustBaseActivity {
 
         Intent intent = getIntent();
         intent_string = intent.getStringExtra(EXTRA);
-        //full screen
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //initData
-        initData();
+
+        //hidden the  stautusbar
+        SystemUI.hide_statusbar(this);
+
+        //set up the database
+        Connector.getDatabase();
+
         //initview
         initView();
+
         //init the okhttp
-        initOkHttp();
+        okHttpClient = HttpUtil.initOkhttp(CONNECT_TIMEOUT);
+
         //set the listener
         set_listen();
     }
 
-    private void initData() {
-        //set up the database
-        Connector.getDatabase();
-    }
     private void initView() {
         tust_number = (EditText) findViewById(R.id.tust_number);
         pswd = (EditText) findViewById(R.id.pswd);
         login_btn = (Button) findViewById(R.id.btn_login);
         warning = (TextView) findViewById(R.id.warning);
-    }
-    private void initOkHttp() {
-        //init the okhttpclient and set the cookiejar for the data request
-        builder = new OkHttpClient.Builder().connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS);//设置连接超时时间;
-        okHttpClient = builder.cookieJar(new JavaNetCookieJar()).build();
     }
 
     private void set_listen() {
@@ -127,16 +121,22 @@ public class LoginActivity extends TustBaseActivity {
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //get input text
                 tust_number_string = tust_number.getText().toString();
                 pswd_string = pswd.getText().toString();
+
+                //check null
                 if (tust_number_string.equals("") || pswd_string.equals("")) {
                     Snackbar.make(login_btn, R.string.null_number_and_pswd, Snackbar.LENGTH_SHORT).show();
                 } else {
-
                     //login
-                    int status = login(tust_number_string, pswd_string);
-                    //set progress
-                    setDialog(getString(R.string.login), getString(R.string.login_info));
+                    try {
+                        //set progress
+                        setDialog(getString(R.string.login), getString(R.string.login_info));
+                        login(tust_number_string, pswd_string);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -151,27 +151,32 @@ public class LoginActivity extends TustBaseActivity {
             }
         });
     }
+
+
     //set dialog
     private void setDialog(String string, String s) {
-        //create the dialog
-        pg = new ProgressDialog(LoginActivity.this);
-        pg.setTitle(string);
-        pg.setMessage(s);
-        pg.setCancelable(false);
-        pg.show();
+        try {
+            //create the dialog
+            pg = new ProgressDialog(LoginActivity.this);
+            pg.setTitle(string);
+            pg.setMessage(s);
+            pg.setCancelable(false);
+            pg.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     //login
-    private int login(final String tust_number_string, final String pswd_string) {
+    private int login(final String tust_number_string, final String pswd_string) throws Exception {
         //create the formbody
         FormBody formBody = new FormBody.Builder()
-                .add(getString(R.string.id1), tust_number_string)
-                .add(getString(R.string.id2), pswd_string)
+                .add(FormData.login_id, tust_number_string)
+                .add(FormData.login_pswd, pswd_string)
                 .build();
-        //start the request
-        Request request = new Request.Builder().post(formBody).url(UrlData.login_post_url).build();
+
         //the callback of the request
         okHttpClient
-                .newCall(request).enqueue(new Callback() {
+                .newCall(HttpUtil.HttpConnect(UrlData.login_post_url,formBody)).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 //callback:failure
@@ -201,7 +206,14 @@ public class LoginActivity extends TustBaseActivity {
                         mess.what = 1;
                         myHandler.sendMessage(mess);
                     } else {
-                        login(tust_number_string, pswd_string);
+                        try {
+                            //dismiss
+                            pg.dismiss();
+                            pg.cancel();
+                            login(tust_number_string, pswd_string);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         times = times + 1;
                     }
                 } else {
@@ -221,13 +233,14 @@ public class LoginActivity extends TustBaseActivity {
     private void saveUserInfo(String tust_number_string, String pswd_string) {
         // encodeToString will return string value
         String enToStr = Base64.encodeToString(pswd_string.getBytes(), Base64.DEFAULT);
-        Log.i("Test", "encodeToString >>> " + enToStr);
         //save
         SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
         editor.putString("tust_number", tust_number_string);
         editor.putString("pswd", enToStr);
         editor.apply();
     }
+
+
     private void GetStudentInfo() {
         //the method is a way to get data
         //and we should send an url and a flag to it,so it can use the method（savedata） to save
@@ -278,7 +291,7 @@ public class LoginActivity extends TustBaseActivity {
             content2 = doc2.select("tr");
 
             for (int i = 22; i < content2.size(); i++) {
-                Log.d(TAG, i+"TR" + content2.get(i).text());
+
                 //set the value of user(int)
                 if(intent_string.equals(EXTRA)) {
                     user = 1;
@@ -296,10 +309,6 @@ public class LoginActivity extends TustBaseActivity {
                 if (!(content2.get(i).text().contains(getString(R.string.plan)))) {
                     SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
                     content_Text = content2.get(i).select("td");
-
-                    for(int a=0;a<content_Text.size();a++) {
-                        Log.d(TAG, i+"TR标签"+a+"TD标签" + content_Text.get(a).text());
-                    }
                     //load courese object
                     help_course = creat_course(
                             pref.getString("0", "null"),
@@ -325,15 +334,9 @@ public class LoginActivity extends TustBaseActivity {
                     );
 
                 } else {
-
                     //color
                     slec_color = colors[i % 15];
-
                     content_Text = content2.get(i).select("td");
-                    for(int a=0;a<content_Text.size();a++) {
-                        Log.d(TAG, i+"TR标签"+a+"TD标签" + content_Text.get(a).text());
-                    }
-
                     help_course = creat_course(
                             content_Text.get(0).text(),
                             content_Text.get(1).text(),
@@ -505,10 +508,11 @@ public class LoginActivity extends TustBaseActivity {
         }
     };
 
+
+
     private void GetHead() {
-        Request request = new Request.Builder().
-                url(UrlData.get_head).build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
+
+        okHttpClient.newCall(HttpUtil.HttpConnect(UrlData.get_head,null)).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Snackbar.make(login_btn, R.string.wrong, Snackbar.LENGTH_SHORT).show();

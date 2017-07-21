@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
+import android.view.WindowManager;
 
 /**
  * Created by surine on 2017/2/17.
@@ -24,6 +25,13 @@ public class SystemUI {
             activity.getWindow().setNavigationBarColor(Color.TRANSPARENT);
             activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+    }
+
+    //隐藏状态栏
+    public static void  hide_statusbar(Activity activity){
+        //full screen
+        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
 }

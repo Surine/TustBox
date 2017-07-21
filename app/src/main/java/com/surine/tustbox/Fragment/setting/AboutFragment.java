@@ -58,6 +58,7 @@ public class AboutFragment extends Fragment{
     TextView textView37;
     TextView textView38;
     TextView textView40;
+    TextView textView41;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -134,6 +135,14 @@ public class AboutFragment extends Fragment{
             @Override
             public void onClick(View view) {
                // Toast.makeText(getActivity(),"卖个萌！",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        textView41 = (TextView) view.findViewById(R.id.all_log);
+        textView41.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 Toast.makeText(getActivity(),"服务器处于维护阶段，公告功能将在不久后上线！",Toast.LENGTH_SHORT).show();
             }
         });
         return view;

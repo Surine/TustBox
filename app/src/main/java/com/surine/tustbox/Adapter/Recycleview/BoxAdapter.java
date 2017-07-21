@@ -3,6 +3,7 @@ package com.surine.tustbox.Adapter.Recycleview;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.surine.tustbox.Activity.Box_info_Activty;
 import com.surine.tustbox.Bean.Box;
 import com.surine.tustbox.R;
-import com.surine.tustbox.Activity.Box_info_Activty;
 
 import java.util.List;
 
@@ -57,10 +58,11 @@ public class BoxAdapter extends RecyclerView.Adapter<BoxAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Box box = mBoxes.get(position);
+        Log.d("LOG", "onBindViewHolder: "+box.getBox_name());
         holder.mTextView.setText(box.getBox_name());
         holder.mImageView.setImageResource(box.getImage_id());
         holder.info.setText(box.getInfo());
-        holder.background.setBackgroundColor(mContext.getResources().getColor(box.getColor_id()));
+        holder.mImageView2.setImageResource(box.getColor_id());
 
     }
     @Override
@@ -70,12 +72,14 @@ public class BoxAdapter extends RecyclerView.Adapter<BoxAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mImageView;
+        ImageView mImageView2;
         TextView mTextView;
         RelativeLayout background;
         TextView info;
         public ViewHolder(View itemView) {
             super(itemView);
             mImageView  = (ImageView) itemView.findViewById(R.id.box_image);
+            mImageView2  = (ImageView) itemView.findViewById(R.id.circleImageView2);
             mTextView = (TextView) itemView.findViewById(R.id.box_text);
             info = (TextView) itemView.findViewById(R.id.info);
             background = (RelativeLayout) itemView.findViewById(R.id.box_background);

@@ -59,6 +59,7 @@ public class Course_Fragment extends Fragment {
     TextView tex6;
     TextView tex7;
     ImageView mImageView;
+    ImageView backimageView;
     TextView today_text;
     ListView listview;
     int week_number_for_todays_course = 0;
@@ -119,8 +120,17 @@ public class Course_Fragment extends Fragment {
     private void showDialog() {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_view_today_class, null);
         listview = (ListView) view.findViewById(R.id.listview);
+        backimageView = (ImageView) view.findViewById(R.id.imageView3);
         today_text = (TextView) view.findViewById(R.id.today_text);
-        today_text.setText("今天·" + TimeUtil.GetWeek());
+
+        //TODO:在这里获取出生日期，来判断展示
+        if(false){
+            backimageView.setImageResource(R.drawable.birthday);
+            today_text.setText("生日快乐!");
+        }else{
+            today_text.setText("今天·" + TimeUtil.GetWeek());
+        }
+
         SimpleAdapter adapter = new SimpleAdapter(getActivity(), initListViewData(), R.layout.item_today,
                 new String[]{"background", "location", "name", "name_little", "time"},
                 new int[]{R.id.today_course_background, R.id.today_courese_location, R.id.today_course_name, R.id.today_course_name_little, R.id.today_course_time});

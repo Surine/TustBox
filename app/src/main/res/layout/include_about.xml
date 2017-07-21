@@ -115,7 +115,7 @@
         android:layout_height="60dp"
         android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/textView33"
-        android:layout_below="@+id/textView33"
+        android:layout_below="@+id/all_log"
         android:layout_marginTop="5dp"
         android:background="@drawable/ripple"
         android:fontFamily="casual"
@@ -157,6 +157,20 @@
         android:layout_alignStart="@+id/textView29"
         android:layout_alignEnd="@+id/textView29"
         android:layout_alignTop="@+id/imageView5"/>
+    <TextView
+        android:id="@+id/all_log"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView33"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/ripple"
+        android:fontFamily="casual"
+        android:gravity="center_vertical"
+        android:paddingStart="77dp"
+        android:text="@string/all_log"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

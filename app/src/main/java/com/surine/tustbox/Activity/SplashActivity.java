@@ -38,8 +38,10 @@ public class SplashActivity extends TustBaseActivity {
     //intent: start intent based on login status
     private void Intent() {
         SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+
+        //start login
         if (!pref.getBoolean("is_login", false)) {
-            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+            //intent
             Intent intent = new Intent(this,LoginActivity.class);
             intent.putExtra("other_user","no");
             if (android.os.Build.VERSION.SDK_INT > 21) {
@@ -47,6 +49,7 @@ public class SplashActivity extends TustBaseActivity {
             } else {
                 startActivity(intent);
             }
+            //start mainActivity
         } else {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
         }

@@ -7,10 +7,10 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/back_01"
+        android:scaleType="fitXY"
+        android:background="@drawable/back_01"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"/>
     <TextView

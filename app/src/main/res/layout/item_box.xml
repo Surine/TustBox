@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/box_background"
     android:layout_margin="1dp"
-    android:background="@color/colorPrimary"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@color/colorPrimary"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/circleImageView2"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/box_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
         <TextView
             android:id="@+id/box_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
             android:text="TUST"
-            android:textColor="@color/Tust_White"
-            android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textSize="15sp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:layout_below="@+id/box_image"
+            android:layout_marginTop="86dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"/>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/box_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/box_text"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="28dp"
-            android:src="@mipmap/ic_launcher"/>
+
         <TextView
             android:id="@+id/info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/box_image"
             android:text="INFO"
+            android:visibility="gone"
             android:textSize="10sp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"

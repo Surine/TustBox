@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.surine.tustbox.Adapter.ViewPager.SimpleFragmentPagerAdapter;
 import com.surine.tustbox.Bean.Score_Info;
+import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.NetWork.JavaNetCookieJar;
 import com.surine.tustbox.R;
@@ -184,8 +185,8 @@ public class Score_Fragment extends Fragment{
         }
 
         FormBody formBody = new FormBody.Builder()
-                .add(getString(R.string.id1), pref.getString("tust_number",null))
-                .add(getString(R.string.id2), id_card_pswd)
+                .add(FormData.login_id, pref.getString("tust_number",null))
+                .add(FormData.login_pswd, id_card_pswd)
                 .build();
         Request request = new Request.Builder().post(formBody).url(UrlData.login_post_url).build();
         okHttpClient.newCall(request).enqueue(new Callback() {
@@ -240,17 +241,21 @@ public class Score_Fragment extends Fragment{
     private void Jsoup_the_Html(String str) {
         Document doc = Jsoup.parse(str);
         Elements content2 = doc.select("tr");
-        for (int i = 7; i < content2.size(); i++) {
-            content_Text = content2.get(i).select("td");
-            Score_Info score_info = new Score_Info();
-            score_info.setType("THIS");
-            score_info.setName(content_Text.get(2).text());
-            score_info.setEnglish_name(content_Text.get(3).text());
-            score_info.setScore(content_Text.get(9).text());
-            score_info.setCredit(content_Text.get(4).text());
-            score_info.setRanking(content_Text.get(10).text());
-            score_info.setAve(content_Text.get(8).text());
-            score_info.save();
+        try {
+            for (int i = 7; i < content2.size(); i++) {
+                content_Text = content2.get(i).select("td");
+                Score_Info score_info = new Score_Info();
+                score_info.setType("THIS");
+                score_info.setName(content_Text.get(2).text());
+                score_info.setEnglish_name(content_Text.get(3).text());
+                score_info.setScore(content_Text.get(9).text());
+                score_info.setCredit(content_Text.get(4).text());
+                score_info.setRanking(content_Text.get(10).text());
+                score_info.setAve(content_Text.get(8).text());
+                score_info.save();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         Log.d(ARG_, "Jsoup_the_Html: 解析成功");
         getAllScore();
