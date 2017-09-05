@@ -24,7 +24,7 @@ import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.model.TakePhotoOptions;
-import com.surine.tustbox.Activity.SplashActivity;
+import com.surine.tustbox.UI.SplashActivity;
 import com.surine.tustbox.R;
 import com.surine.tustbox.Util.ClearCacheUtil;
 

@@ -10,6 +10,7 @@ import android.widget.RemoteViewsService;
 
 import com.surine.tustbox.Bean.Course_Info;
 import com.surine.tustbox.R;
+import com.surine.tustbox.Util.PatternUtil;
 
 import org.litepal.crud.DataSupport;
 
@@ -90,7 +91,7 @@ public class WidgetService extends RemoteViewsService {
             mCourse_infos = DataSupport.findAll(Course_Info.class);
             //数据筛选
             SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
-            choose_week =  pref.getInt("choice_week",0)+1;
+            choose_week =  pref.getInt("choice_week",0);
             for(int j = 0;j<30;j++){
                 mLastList.add(null);
             }
@@ -114,9 +115,10 @@ public class WidgetService extends RemoteViewsService {
                 if(mLastList.get(e)!=null) {
                     if (mLastList.get(e).getWeek().contains("-")) {
 
-                        help_string = mLastList.get(e).getWeek().substring(2,mLastList.get(e).getWeek().length()-2);
-                        String[] sourceStrArray = help_string.split("-");
-                        for(int i= Integer.parseInt(sourceStrArray[0]);i<=Integer.parseInt(sourceStrArray[1]);i++){
+                        //正则解析，提取数字
+                        List<String> week_range = PatternUtil.getNumber(mLastList.get(e).getWeek());
+
+                        for(int i= Integer.parseInt(week_range.get(0));i<=Integer.parseInt(week_range.get(1));i++){
                             number_b+=(i+",");
                         }
                         if(!(number_b.contains(","+choose_week+","))){

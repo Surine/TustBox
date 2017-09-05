@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.surine.tustbox.Activity.MainActivity">
+    tools:context="com.surine.tustbox.UI.MainActivity">
 
 
 

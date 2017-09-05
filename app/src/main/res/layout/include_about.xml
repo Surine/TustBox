@@ -236,13 +236,26 @@
         android:gravity="center_vertical"
         android:paddingStart="77dp"
         android:text="@string/help"/>
+    <TextView
+        android:id="@+id/join_celitea"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/textView38"
+        android:layout_below="@+id/textView38"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/ripple"
+        android:fontFamily="casual"
+        android:gravity="center_vertical"
+        android:paddingStart="77dp"
+        android:text="@string/join"/>
 
    <View
        android:layout_width="match_parent"
        android:layout_height="1dp"
        android:layout_marginStart="30dp"
        android:layout_marginEnd="30dp"
-       android:layout_below="@id/textView38"
+       android:layout_below="@id/join_celitea"
        android:background="@color/color3"
        android:layout_marginTop="20dp"
        android:id="@+id/view3"/>

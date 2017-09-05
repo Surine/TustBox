@@ -18,10 +18,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.surine.tustbox.Activity.SettingActivity;
 import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.NetWork.JavaNetCookieJar;
 import com.surine.tustbox.R;
+import com.surine.tustbox.UI.SettingActivity;
+import com.surine.tustbox.Util.HttpUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -33,7 +34,6 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
@@ -59,6 +59,7 @@ public class AboutFragment extends Fragment{
     TextView textView38;
     TextView textView40;
     TextView textView41;
+    TextView textView42;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -145,6 +146,16 @@ public class AboutFragment extends Fragment{
                  Toast.makeText(getActivity(),"服务器处于维护阶段，公告功能将在不久后上线！",Toast.LENGTH_SHORT).show();
             }
         });
+        textView42 = (TextView) view.findViewById(R.id.join_celitea);
+        textView42.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = UrlData.celitea_url;
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent .setData(Uri.parse(url));
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -155,7 +166,7 @@ public class AboutFragment extends Fragment{
     }
 
     private void cp_qq() {
-        PackageManager packageManager;
+        PackageManager packageManager = null;
         try {
             ClipboardManager cmb = (ClipboardManager) getActivity().getSystemService(CLIPBOARD_SERVICE);
             cmb.setText(getString(R.string.qq_number));
@@ -166,13 +177,16 @@ public class AboutFragment extends Fragment{
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
+            Intent intent=new Intent();
+            intent = packageManager.getLaunchIntentForPackage("com.tencent.tim");
+            startActivity(intent);
         }
     }
 
     private void share() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.welcome));
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.welcome)+UrlData.download_url);
         intent.setType("text/plain");
         //设置分享列表的标题，并且每次都显示分享列表  
         startActivity(Intent.createChooser(intent, getString(R.string.more_share)));
@@ -206,9 +220,7 @@ public class AboutFragment extends Fragment{
     }
 
     private void StartCheck() {
-        Request request = new Request.Builder().
-                url(UrlData.update_url).build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
+        HttpUtil.get(UrlData.update_url).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 //failure

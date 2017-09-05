@@ -5,15 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.surine.tustbox.Activity.SplashActivity">
+    tools:context="com.surine.tustbox.UI.SplashActivity">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="290dp"
-        android:layout_height="290dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/tust2"
+        android:src="@drawable/bear"
         android:transitionName="transitionImg"
         tools:ignore="MissingConstraints"
         app:layout_constraintTop_toTopOf="parent"

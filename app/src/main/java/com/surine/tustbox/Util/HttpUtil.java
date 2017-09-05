@@ -4,6 +4,7 @@ import com.surine.tustbox.NetWork.JavaNetCookieJar;
 
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Call;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -36,5 +37,19 @@ public class HttpUtil {
             request = new Request.Builder().post(formbody).url(url).build();
         }
         return request;
+    }
+
+    //get
+    public static Call get(String url){
+        OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS);//设置连接超时时间;
+        OkHttpClient okHttpClient = builder.cookieJar(new JavaNetCookieJar()).build();
+        return okHttpClient.newCall(new Request.Builder().url(url).build());
+    }
+
+    //post
+    public static Call post(String url,FormBody formBody){
+        OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS);//设置连接超时时间;
+        OkHttpClient okHttpClient = builder.cookieJar(new JavaNetCookieJar()).build();
+        return okHttpClient.newCall(new Request.Builder().post(formBody).url(url).build());
     }
 }

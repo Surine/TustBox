@@ -23,10 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.surine.tustbox.Activity.ToolbarActivity;
 import com.surine.tustbox.Adapter.Recycleview.Course_Table_Adapter;
 import com.surine.tustbox.Bean.Course_Info;
 import com.surine.tustbox.R;
+import com.surine.tustbox.UI.ToolbarActivity;
+import com.surine.tustbox.Util.PatternUtil;
+import com.surine.tustbox.Util.SharedPreferencesUtil;
 import com.surine.tustbox.Util.TimeUtil;
 
 import org.litepal.crud.DataSupport;
@@ -101,6 +103,7 @@ public class Course_Fragment extends Fragment {
         return v;
     }
 
+
     //init the dialog
     private void initDialog() {
         SharedPreferences pref = getActivity().getSharedPreferences("data", MODE_PRIVATE);
@@ -153,10 +156,8 @@ public class Course_Fragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //save "it was shown today"
-                SharedPreferences.Editor editor = getActivity().getSharedPreferences("data", MODE_PRIVATE).edit();
-                editor.putBoolean("today_course_is_show", true);
-                editor.putInt("day_", week_number_for_todays_course);
-                editor.apply();
+                SharedPreferencesUtil.Save(getActivity(),"today_course_is_show", true);
+                SharedPreferencesUtil.Save(getActivity(),"day_", week_number_for_todays_course);
             }
         });
         builder.setCancelable(false);
@@ -234,23 +235,24 @@ public class Course_Fragment extends Fragment {
         if(other_user_string.equals("1")){
             user = 0;
         }else{
-            SharedPreferences pref = getActivity().getSharedPreferences("data",MODE_PRIVATE);
-            SharedPreferences.Editor editor = getActivity().getSharedPreferences("data", MODE_PRIVATE).edit();
-            if(pref.getInt("user_flag",0)==0){
+            if(SharedPreferencesUtil.Read(getActivity(),"user_flag",0)==0){
                 user = 0;
-                editor.putInt("user_flag",1);
+                SharedPreferencesUtil.Save(getActivity(),"user_flag",user);
             }else{
                 user = 1;
-                editor.putInt("user_flag",0);
+                SharedPreferencesUtil.Save(getActivity(),"user_flag",user);
             }
-            editor.apply();
         }
         load_image();
         initWeek();  //init the week
         mCourseList = DataSupport.findAll(Course_Info.class);
-        SharedPreferences pref = getActivity().getSharedPreferences("data",MODE_PRIVATE);
-        choose_week =  pref.getInt("choice_week",0)+1;
+        choose_week =  SharedPreferencesUtil.Read(getActivity(),"choice_week",0);
+        if(choose_week == 0){
+            Toast.makeText(getActivity(),"请检查网络链接（可访问互联网而非校园网）",Toast.LENGTH_SHORT).show();
+        }
         choose_week = SetWeek(choose_week);
+
+        //表格为6*7
         for(int j = 0;j<42;j++){
             mLastList.add(null);
         }
@@ -282,9 +284,10 @@ public class Course_Fragment extends Fragment {
             if(mLastList.get(e)!=null) {
                 if (mLastList.get(e).getWeek().contains("-")) {
 
-                   help_string = mLastList.get(e).getWeek().substring(2,mLastList.get(e).getWeek().length()-2);
-                    String[] sourceStrArray = help_string.split("-");
-                    for(int i= Integer.parseInt(sourceStrArray[0]);i<=Integer.parseInt(sourceStrArray[1]);i++){
+                    //正则解析，提取数字
+                    List<String> week_range = PatternUtil.getNumber(mLastList.get(e).getWeek());
+
+                    for(int i= Integer.parseInt(week_range.get(0));i<=Integer.parseInt(week_range.get(1));i++){
                        number_b+=(i+",");
                     }
                     if(!(number_b.contains(","+choose_week+","))){
@@ -302,8 +305,7 @@ public class Course_Fragment extends Fragment {
     }
 
     private void load_image() {
-        SharedPreferences pref = getActivity().getSharedPreferences("data",MODE_PRIVATE);
-        String image_path = pref.getString("my_picture_path",null);
+        String image_path = SharedPreferencesUtil.Read(getActivity(),"my_picture_path",null);
         if(image_path != null){
             Glide.with(this).load(image_path).into(mImageView);
         }
@@ -311,21 +313,16 @@ public class Course_Fragment extends Fragment {
 
     //Automatic display week
     private int SetWeek(int choose_week) {
-        SharedPreferences pref = getActivity().getSharedPreferences("data",MODE_PRIVATE);
-        Boolean change = pref.getBoolean("is_change_week",false);
+        Boolean change = SharedPreferencesUtil.Read(getActivity(),"is_change_week",false);
         if(TimeUtil.GetWeek().equals("周一")){
            if(!change) {
-               SharedPreferences.Editor editor = getActivity().getSharedPreferences("data", MODE_PRIVATE).edit();
-               editor.putBoolean("is_change_week", true);
-               editor.putInt("choice_week", choose_week);
-               editor.apply();
-               return choose_week + 1;
+               SharedPreferencesUtil.Save(getActivity(),"is_change_week", true);
+               SharedPreferencesUtil.Save(getActivity(),"choice_week", choose_week);
+               return choose_week;
            }
        }
        else if(TimeUtil.GetWeek().equals("周日")){
-           SharedPreferences.Editor editor = getActivity().getSharedPreferences("data", MODE_PRIVATE).edit();
-           editor.putBoolean("is_change_week", false);
-           editor.apply();
+           SharedPreferencesUtil.Save(getActivity(),"is_change_week", false);
        }
        return choose_week;
     }

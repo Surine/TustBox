@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.surine.tustbox.Activity.Box_info_Activty;
+import com.surine.tustbox.UI.Box_info_Activty;
 import com.surine.tustbox.Bean.Box;
 import com.surine.tustbox.R;
 

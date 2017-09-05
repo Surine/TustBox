@@ -7,7 +7,7 @@ import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 import android.widget.Toast;
 
-import com.surine.tustbox.Activity.SettingActivity;
+import com.surine.tustbox.UI.SettingActivity;
 import com.surine.tustbox.Eventbus.SimpleEvent;
 import com.surine.tustbox.R;
 import com.surine.tustbox.Util.ClearCacheUtil;
