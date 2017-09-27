@@ -4,7 +4,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="name">小天盒子 开发版2.0 @surine</string>
-    <string name="version">小天盒子 2.0.4</string>
+    <string name="version">小天盒子 2.0.6-Beta</string>
     <string name="about">关于登录</string>
     <string name="warning_text">注意</string>
     <string name="note">1.\t\t为了确保您的帐号安全，主要功能仅限使用校园网，
@@ -15,8 +15,7 @@
         遇到此情况时请重新点击登录按钮将获取准确数据，不影响其他功能使用。\n
         3.\t\tAPP是采用模拟登陆方式获得数据，已考虑数据安全性处理，在一定程度
         上保证了数据的安全性，本APP不会以各种方式获取用户的隐私数据。\n
-        4.\t\t登录成功后显示的课程可能不准确，请切换周才能显示正常数据。\n
-        5.\t\t默认登录密码是身份证后六位，如果身份证包含X，则X大写
+        4.\t\t默认登录密码是身份证后六位，如果身份证包含X，则X大写
     </string>
     <string name="ok">确定</string>
     <string name="wrong">帐号或者密码错误！</string>
@@ -45,7 +44,7 @@
     <string name="setting_back_title">课表背景图片</string>
     <string name="about_app">关于</string>
     <string name="about_tustbox">关于小天盒子</string>
-    <string name="setting">设置</string>
+    <string name="setting">系统设置</string>
     <string name="score">成绩</string>
     <string name="login_success">登录成功</string>
     <string name="gpa">GPA计算</string>
@@ -53,8 +52,8 @@
     <string name="share_my_score">给妈妈发成绩单！</string>
     <string name="loading">正在加载数据，请稍后……</string>
     <string name="library">图书馆</string>
-    <string name="exit">退出</string>
-    <string name="exit_info">退出账号将清除本用户全部数据！</string>
+    <string name="exit">注销账号</string>
+    <string name="exit_info">注销账号将清除本用户全部数据！</string>
     <string name="cancel">取消</string>
     <string name="choose_week">选择当前周</string>
     <string name="choose_">选择了</string>
@@ -94,7 +93,7 @@
     <string name="app">一个优秀的APP都是要有底线的！</string>
     <string name="osl">· 开源许可</string>
     <string name="osl2">开源许可</string>
-    <string name="help">· 赞助开发者</string>
+    <string name="help">· 给开发者丢辣条</string>
     <string name="surine_is_me">新世纪的Android爱好者，xiaxiaxia~</string>
     <string name="qq_number">635622188</string>
     <string name="qq_is_copy">QQ已经复制到剪贴板</string>
@@ -106,23 +105,18 @@
     <string name="qq_email">2234503567@qq.com</string>
     <string name="qq_email_mo">mailto:2234503567@qq.com</string>
     <string name="log">日志</string>
-    <string name="new_log"> 小天[V2.0.4.0004]，每一个小需求都应被实现\n
-        ·新学期准备：课表复活，修复了一个因教务处程序猿哥哥的输入小错误导致的八阿哥，
-        在新的版本中尽可能的使用正则表达式来提高稳定性。
-        \n
-        ·优化盒子UI，代码重构\n
-        ·增加系统稳定性\n
-        ·修复课程卡片随view大小变化而产生重叠或间隙的bug\n
-        ·修复部分机型第一次登录会出现Fc的问题，如果您的设备仍有此问题，可以尝试再次打开登录\n
-        ·暂时删除极光推送服务，后台正在处理。\n
-        ·增加自动更新周功能\n
-        ·修复第一次登录验证身份不对的问题。\n
+    <string name="new_log"> 小天[V2.0.6.20170927]，每一个小需求都应被实现\n
+         · 课程表增加日视图，每天给你的最清晰。\n
+         · 主题色可以随着背景图的改变而改变，拒绝纯蓝的单调。\n
+         · 课程背景修改为浅色系，有木有充满活力?\n
+         · 课程表与节次联动[逼死强迫症系列得到了修复]\n
+         · 部分代码重构，提升系统稳定性\n
     </string>
     <string name="hide">隐藏证件照</string>
     <string name="hide_summary">开启后将替换您的证件照</string>
     <string name="safe">安全</string>
-    <string name="pswd">信息加密</string>
-    <string name="pswd_summary">您所填写所有表单信息或者隐私数据都保存在本地 ，并使用Base64进行加密，在Root条件下也可以保证相对安全，但由于学校教务属于明文登录系统 请在使用软件时保证网络环境安全（如网络嗅探威胁等）</string>
+    <string name="pswd">信息加密策略</string>
+    <string name="pswd_summary">Base64</string>
     <string name="nothing">什么都木有啊！！</string>
     <string name="about_gp">关于GP</string>
     <string name="info_gp">该平台是公司根据校园正版化（GP）项目在我国高校中的具体使用需求自行研发的软件管理平台系统,
@@ -130,25 +124,24 @@
                 本软件只是将TUST官网所列举的软件做了信息整合，提供给还不知道到有这个平台的同学，如果你需要更多的软件资源，可以去GP官网查看。此外，考虑到这些软件属于电脑软件，下载到手机上转起来也比较麻烦，而且挺占内存，所以直接以链接的方式分享！</string>
     <string name="my_info">我的资料</string>
     <string name="all_log">· 全部公告</string>
-    <string name="join">· 加入我们</string>
+    <string name="join">· 加入我们 [计算机精英协会]</string>
+    <string name="network_introduce">如果你和我一样不喜欢每次都输入账号密码登录登录校园网的话，就试试一键登录吧！
+        小天会将您的密码加密储存在本地，并且不会以任何方式发送出去，小伙伴们就放心使用吧！不过小伙伴们也要谨慎保管好自己的密码哦！
+        另外，去你的桌面上找找会出现一个一键登录校园网的快捷方式，以后就不用进来点我头上的按钮啦！
+    </string>
+    <string name="info_trans">Ubuntu16.04/Apache2.0/Thinkphp/MD5</string>
+    <string name="info_trans_title">后台及传输加密策略</string>
+    <string name="change_week_in_main_page">切换周</string>
+    <string name="Exit">退出登录</string>
+    <string name="More_User">多用户</string>
+    <string name="Course_week_toolbar_title">第%1$d周</string>
+    <string name="null_input">存在空输入</string>
+    <string name="try_again">重试</string>
+    <string name="is_log_network">正在登录校园网……</string>
+    <string name="get_data_use_fail">获取流量使用详情失败</string>
+    <string name="school">校园</string>
+    <string name="title_activity_today_card">TodayCardActivity</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
 
-
-<!--小天日志
-
-小天2.0.3，每一个小需求都应被实现\n
-        ·新学期准备：课表复活，准备加入分享课表功能\n
-        ·优化盒子UI，代码重构\n
-        ·增加系统稳定性\n
-        ·修复课程卡片随view大小变化而产生重叠或间隙的bug
-        ·修复第一次登录会出现Fc的问题
-
-
-小天2.0.2，每一个小需求都应被实现\n
-        · 新增： GP下载平台\n
-        · 新增： 课表双用户(猜猜干嘛用的？)\n
-        · 新增： 上课提醒（后端太任性，指不定大半夜就发推送了，毕竟我刚学……）\n
-        · 优化：发现系统语言为非简体中文时无法实现initWeek()方法目标问题，临时补充English支持，正在努力想办法fix.\n
-        · 优化：UI界面和代码结构\n
--->

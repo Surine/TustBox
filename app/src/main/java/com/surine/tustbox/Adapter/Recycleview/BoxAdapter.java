@@ -12,9 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.surine.tustbox.UI.Box_info_Activty;
 import com.surine.tustbox.Bean.Box;
 import com.surine.tustbox.R;
+import com.surine.tustbox.UI.Box_info_Activty;
+import com.surine.tustbox.UI.NetWorkActivity;
 
 import java.util.List;
 
@@ -44,11 +45,12 @@ public class BoxAdapter extends RecyclerView.Adapter<BoxAdapter.ViewHolder> {
                     //score
                     mContext.startActivity(new Intent(mContext, Box_info_Activty.class).putExtra("item_box",0));
                 }else if(pos == 1){
-                    Toast.makeText(mContext,"没做，嗯，占个坑",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext,"图书管理系统维护中……",Toast.LENGTH_SHORT).show();
                 }else if(pos == 2){
                     mContext.startActivity(new Intent(mContext, Box_info_Activty.class).putExtra("item_box",2));
                 }else if(pos == 3){
-                    mContext.startActivity(new Intent(mContext, Box_info_Activty.class).putExtra("item_box",3));
+                    //打开网络界面
+                    mContext.startActivity(new Intent(mContext, NetWorkActivity.class));
                 }
             }
         });

@@ -3,19 +3,10 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
    <item android:id="@+id/week"
          app:showAsAction="always"
-         android:title="切换周"/>
+         android:title="@string/change_week_in_main_page"/>
 
-    <item android:id="@+id/exit"
-          android:icon="@drawable/ic_action_exit"
-          app:showAsAction="always"
-          android:title="退出登录"
-        />
-    <item android:id="@+id/setting"
-          android:icon="@drawable/ic_action_setting"
-          app:showAsAction="always"
-          android:title="设置"
-        />
+
     <item android:id="@+id/other_user"
           app:showAsAction="never"
-          android:title="多用户"/>
+          android:title="@string/More_User"/>
 </menu>

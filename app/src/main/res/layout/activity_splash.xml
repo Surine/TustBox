@@ -13,7 +13,7 @@
         android:layout_height="250dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/bear"
+        android:src="@drawable/tust2"
         android:transitionName="transitionImg"
         tools:ignore="MissingConstraints"
         app:layout_constraintTop_toTopOf="parent"

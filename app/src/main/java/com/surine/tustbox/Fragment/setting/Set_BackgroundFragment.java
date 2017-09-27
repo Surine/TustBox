@@ -1,7 +1,6 @@
 package com.surine.tustbox.Fragment.setting;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,9 +23,10 @@ import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.model.TakePhotoOptions;
-import com.surine.tustbox.UI.SplashActivity;
+import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
 import com.surine.tustbox.Util.ClearCacheUtil;
+import com.surine.tustbox.Util.SharedPreferencesUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -87,16 +87,14 @@ public class Set_BackgroundFragment extends TakePhotoFragment {
             public void onClick(View view) {
                 String cachePath2 =  getActivity().getCacheDir().getPath();
                 ClearCacheUtil.delAllFile(cachePath2,getActivity());
+                SharedPreferencesUtil.Save(getActivity(), "TOOLBAR_C", R.color.colorPrimary);
                 restartMethod();
             }
         });
     }
 
     private void restartMethod() {
-        Intent intent = new Intent(getActivity(), SplashActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        android.os.Process.killProcess(android.os.Process.myPid());
-        getActivity().startActivity(intent);
+        TustBaseActivity.KillAPP();
     }
 
     private void configTakePhotoOption(TakePhoto takePhoto){
@@ -110,7 +108,7 @@ public class Set_BackgroundFragment extends TakePhotoFragment {
                 .getSystemService(Context.WINDOW_SERVICE);
         int width = wm.getDefaultDisplay().getWidth();
         int height = wm.getDefaultDisplay().getHeight()-140;
-        int maxSize = 102400;
+        int maxSize = 204800;
         CompressConfig config=new CompressConfig.Builder()
                 .setMaxSize(maxSize)
                 .setMaxPixel(width>=height? width:height)

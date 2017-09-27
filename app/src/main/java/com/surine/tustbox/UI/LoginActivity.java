@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +20,7 @@ import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.Init.SystemUI;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
+import com.surine.tustbox.Util.EncryptionUtil;
 import com.surine.tustbox.Util.HttpUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
 
@@ -239,7 +239,7 @@ public class LoginActivity extends TustBaseActivity {
     //save user information
     private void saveUserInfo(String tust_number_string, String pswd_string) {
         // encodeToString will return string value
-        String enToStr = Base64.encodeToString(pswd_string.getBytes(), Base64.DEFAULT);
+        String enToStr = EncryptionUtil.base64_en(pswd_string);
 
         SharedPreferencesUtil.Save(LoginActivity.this,"tust_number", tust_number_string);
         SharedPreferencesUtil.Save(LoginActivity.this,"pswd", enToStr);
@@ -275,6 +275,8 @@ public class LoginActivity extends TustBaseActivity {
                     SaveStudentInfo(this.content.get(37).text(), this.content.get(38).text());
                     SaveStudentInfo(this.content.get(41).text(), this.content.get(42).text());
                     SaveStudentInfo(this.content.get(45).text(), this.content.get(46).text());
+                    //save the birthday
+                    SharedPreferencesUtil.Save(LoginActivity.this,"BIRTHDAY",this.content.get(46).text());
                     SaveStudentInfo(this.content.get(47).text(), this.content.get(48).text());
                     SaveStudentInfo(this.content.get(49).text(), this.content.get(50).text());
                     SaveStudentInfo(this.content.get(67).text(), this.content.get(68).text());

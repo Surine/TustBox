@@ -9,7 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +21,8 @@ import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.NetWork.JavaNetCookieJar;
 import com.surine.tustbox.R;
+import com.surine.tustbox.Util.EncryptionUtil;
+import com.surine.tustbox.Util.SharedPreferencesUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -171,21 +172,16 @@ public class Score_Fragment extends Fragment{
     }
 
     private void login() {
-        SharedPreferences pref = getActivity().getSharedPreferences("data",MODE_PRIVATE);
         try {
-            String base64 =  pref.getString("pswd",null);
-
             // 对base64加密后的数据进行解密
-            Log.i("Test", "decode >>>" + new String(Base64.decode(base64.getBytes(), Base64.DEFAULT)));
-            id_card_pswd =  new String
-                    (Base64.decode(base64.getBytes(), Base64.DEFAULT));
+            id_card_pswd = EncryptionUtil.base64_de(SharedPreferencesUtil.Read(getActivity(),"pswd",""));
         } catch (Exception e) {
             Toast.makeText(getActivity(), "给密码解密时产生错误!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
         FormBody formBody = new FormBody.Builder()
-                .add(FormData.login_id, pref.getString("tust_number",null))
+                .add(FormData.login_id, SharedPreferencesUtil.Read(getActivity(),"tust_number",""))
                 .add(FormData.login_pswd, id_card_pswd)
                 .build();
         Request request = new Request.Builder().post(formBody).url(UrlData.login_post_url).build();

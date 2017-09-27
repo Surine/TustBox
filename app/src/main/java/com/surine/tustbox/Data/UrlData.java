@@ -31,7 +31,7 @@ public class UrlData {
     public static String gp_download = "http://tust.gp.tust.edu.cn/download.html";
     public static String gp_download_short = "http://tust.gp.tust.edu.cn/";
     //update
-    public static String update_url = "http://surine.cn/update/update_log.html";
+    public static String update_url = "http://surine.cn/TustBox/index.php/Home/AppManager/update";
     //download
     public static String download_url = "http://surine.cn/TustBox/index.php/Home/AppManager/download";
     //github
@@ -42,5 +42,16 @@ public class UrlData {
     public static String notice_url ="file:///android_asset/Html/notice.html";
     //get server week
     public static String getServerWeek ="http://surine.cn/TustBoxServer/Course/GetWeek.php";
-    public static String celitea_url ="http://surine.cn:8889";
+    public static String celitea_url ="http://celitea.cn";
+    //login
+    public static String login_server_url ="http://surine.cn/TustBox/index.php/Home/Login/login";
+    //get today info
+    public static String get_today_url ="http://surine.cn/TustBox/index.php/Home/TodayCourse/getTodayInfo";
+
+    //schoolnetwork url
+    public static final String net_post_url = "http://59.67.0.245/a30.htm";
+    //校园网登录重定向
+    public static final String net_get_url = "http://59.67.0.245";
+    //网费充值
+    public static final String charge_page = "http://59.67.5.142/WebPay/toRecharge";
 }

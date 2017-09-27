@@ -155,8 +155,8 @@
         android:id="@+id/textView34"
         android:layout_above="@+id/view2"
         android:layout_alignStart="@+id/textView29"
-        android:layout_alignEnd="@+id/textView29"
-        android:layout_alignTop="@+id/imageView5"/>
+        android:layout_alignTop="@+id/imageView5"
+        android:layout_alignParentEnd="true"/>
     <TextView
         android:id="@+id/all_log"
         android:layout_width="wrap_content"

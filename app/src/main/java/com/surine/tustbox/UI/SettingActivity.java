@@ -3,6 +3,7 @@ package com.surine.tustbox.UI;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import com.surine.tustbox.Fragment.setting.Set_BackgroundFragment;
 import com.surine.tustbox.Fragment.setting.SettingFragment;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
+import com.surine.tustbox.Util.SharedPreferencesUtil;
 
 /**
  * Created by surine on 2017/4/8.
@@ -51,7 +53,9 @@ public class SettingActivity extends TustBaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         setTitle(getString(R.string.setting));
-
+        //设置toolbar颜色
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Integer.parseInt
+                (String.valueOf(SharedPreferencesUtil.Read(this,"TOOLBAR_C", R.color.colorPrimary)))));
         //preventing repeated loading (fragment)
         if (savedInstanceState == null) {
            Intent intent = getIntent();

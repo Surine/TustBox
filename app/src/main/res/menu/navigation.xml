@@ -4,16 +4,23 @@
 
     <item
         android:id="@+id/navigation_home"
+        android:title="@string/title_course"
         android:icon="@drawable/ic_developer_board_black_24dp"
        />
 
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_next_week_black_24dp"
+        android:title="@string/box"
         />
-
+    <item
+        android:id="@+id/navigation_school"
+        android:title="@string/school"
+        android:icon="@drawable/ic_style_black_24dp"
+        />
     <item
         android:id="@+id/navigation_notifications"
+        android:title="@string/me"
         android:icon="@drawable/ic_account_circle_black_24dp"
        />
 

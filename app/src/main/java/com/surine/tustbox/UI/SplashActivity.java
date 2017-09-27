@@ -43,13 +43,16 @@ public class SplashActivity extends TustBaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 //get the server week
                 getServerWeek();
             }
-        }, 300);
+        }, 20);
 
-        //TODO:我们期望在这里，请求服务器获取当前的周，然后将数据保存在本地
+
     }
+
+
 
     //intent: start intent based on login status
     private void Intent() {

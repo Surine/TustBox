@@ -50,7 +50,7 @@ public class WidgetProvider extends AppWidgetProvider {
         remoteView.setRemoteAdapter(R.id.gridview, serviceIntent);
         remoteView.setOnClickPendingIntent(R.id.bt_refresh, getPendingIntent(context));
         SharedPreferences pref = context.getSharedPreferences("data",MODE_PRIVATE);
-        int choose_week =  pref.getInt("choice_week",0)+1;
+        int choose_week =  pref.getInt("choice_week",0);
         remoteView.setTextViewText(R.id.widget_week, "第"+choose_week+"周");
 
         //更新

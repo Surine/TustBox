@@ -2,6 +2,7 @@ package com.surine.tustbox.Eventbus;
 
 /**
  * Created by surine on 2017/4/8.
+ * count : 6
  */
 
 public class SimpleEvent {

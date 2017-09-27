@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.surine.tustbox">
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -11,6 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
     <application
         android:name=".Init.TustBoxApplication"
         android:allowBackup="true"
@@ -24,6 +26,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -44,6 +47,20 @@
         <activity
             android:name=".UI.SettingActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".UI.NetWorkActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".UI.ShortActivity"
+            android:icon="@drawable/ic_short"
+            android:label="一键登录校园网"
+            android:theme="@style/myTransparent">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
         <!-- 来自：http://www.cnblogs.com/skywang12345/p/3264991.html Thanks to author -->
         <receiver
@@ -69,6 +86,10 @@
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
+        <activity
+            android:name=".UI.TodayCardActivity"
+            android:theme="@style/myTransparent">
+        </activity>
     </application>
 
 </manifest>

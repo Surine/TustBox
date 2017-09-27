@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.neenbedankt.android-apt'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -7,8 +7,8 @@ android {
         applicationId "com.surine.tustbox"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 3
-        versionName "2.0.4"
+        versionCode 5
+        versionName "2.0.6 Beta-20170924"
         testInstrumentationRunner "android.support.widget.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         ndk {
@@ -41,4 +41,9 @@ dependencies {
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
     testCompile 'junit:junit:4.12'
     compile 'com.google.code.gson:gson:2.8.1'
+    //noinspection GradleCompatible
+    compile 'com.android.support:palette-v7:26.0.0-alpha1'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.28'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
 }

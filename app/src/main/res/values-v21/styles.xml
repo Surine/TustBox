@@ -9,4 +9,7 @@
         <item name="android:windowContentTransitions">true</item>
 
     </style>
+    <style name="myTransparent" parent="AppTheme">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 </resources>

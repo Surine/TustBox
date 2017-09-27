@@ -1,0 +1,147 @@
+<resources>
+    <string name="app_name">TustBox</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="name">TustBox Dev-Version2.0 @surine</string>
+    <string name="version">TustBox 2.0.6-Beta</string>
+    <string name="about">About Login</string>
+    <string name="warning_text">Warning</string>
+    <string name="note">1.\t\t为了确保您的帐号安全，主要功能仅限使用校园网，
+        因此登录之前请检查您的网络是否连接至校园网，
+        包括校园TUST无线网络或者宿舍网络接口路由器，
+        如果未连接校园网可能会产生登录不上的情况。\n
+        2.\t\t由于Cookies问题，可能存在获取信息失败的情况，
+        遇到此情况时请重新点击登录按钮将获取准确数据，不影响其他功能使用。\n
+        3.\t\tAPP是采用模拟登陆方式获得数据，已考虑数据安全性处理，在一定程度
+        上保证了数据的安全性，本APP不会以各种方式获取用户的隐私数据。\n
+        4.\t\t默认登录密码是身份证后六位，如果身份证包含X，则X大写
+    </string>
+    <string name="ok">OK</string>
+    <string name="wrong">Account or password error！</string>
+    <string name="success">Request success！</string>
+    <!--不能英语化-->
+    <string name="manager_">学分制综合教务</string>
+    <string name="fail">Request timed out！Please check the campus network connection</string>
+    <string name="get">Get</string>
+    <string name="get_info">Getting personal information...</string>
+    <string name="login">Login</string>
+    <string name="login_info">Is logging in to the Office of Academic Affairs……</string>
+    <string name="save_success">Personal information has been saved</string>
+    <string name="title_course">Schedule</string>
+    <string name="box">Box</string>
+    <string name="me">Me</string>
+    <string name="unknow_error">unknown error</string>
+    <string name="school_network">School Network</string>
+    <string name="id3">myusername</string>
+    <string name="id4">smartdot</string>
+    <string name="id5">username</string>
+    <string name="no_class">There is no class today，Go dating soon！</string>
+    <string name="i_know">I Know！</string>
+    <string name="happy">^_^ HAPPY！</string>
+    <string name="close_dialog_summ">After opening the course every day will not be a window reminder</string>
+    <string name="today_course_title">Close daily lesson reminder</string>
+    <string name="setting_background_summ">Choose a favorite picture as a background for the class schedule</string>
+    <string name="setting_back_title">Schedule background pictures</string>
+    <string name="about_app">About</string>
+    <string name="about_tustbox">About TustBox</string>
+    <string name="setting">Setting</string>
+    <string name="score">Achievement</string>
+    <string name="login_success">Login success</string>
+    <string name="gpa">Caculate the GPA</string>
+    <string name="calculate_file">Calculation file</string>
+    <string name="share_my_score">Send a transcript to your mother ！</string>
+    <string name="loading">Loading data，please wait……</string>
+    <string name="library">Library</string>
+    <string name="exit">Exit</string>
+    <string name="exit_info">Exempting the account will clear all user data！</string>
+    <string name="cancel">Cancel</string>
+    <string name="choose_week">Select current week</string>
+    <string name="choose_">Choose</string>
+    <string name="f1">Excellent</string>
+    <string name="f2">Good</string>
+    <string name="f3">medium</string>
+    <string name="f4">Pass</string>
+    <string name="f5">Failed</string>
+    <string name="this_term_gpa">Current grade points：</string>
+    <string name="share_your_score_to">Share your results</string>
+    <string name="course_info">Course details</string>
+    <string name="null_number_and_pswd">The student number or password is empty</string>
+    <!--不能英语化-->
+    <string name="plan">培养方案</string>
+    <string name="error_information">Error message</string>
+    <string name="get_error">Failed to get information，please login again</string>
+    <string name="get_success">Successful access to information</string>
+    <string name="clear_success">Data is cleared successfully</string>
+    <string name="album_view">Select the table background image</string>
+    <string name="image_view">Click to select a picture</string>
+    <string name="add">Ok</string>
+    <string name="selected">Selected</string>
+    <string name="limit_exceeded">Can choose up to %d</string>
+    <string name="qq">· QQ—group: 635622188</string>
+    <string name="surine">· Developer：Surine</string>
+    <string name="clear_cache">Clear Cache</string>
+    <string name="clear_sunmmy">Clear the wallpaper cache and choose the background image after clearing it</string>
+    <string name="error_get_data">The data is wrong, please retrieve or contact the developer</string>
+    <string name="learn_info">Learning situation</string>
+    <string name="no_more_info">Did not get valuable information</string>
+    <string name="gp">GP Download</string>
+    <string name="bug_or">· Bug OR Make complaints</string>
+    <string name="share">· Share TustBox</string>
+    <string name="support">Support</string>
+    <string name="check_update">· Check Update</string>
+    <string name="notice">· Disclaimer</string>
+    <string name="notice2">Disclaimer</string>
+    <string name="app">A good APP is to have the bottom line！</string>
+    <string name="osl">· Open Source License</string>
+    <string name="osl2">Open Source License</string>
+    <string name="help">· Sponsor developers</string>
+    <string name="surine_is_me">New century Android enthusiasts，xiaxiaxia~</string>
+    <string name="qq_number">635622188</string>
+    <string name="qq_is_copy">QQ number has been copied to the clipboard</string>
+    <string name="welcome">Welcome to the TustBox：</string>
+    <string name="more_share">Let more people meet TustBox</string>
+    <string name="type">What kind of way do you use to contact me？</string>
+    <string name="what_do_you_want_to_say">Want to say something？</string>
+    <string name="welcome_send_bug">Welcome to give me advice：</string>
+    <string name="qq_email">2234503567@qq.com</string>
+    <string name="qq_email_mo">mailto:2234503567@qq.com</string>
+    <string name="log">Log</string>
+    <string name="new_log"> 小天[V2.0.6.20170927]，每一个小需求都应被实现</string>
+    <string name="hide">Hidden credentials photo</string>
+    <string name="hide_summary">Replace your credentials after opening</string>
+    <string name="safe">security</string>
+    <string name="pswd">Information encryption</string>
+    <string name="pswd_summary">Base64</string>
+    <string name="nothing">Nothing！！</string>
+    <string name="about_gp">About GP</string>
+    <string name="info_gp">The platform is the software management platform system developed by the company according to the specific use needs of the campus genuine (GP) project in China\'s colleges and universities.
+        It is also the first solution for the correct and safe use of campus genuine software.\n
+        This software is only TUST official website listed software to do the information
+        integration, provided to do not know to have this platform students, if you need more
+        software resources, you can go to GP official website view. In addition, taking into
+        account the software belongs to the computer software, download to the phone is also
+        too cumbersome to turn up,and quite accounted for memory, so directly to the link to share!</string>
+    <string name="my_info">My data</string>
+    <string name="all_log">· All Announcements</string>
+    <string name="join">· Join us [Celitea]</string>
+    <string name="network_introduce">如果你和我一样不喜欢每次都输入账号密码登录登录校园网的话，就试试一键登录吧！
+        小天会将您的密码加密储存在本地，并且不会以任何方式发送出去，小伙伴们就放心使用吧！不过小伙伴们也要谨慎保管好自己的密码哦！
+        另外，去你的桌面上找找会出现一个一键登录校园网的快捷方式，以后就不用进来点我头上的按钮啦！
+    </string>
+    <string name="info_trans">Ubuntu16.04/Apache2.0/Thinkphp/MD5</string>
+    <string name="info_trans_title">Information transmission</string>
+    <string name="change_week_in_main_page">Change Week</string>
+    <string name="Exit">Exit</string>
+    <string name="More_User">More User</string>
+    <string name="Course_week_toolbar_title">Week:%1$d</string>
+    <string name="null_input">存在空输入</string>
+    <string name="try_again">重试</string>
+    <string name="school">School</string>
+    <string name="is_log_network">正在登录校园网……</string>
+    <string name="get_data_use_fail">获取流量使用详情失败</string>
+    <string name="title_activity_today_card">TodayCardActivity</string>
+    <string name="action_settings">Settings</string>
+
+</resources>
+

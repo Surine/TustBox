@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -22,11 +20,11 @@ import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.NetWork.JavaNetCookieJar;
 import com.surine.tustbox.R;
 import com.surine.tustbox.UI.SettingActivity;
+import com.surine.tustbox.UI.ToolbarActivity;
 import com.surine.tustbox.Util.HttpUtil;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -44,7 +42,6 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 
 public class AboutFragment extends Fragment{
     private static final long CONNECT_TIMEOUT = 5;
-    String new_message;
     String update_message;
     private ProgressDialog pg;
     private OkHttpClient.Builder builder;
@@ -60,6 +57,10 @@ public class AboutFragment extends Fragment{
     TextView textView40;
     TextView textView41;
     TextView textView42;
+    private String version = "";
+    private String log = "";
+    private int is_ness = 0;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -119,7 +120,7 @@ public class AboutFragment extends Fragment{
         textView37.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),SettingActivity.class).putExtra("set_",4));
+                startActivity(new Intent(getActivity(), ToolbarActivity.class).putExtra("activity_flag",2));
             }
         });
 
@@ -127,7 +128,7 @@ public class AboutFragment extends Fragment{
         textView38.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"我会慢慢变成熟！",Toast.LENGTH_SHORT).show();
+                startAlipay();
             }
         });
 
@@ -157,6 +158,19 @@ public class AboutFragment extends Fragment{
             }
         });
         return view;
+    }
+
+    private void startAlipay() {
+        PackageManager packageManager = null;
+        try {
+            ClipboardManager cmb = (ClipboardManager) getActivity().getSystemService(CLIPBOARD_SERVICE);
+            cmb.setText("2234503567@qq.com");
+            Toast.makeText(getActivity(), "支付宝账号已复制",Toast.LENGTH_SHORT).show();
+            packageManager = getActivity().getPackageManager();
+            startActivity(packageManager.getLaunchIntentForPackage("com.eg.android.AlipayGphone"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initOkHttp() {
@@ -204,7 +218,6 @@ public class AboutFragment extends Fragment{
     }
 
     private void Check_update() {
-        new_message = "\n\n";
         setDialog();
         StartCheck();
     }
@@ -224,72 +237,61 @@ public class AboutFragment extends Fragment{
             @Override
             public void onFailure(Call call, IOException e) {
                 //failure
-                Message mess = new Message();
-                mess.what = 1;
-                myHandler.sendMessage(mess);
+               getActivity().runOnUiThread(new Runnable() {
+                   @Override
+                   public void run() {
+                       Toast.makeText(getActivity(),"网络好像出现了点问题！",Toast.LENGTH_SHORT).show();
+                       pg.dismiss();
+                   }
+               });
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 update_message = response.body().string().toString();
-                pg.dismiss();
-                Message mess = new Message();
-                mess.what = 2;
-                myHandler.sendMessage(mess);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JSONObject jsonObject = null;
+                        try {
+                            //获取相关信息
+                            jsonObject = new JSONObject(update_message);
+                            version = jsonObject.getString("version");
+                            log = jsonObject.getString("log");
+                            is_ness = Integer.parseInt(jsonObject.getString("is_ness"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        if(version.equals(getAppInfo())||version.equals("")||version == null){
+                            //this version
+                            builder.setTitle("已经是最新版本呐！");
+                            builder.setMessage(log);
+                            builder.setPositiveButton(R.string.ok,null);
+                        }else{
+                            //new version
+                            builder.setTitle("小天发现新版本啦！");
+                            builder.setMessage(log);
+                            builder.setPositiveButton("现在更新", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    String url = UrlData.download_url;
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                    intent .setData(Uri.parse(url));
+                                    startActivity(intent);
+
+                                }
+                            });
+                            builder.setNegativeButton("残忍拒绝",null);
+                        }
+                        builder.show();
+                        pg.dismiss();
+                    }
+                });
             }
         });
 
     }
-
-
-    private Handler myHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case 1:
-                    Toast.makeText(getActivity(),"网络好像出现了点问题！",Toast.LENGTH_SHORT).show();
-                    pg.dismiss();
-                    break;
-                case 2:
-                    Jsoup();
-                    break;
-            }
-        }
-    };
-
-
-    private void Jsoup() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        Document doc = Jsoup.parse(update_message);
-        Elements content = doc.select("li");
-        for(int i = 0;i<content.size();i++){
-            new_message+=(content.get(i).text()+"\n");
-        }
-        String title = doc.title();
-        if(title.equals(getAppInfo())){
-            //this version
-            builder.setTitle("已经是最新版本呐！");
-            builder.setMessage(new_message);
-            builder.setPositiveButton(R.string.ok,null);
-        }else{
-            //new version
-            builder.setTitle("小天发现新版本啦！");
-            builder.setMessage(new_message);
-            builder.setPositiveButton("现在更新", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    String url = UrlData.download_url;
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent .setData(Uri.parse(url));
-                    startActivity(intent);
-
-                }
-            });
-            builder.setNegativeButton("残忍拒绝",null);
-        }
-        builder.show();
-    }
-
 
     private String getAppInfo() {
         try {

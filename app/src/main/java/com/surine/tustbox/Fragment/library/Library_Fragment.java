@@ -191,8 +191,8 @@ public class Library_Fragment extends Fragment{
 
     private void showLogin() {
         final View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_view_login_work_view,null);
-        final EditText id = (EditText) view.findViewById(R.id.editText2);
-        final EditText pswd = (EditText) view.findViewById(R.id.editText3);
+        final EditText id = (EditText) view.findViewById(R.id.tust_number);
+        final EditText pswd = (EditText) view.findViewById(R.id.network_passwd);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view);
         builder.setPositiveButton("下一步", new DialogInterface.OnClickListener() {

@@ -8,6 +8,7 @@ import okhttp3.Call;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 
 /**
  * Created by surine on 2017/7/9.
@@ -52,4 +53,11 @@ public class HttpUtil {
         OkHttpClient okHttpClient = builder.cookieJar(new JavaNetCookieJar()).build();
         return okHttpClient.newCall(new Request.Builder().post(formBody).url(url).build());
     }
+
+//    //post file
+//    public static Call post_file(String url, RequestBody requestBody){
+//        OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS);//设置连接超时时间;
+//        OkHttpClient okHttpClient = builder.cookieJar(new JavaNetCookieJar()).build();
+//        return okHttpClient.newCall()
+//    }
 }

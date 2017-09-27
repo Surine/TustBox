@@ -20,7 +20,6 @@ import org.greenrobot.eventbus.EventBus;
 
 public class SettingFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
     private Preference Setting_back;
-    private SwitchPreference setting_dialog;
     private SwitchPreference setting_close_show_picture;
     private Preference About;
     private Preference clear_cache;
@@ -35,7 +34,6 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
 
     private void setLinsener() {
         Setting_back.setOnPreferenceClickListener(this);
-        setting_dialog.setOnPreferenceClickListener(this);
         About.setOnPreferenceClickListener(this);
         setting_close_show_picture.setOnPreferenceClickListener(this);
         clear_cache.setOnPreferenceClickListener(this);
@@ -48,7 +46,6 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         clear_cache = findPreference("clear_cache");
         Setting_back = findPreference("setting_back");
         Setting_back = findPreference("setting_back");
-        setting_dialog = (SwitchPreference) findPreference("setting_dialog");
         setting_close_show_picture = (SwitchPreference) findPreference("setting_close_show_picture");
     }
 
@@ -56,8 +53,6 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     public boolean onPreferenceClick(Preference preference) {
         if(preference == Setting_back){
             startActivity(new Intent(getActivity(),SettingActivity.class).putExtra("set_",1));
-        }else if(preference == setting_dialog){
-
         }else if(preference == setting_close_show_picture){
             //发送数据
             EventBus.getDefault().post(new SimpleEvent(1,"UPDATE"));

@@ -21,33 +21,36 @@
    <ImageView
        android:layout_width="32dp"
        android:layout_height="40dp"
-       android:background="@color/colorPrimary"
+       android:background="@color/trans_white"
        />
    <LinearLayout
        android:layout_width="match_parent"
-       android:layout_height="40dp"
+       android:layout_height="30dp"
+       android:id="@+id/week_word"
+       android:background="@color/trans_white"
        android:layout_marginStart="32dp"
        app:layout_behavior="@string/appbar_scrolling_view_behavior"
        >
 
       <TextView
+          android:id="@+id/mon"
           android:layout_width="0dp"
           android:layout_height="match_parent"
           android:layout_weight="1"
-          android:text="周一"
-          android:id="@+id/mon"
-          android:textColor="@color/Tust_White"
-          android:background="@color/colorPrimary"
           android:gravity="top|center_horizontal"
           android:paddingTop="10dp"
+          android:text="周一"
+
+          android:textSize="12sp"
           />
+
       <TextView
           android:layout_width="0dp"
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:text="周二"
-          android:textColor="@color/Tust_White"
-          android:background="@color/colorPrimary"
+
+          android:textSize="12sp"
           android:id="@+id/tus"
           android:gravity="top|center_horizontal"
           android:paddingTop="10dp"
@@ -57,8 +60,8 @@
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:text="周三"
-          android:textColor="@color/Tust_White"
-          android:background="@color/colorPrimary"
+
+          android:textSize="12sp"
           android:id="@+id/wes"
           android:gravity="top|center_horizontal"
           android:paddingTop="10dp"
@@ -68,8 +71,8 @@
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:text="周四"
-          android:textColor="@color/Tust_White"
-          android:background="@color/colorPrimary"
+
+          android:textSize="12sp"
           android:id="@+id/thr"
           android:gravity="top|center_horizontal"
           android:paddingTop="10dp"
@@ -79,9 +82,9 @@
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:text="周五"
-          android:textColor="@color/Tust_White"
-          android:background="@color/colorPrimary"
+          android:textSize="12sp"
           android:id="@+id/fri"
+
           android:gravity="top|center_horizontal"
           android:paddingTop="10dp"
           />
@@ -90,8 +93,7 @@
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:text="周六"
-          android:textColor="@color/Tust_White"
-          android:background="@color/colorPrimary"
+          android:textSize="12sp"
           android:id="@+id/sta"
           android:gravity="top|center_horizontal"
           android:paddingTop="10dp"
@@ -102,77 +104,93 @@
           android:layout_height="match_parent"
           android:layout_weight="1"
           android:text="周日"
-          android:textColor="@color/Tust_White"
-          android:background="@color/colorPrimary"
+          android:textSize="12sp"
           android:id="@+id/sun"
           android:gravity="top|center_horizontal"
           android:paddingTop="10dp"
           />
    </LinearLayout>
-   <LinearLayout
+   <ScrollView
        android:layout_width="32dp"
        android:layout_marginTop="40dp"
-       android:layout_height="match_parent"
-       android:orientation="vertical"
-       >
-      <TextView
+       android:scrollbars="none"
+       android:id="@+id/scrollview"
+       android:overScrollMode="never"
+       android:background="@color/trans_white"
+       android:layout_height="match_parent">
+      <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1"
-          android:gravity="center"
-          android:textColor="#838181"
-          android:text="1"
-          />
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1"
-          android:text="2"
-          android:textColor="#838181"
-          android:gravity="center"
-          />
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1"
-          android:text="3"
-          android:textColor="#838181"
-          android:gravity="center"
-          />
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1"
-          android:text="4"
-          android:textColor="#838181"
-          android:gravity="center"
-          />
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1"
-          android:text="5"
-          android:textColor="#838181"
-          android:gravity="center"
-          />
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="1"
-          android:text="6"
-          android:textColor="#838181"
-          android:gravity="center"
-          />
-   </LinearLayout>
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          >
+
+         <TextView
+             android:id="@+id/text_course_1"
+             android:layout_width="match_parent"
+             android:layout_height="86dp"
+             android:layout_weight="1"
+             android:gravity="center"
+             android:text="1"
+
+             />
+
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="86dp"
+             android:layout_weight="1"
+             android:text="2"
+             android:id="@+id/text_course_2"
+
+             android:gravity="center"
+             />
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="86dp"
+             android:layout_weight="1"
+             android:text="3"
+             android:id="@+id/text_course_3"
+
+             android:gravity="center"
+             />
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="86dp"
+             android:layout_weight="1"
+             android:text="4"
+             android:id="@+id/text_course_4"
+
+             android:gravity="center"
+             />
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="86dp"
+             android:layout_weight="1"
+             android:text="5"
+             android:id="@+id/text_course_5"
+
+             android:gravity="center"
+             />
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="86dp"
+             android:layout_weight="1"
+             android:text="6"
+             android:id="@+id/text_course_6"
+
+             android:gravity="center"
+             />
+      </LinearLayout>
+   </ScrollView>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/course_table"
+        android:overScrollMode="never"
         android:layout_marginStart="32dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_below="@id/week_word"
         android:layout_marginEnd="5dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="5dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
     </android.support.v7.widget.RecyclerView>

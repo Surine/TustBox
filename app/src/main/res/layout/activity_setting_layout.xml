@@ -6,8 +6,9 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
-        android:layout_height="?actionBarSize"
+        android:layout_height="@dimen/toolbar_height"
         android:layout_width="match_parent"
+        android:paddingTop="@dimen/toolbar_height_padding"
         android:background="@color/colorPrimary"
         android:id="@+id/setting_toolbar"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -17,6 +18,5 @@
         android:id="@+id/share_setting_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
-        />
+        android:layout_below="@+id/setting_toolbar"/>
 </RelativeLayout>

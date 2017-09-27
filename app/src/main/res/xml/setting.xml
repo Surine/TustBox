@@ -8,11 +8,6 @@
           android:title="@string/setting_back_title"
           android:summary="@string/setting_background_summ"
           />
-      <SwitchPreference
-          android:key="setting_dialog"
-          android:title="@string/today_course_title"
-          android:summary="@string/close_dialog_summ"
-          />
       <Preference
           android:key="clear_cache"
           android:title="@string/clear_cache"
@@ -35,6 +30,10 @@
         <Preference
             android:title="@string/pswd"
             android:summary="@string/pswd_summary"
+            />
+        <Preference
+            android:title="@string/info_trans_title"
+            android:summary="@string/info_trans"
             />
     </PreferenceCategory>
     <PreferenceCategory
