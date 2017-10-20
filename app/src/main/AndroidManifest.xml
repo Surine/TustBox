@@ -51,6 +51,9 @@
             android:name=".UI.NetWorkActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".UI.UserInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".UI.ShortActivity"
             android:icon="@drawable/ic_short"
             android:label="一键登录校园网"
@@ -90,6 +93,7 @@
             android:name=".UI.TodayCardActivity"
             android:theme="@style/myTransparent">
         </activity>
+
     </application>
 
 </manifest>

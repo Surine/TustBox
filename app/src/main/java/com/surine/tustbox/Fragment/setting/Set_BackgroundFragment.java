@@ -25,7 +25,7 @@ import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.model.TakePhotoOptions;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
-import com.surine.tustbox.Util.ClearCacheUtil;
+import com.surine.tustbox.Util.IOUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
 
 import java.io.File;
@@ -86,7 +86,7 @@ public class Set_BackgroundFragment extends TakePhotoFragment {
             @Override
             public void onClick(View view) {
                 String cachePath2 =  getActivity().getCacheDir().getPath();
-                ClearCacheUtil.delAllFile(cachePath2,getActivity());
+                IOUtil.delAllFile(cachePath2,getActivity());
                 SharedPreferencesUtil.Save(getActivity(), "TOOLBAR_C", R.color.colorPrimary);
                 restartMethod();
             }

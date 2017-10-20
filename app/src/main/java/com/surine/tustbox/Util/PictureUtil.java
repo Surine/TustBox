@@ -7,7 +7,7 @@ import android.graphics.Bitmap;
  * 下面引用的是StackBlur模糊算法
  */
 
-public class FastBlurUtil {
+public class PictureUtil {
     public static Bitmap doBlur(Bitmap sentBitmap, int radius, boolean canReuseInBitmap) {
         // Stack Blur v1.0 from
 

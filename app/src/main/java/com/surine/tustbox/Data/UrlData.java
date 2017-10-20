@@ -45,8 +45,12 @@ public class UrlData {
     public static String celitea_url ="http://celitea.cn";
     //login
     public static String login_server_url ="http://surine.cn/TustBox/index.php/Home/Login/login";
+    //register
+    public static String register_server_url ="http://surine.cn/TustBox/index.php/Home/Login/register";
     //get today info
     public static String get_today_url ="http://surine.cn/TustBox/index.php/Home/TodayCourse/getTodayInfo";
+    //get head
+    public static String get_head_url ="http://surine.cn/TustBox/index.php/Home/User/getHead";
 
     //schoolnetwork url
     public static final String net_post_url = "http://59.67.0.245/a30.htm";

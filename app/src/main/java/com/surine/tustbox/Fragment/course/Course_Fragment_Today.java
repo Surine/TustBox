@@ -201,6 +201,8 @@ public class Course_Fragment_Today extends Fragment{
             }
 
             private void initView() {
+                imageView = (ImageView) v.findViewById(R.id.back);
+                textview = (TextView) v.findViewById(R.id.text_title);
                 mRecyclerView = (RecyclerView) v.findViewById(R.id.rec_today_course);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 today_adapter = new Today_Course_Adapter(R.layout.item_course_today_new, mLast_infos);
@@ -215,14 +217,14 @@ public class Course_Fragment_Today extends Fragment{
                 });
                 today_adapter.setEmptyView(noView);
 
-                View headerView = getHeaderView(0, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
-
-                today_adapter.addHeaderView(headerView);
+//                View headerView = getHeaderView(0, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                    }
+//                });
+//
+//                today_adapter.addHeaderView(headerView);
                 today_adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                     @Override
                     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -232,17 +234,13 @@ public class Course_Fragment_Today extends Fragment{
             }
 
 
-    private View getHeaderView(int type, View.OnClickListener listener) {
-                View view = getActivity().getLayoutInflater().inflate(R.layout.view_header, (ViewGroup) mRecyclerView.getParent(), false);
-                if (type == 0) {
-                    imageView = (ImageView) view.findViewById(R.id.back);
-                    textview = (TextView) view.findViewById(R.id.text_title);
-                    textview_date = (TextView) view.findViewById(R.id.textView14);
-                    textview_date.setText(TimeUtil.GetDate_or());
-                }
-                view.setOnClickListener(listener);
-                return view;
-            }
+//    private View getHeaderView(int type, View.OnClickListener listener) {
+//                View view = getActivity().getLayoutInflater().inflate(R.layout.view_header, (ViewGroup) mRecyclerView.getParent(), false);
+//                if (type == 0) {
+//                }
+//                view.setOnClickListener(listener);
+//                return view;
+//            }
 
 
             @Subscribe

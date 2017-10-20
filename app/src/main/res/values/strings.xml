@@ -5,17 +5,14 @@
     <string name="title_notifications">Notifications</string>
     <string name="name">小天盒子 开发版2.0 @surine</string>
     <string name="version">小天盒子 2.0.6-Beta</string>
-    <string name="about">关于登录</string>
+    <string name="about">萌新么？看看关于我吧！</string>
     <string name="warning_text">注意</string>
     <string name="note">1.\t\t为了确保您的帐号安全，主要功能仅限使用校园网，
         因此登录之前请检查您的网络是否连接至校园网，
         包括校园TUST无线网络或者宿舍网络接口路由器，
         如果未连接校园网可能会产生登录不上的情况。\n
-        2.\t\t由于Cookies问题，可能存在获取信息失败的情况，
-        遇到此情况时请重新点击登录按钮将获取准确数据，不影响其他功能使用。\n
-        3.\t\tAPP是采用模拟登陆方式获得数据，已考虑数据安全性处理，在一定程度
-        上保证了数据的安全性，本APP不会以各种方式获取用户的隐私数据。\n
-        4.\t\t默认登录密码是身份证后六位，如果身份证包含X，则X大写
+        2.\t\t默认登录密码是身份证后六位，如果身份证包含X，则X大写。\n
+        3.\t\t建议新用户使用之前阅读APP说明。
     </string>
     <string name="ok">确定</string>
     <string name="wrong">帐号或者密码错误！</string>
@@ -142,6 +139,11 @@
     <string name="school">校园</string>
     <string name="title_activity_today_card">TodayCardActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="copyright">可以不仅仅是课表\n Copyright @surine</string>
+    <string name="score_helper">成绩助手</string>
+    <string name="bus_helper">校车时刻表</string>
+    <string name="network_error">网络（非校园网）未连接</string>
+    <string name="token_error_info">身份认证失败，请重新进入APP，将会自动验证身份</string>
 
 </resources>
 

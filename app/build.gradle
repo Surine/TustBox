@@ -25,6 +25,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'
     compile 'com.android.support:support-vector-drawable:25.2.0'
@@ -39,11 +40,10 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:10.2.0'
     compile 'com.github.cooltechworks:ScratchView:v1.1'
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
-    testCompile 'junit:junit:4.12'
     compile 'com.google.code.gson:gson:2.8.1'
-    //noinspection GradleCompatible
     compile 'com.android.support:palette-v7:26.0.0-alpha1'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.28'
     compile 'com.jakewharton:butterknife:8.4.0'
+    testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
 }

@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.surine.tustbox.UI.SettingActivity;
 import com.surine.tustbox.Eventbus.SimpleEvent;
 import com.surine.tustbox.R;
-import com.surine.tustbox.Util.ClearCacheUtil;
+import com.surine.tustbox.Util.IOUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -69,7 +69,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     private void clear_cache() {
         /** * 清除本应用内部缓存 */
         String cachePath2 =  getActivity().getCacheDir().getPath();
-        ClearCacheUtil.delAllFile(cachePath2,getActivity());
+        IOUtil.delAllFile(cachePath2,getActivity());
         Toast.makeText(getActivity(),"缓存清理成功，请重新选择背景",Toast.LENGTH_SHORT).show();
     }
 

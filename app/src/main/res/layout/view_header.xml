@@ -6,21 +6,23 @@
               android:layout_height="match_parent">
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="190dp"
         android:id="@+id/back"
-        android:src="@drawable/bkg_01_jan"
+        android:src="@drawable/bkg_03_mar"
         android:scaleType="centerCrop"
         android:transitionName="art_image"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         tools:ignore="NewApi"/>
+
     <TextView
         android:id="@+id/textView14"
         android:textSize="45sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="9月24日"
+        android:visibility="gone"
         android:background="@drawable/side_nav_bar2"
         android:paddingTop="7dp"
         android:paddingBottom="5dp"
@@ -29,7 +31,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="@drawable/side_nav_bar"
+        android:layout_marginBottom="20dp"
         android:layout_alignBottom="@+id/back"
         android:layout_alignParentStart="true">
         <TextView
@@ -39,7 +41,10 @@
             android:id="@+id/text_title"
             android:ellipsize="end"
             android:text="欢迎使用小天盒子"
+            android:textColor="@color/Tust_White"
             android:gravity="bottom"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="7dp"
             android:layout_marginBottom="15dp"
             android:paddingStart="10dp"
             />

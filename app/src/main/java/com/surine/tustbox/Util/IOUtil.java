@@ -9,7 +9,7 @@ import java.io.File;
  * Created by surine on 2017/4/22.
  */
 
-public class ClearCacheUtil {
+public class IOUtil {
     /**
      * 删除文件夹里面的所有文件
      */
@@ -41,6 +41,9 @@ public class ClearCacheUtil {
         }
     }
 
+    /**
+     * 删除空文件夹
+     */
     public static void delFolder(String folderPath,Context context) {
         try {
             delAllFile(folderPath,context); //删除完里面所有内容
@@ -55,7 +58,6 @@ public class ClearCacheUtil {
 
         }
     }
-
 
 
 }

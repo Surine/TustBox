@@ -88,8 +88,6 @@ public class MainActivity extends TustBaseActivity {
             public void run() {
                 //获取新版本
                 getNewVersion();
-                //登录服务账号
-             //   LoginServer();
             }
         }).start();
 
@@ -152,93 +150,7 @@ public class MainActivity extends TustBaseActivity {
         setFragment_Show(Flag);
     }
 
-    private void LoginServer() {
-        //构建账号密码表单
-        FormBody formBody = new FormBody.Builder()
-                .add(FormData.tust_number_server, SharedPreferencesUtil.Read(MainActivity.this
-                ,"tust_number","000000"))
-                .add(FormData.pass_server, EncryptionUtil.base64_de(SharedPreferencesUtil.Read(MainActivity.this
-                        ,"pswd","000000")))
-                .build();
-        HttpUtil.post(UrlData.login_server_url,formBody).enqueue(new Callback() {
-             @Override
-             public void onFailure(Call call, IOException e) {
 
-             }
-
-             @Override
-             public void onResponse(Call call, Response response) throws IOException {
-                 login_string = response.body().string().toString();
-                 Log.d("XXX",login_string);
-                 runOnUiThread(new Runnable() {
-                     public JSONObject jsonObject;
-                     @Override
-                     public void run() {
-                         try {
-                             jsonObject = new JSONObject(login_string);
-                             jcode = jsonObject.getInt("jcode");
-                             if(jcode == 404){
-                                 //进行用户注册
-                                 Register_user();
-                             }else if(jcode == 400){
-                                 Toast.makeText(MainActivity.this, "登录服务器失败，账号或者密码错误", Toast.LENGTH_SHORT).show();
-                             }else if(jcode == 200){
-                                 //创建token
-                             }
-                         } catch (JSONException e) {
-                             e.printStackTrace();
-                         }
-
-                     }
-                 });
-             }
-         });
-    }
-
-    private void Register_user() {
-        FormBody formBody = new FormBody.Builder()
-                .add(FormData.tust_number_server, SharedPreferencesUtil.Read(MainActivity.this
-                        ,"tust_number","000000"))
-                .add(FormData.pass_server, EncryptionUtil.base64_de(SharedPreferencesUtil.Read(MainActivity.this
-                        ,"pswd","000000")))
-                .add(FormData.sign_server,"这个人很懒，还没有个性签名~")
-                .add(FormData.nick_name_server,SharedPreferencesUtil.Read(MainActivity.this,"stu_name","未设置"))
-                .add(FormData.college_server,SharedPreferencesUtil.Read(MainActivity.this,"part","未知学院"))
-                .build();
-        HttpUtil.post(UrlData.login_server_url,formBody).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                login_string = response.body().string().toString();
-                Log.d("XXX",login_string);
-                runOnUiThread(new Runnable() {
-                    public JSONObject jsonObject;
-                    @Override
-                    public void run() {
-                        try {
-                            jsonObject = new JSONObject(login_string);
-                            jcode = jsonObject.getInt("jcode");
-                            if(jcode == 404){
-                                //进行用户注册
-                                Register_user();
-                            }else if(jcode == 400){
-                                Toast.makeText(MainActivity.this, "登录服务器失败，账号或者密码错误", Toast.LENGTH_SHORT).show();
-                            }else if(jcode == 200){
-                                //创建token
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                });
-            }
-        });
-    }
 
     //iadd all of the fragment to fragmenttransaction
     private void setFragment() {

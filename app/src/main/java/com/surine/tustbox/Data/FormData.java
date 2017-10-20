@@ -28,4 +28,6 @@ public class FormData {
     public static final String face_server = "face";
     public static final String nick_name_server = "nick_name";
     public static final String college_server = "college";
+    public static final String sex = "sex";
+    public static final String token = "token";
 }

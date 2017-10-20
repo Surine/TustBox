@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="com.surine.tustbox.UI.SplashActivity">
 
     <ImageView
@@ -13,7 +14,7 @@
         android:layout_height="250dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/tust2"
+        android:src="@drawable/tust"
         android:transitionName="transitionImg"
         tools:ignore="MissingConstraints"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,18 +23,13 @@
         />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="106dp"
-        android:fontFamily="monospace"
-        android:padding="5dp"
-        android:text="@string/app_name"
-        android:textAlignment="center"
-        android:textColor="@color/Tust_Grey2"
-        android:textSize="29sp"
-        android:textStyle="bold"
-        android:typeface="sans"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="@string/copyright"
+        android:textColor="@color/Tust_White"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>

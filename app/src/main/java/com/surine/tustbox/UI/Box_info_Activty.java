@@ -58,27 +58,27 @@ public class Box_info_Activty extends TustBaseActivity {
         }
 
         //Load the Fragment according to the intent
-        initFragment(getIntent().getIntExtra("item_box",0));
+        initFragment(getIntent().getStringExtra("item_box"));
     }
 
-    private void initFragment(int box_item) {
+    private void initFragment(String box_item) {
        switch (box_item){
-           case 0:
+           case "成绩":
                Flag = 0;
                //loading score fragment
                setTitle(getString(R.string.loading));
                replaceFragment(Score_Fragment.getInstance("School_Score"));
                break;
-           case 1:
+           case "图书":
                Flag = 1;
                replaceFragment(Library_Fragment.getInstance("Library"));
                break;
-           case 2:
+           case "GP":
                Flag = 2;
                setTitle(getString(R.string.loading));
                replaceFragment(GP_download_Fragment.getInstance("GP_download"));
                break;
-           case 3:
+           case "网络":
                Flag = 3;
                setTitle(getString(R.string.school_network));
                Toast.makeText(this,"出现了一点小问题，哎哟！",Toast.LENGTH_SHORT).show();

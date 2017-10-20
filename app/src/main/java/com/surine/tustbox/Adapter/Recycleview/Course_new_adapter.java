@@ -33,6 +33,7 @@ public class Course_new_adapter extends BaseQuickAdapter<Course_Info, BaseViewHo
                         "颜色加载错误，请重新获取或者联系开发者",Toast.LENGTH_LONG).show();
             }
             holder.setText(R.id.loca_text,"@"+course_info.getBuilding()+course_info.getClassroom());
+            holder.addOnClickListener(R.id.back_color);
         }
     }
 }

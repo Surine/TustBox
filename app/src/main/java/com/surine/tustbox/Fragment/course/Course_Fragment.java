@@ -1,5 +1,6 @@
 package com.surine.tustbox.Fragment.course;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,10 +21,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.surine.tustbox.Adapter.Recycleview.Course_new_adapter;
 import com.surine.tustbox.Bean.Course_Info;
 import com.surine.tustbox.Eventbus.SimpleEvent;
 import com.surine.tustbox.R;
+import com.surine.tustbox.UI.ToolbarActivity;
 import com.surine.tustbox.Util.PatternUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
 import com.surine.tustbox.Util.TimeUtil;
@@ -130,6 +133,12 @@ public class Course_Fragment extends Fragment {
         mCourseTable.setLayoutManager(new GridLayoutManager(getActivity(), 7));
         adpter = new Course_new_adapter(R.layout.item_course_card, mLastList);
         mCourseTable.setAdapter(adpter);
+        adpter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(new Intent(getActivity(), ToolbarActivity.class).putExtra("course_id",mLastList.get(position).getId()));
+            }
+        });
         //列表滑动监听
         mCourseTable.setOnScrollListener(new RecyclerView.OnScrollListener() {
 

@@ -149,8 +149,7 @@ public class LoginActivity extends TustBaseActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                builder.setTitle(R.string.warning_text)
-                        .setMessage(R.string.note)
+                builder.setMessage(R.string.note)
                         .setPositiveButton(R.string.ok, null).show();
             }
         });
@@ -266,6 +265,7 @@ public class LoginActivity extends TustBaseActivity {
                     content = doc2.select("td");
                     //save the name in another way
                     SharedPreferencesUtil.Save(LoginActivity.this,"stu_name", this.content.get(20).text());
+                    SharedPreferencesUtil.Save(LoginActivity.this,"sex", this.content.get(32).text());
                     SharedPreferencesUtil.Save(LoginActivity.this,"part", this.content.get(70).text());
                     SaveStudentInfo(this.content.get(19).text(), this.content.get(20).text());
                     SaveStudentInfo(this.content.get(17).text(), this.content.get(18).text());
