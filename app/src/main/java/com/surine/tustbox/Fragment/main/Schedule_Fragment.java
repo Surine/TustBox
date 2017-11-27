@@ -4,7 +4,6 @@ package com.surine.tustbox.Fragment.main;
  * Created by surine on 2017/9/16.
  */
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -39,6 +38,11 @@ public class Schedule_Fragment extends Fragment{
     SimpleFragmentPagerAdapter pagerAdapter;
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
+    /**
+     * 2017年11月14日22:25:20 更新混合UI调整
+     * */
+    Fragment box_fragment = Box_Fragment.getInstance("2");
+    Fragment mSchoolFragment = new SchoolFragment();
     public static Schedule_Fragment getInstance(String title){
         Schedule_Fragment fragment = new Schedule_Fragment();
         Bundle bundle = new Bundle();
@@ -76,9 +80,13 @@ public class Schedule_Fragment extends Fragment{
         //2.使用fragment 的list集合管理碎片
         fragments.add(Course_Fragment_Today.getInstance("1"));
         fragments.add(Course_Fragment.getInstance("2"));
+        fragments.add(box_fragment);
+        fragments.add(mSchoolFragment);
         //3.使用string的list集合来添加标题
         titles.add(TimeUtil.GetWeek());
-        titles.add("周视图");
+        titles.add("课程");
+        titles.add("工具");
+        titles.add("校园");
 
 
         //4.初始化适配器（传入参数：FragmentManager，碎片集合，标题）
@@ -91,13 +99,24 @@ public class Schedule_Fragment extends Fragment{
         //7.关联viewpager
         tab.setupWithViewPager(viewpager);
 
+        TabLayout.Tab tab_one = tab.getTabAt(0);
+        TabLayout.Tab tab_two = tab.getTabAt(1);
+        TabLayout.Tab tab_three = tab.getTabAt(2);
+        TabLayout.Tab tab_four = tab.getTabAt(3);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            tab_one.setIcon(getResources().getDrawable(R.drawable.home,null));
+//            tab_two.setIcon(getResources().getDrawable(R.drawable.calendar_today,null));
+//            tab_three.setIcon(getResources().getDrawable(R.drawable.fan,null));
+//            tab_four.setIcon(getResources().getDrawable(R.drawable.hexagon_multiple,null));
+//        }
+
     }
 
     @Subscribe
     public void GetMessage(SimpleEvent event){
         if(event.getId()==6) {
             //总线事件处理
-            tab.setBackground(new ColorDrawable(Integer.parseInt(event.getMessage())));
+           // tab.setBackground(new ColorDrawable(Integer.parseInt(event.getMessage())));
         }
     }
 }

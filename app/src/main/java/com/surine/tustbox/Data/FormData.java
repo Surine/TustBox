@@ -30,4 +30,11 @@ public class FormData {
     public static final String college_server = "college";
     public static final String sex = "sex";
     public static final String token = "token";
+
+    //科大云盘固定参数
+    public static final String link_name = "link_name";
+    public static final String link_device = "link_device";
+    public static final String username = "username";
+    public static final String password = "password";
+    public static final String locale = "locale";
 }

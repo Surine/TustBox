@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.GridLayoutManager;
@@ -26,6 +27,7 @@ import com.surine.tustbox.Adapter.Recycleview.Course_new_adapter;
 import com.surine.tustbox.Bean.Course_Info;
 import com.surine.tustbox.Eventbus.SimpleEvent;
 import com.surine.tustbox.R;
+import com.surine.tustbox.UI.PanActivity;
 import com.surine.tustbox.UI.ToolbarActivity;
 import com.surine.tustbox.Util.PatternUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
@@ -40,6 +42,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by surine on 2017/3/29.
@@ -49,9 +52,8 @@ public class Course_Fragment extends Fragment {
     private static final String ARG_ = "Course_Fragment";
     int choose_week;
     Course_Info course_info;
-    int position1,position2;
+    int position1, position2;
     String number_b = ",";
-    int week_number_for_todays_course = 0;
     @BindView(R.id.back_ground_picture)
     ImageView mBackGroundPicture;
     @BindView(R.id.mon)
@@ -86,6 +88,8 @@ public class Course_Fragment extends Fragment {
     ScrollView mScrollview;
     @BindView(R.id.course_table)
     RecyclerView mCourseTable;
+    @BindView(R.id.fab_sch_zone)
+    FloatingActionButton mFabSchZone;
     private List<Course_Info> mCourseList = new ArrayList<>();
     private List<Course_Info> mLastList = new ArrayList<>();
     int user;
@@ -93,6 +97,9 @@ public class Course_Fragment extends Fragment {
     private static final String EXTRA = "other_user";
     private View v;
     private Course_new_adapter adpter;
+    private List<String> week_range;
+    private Course_Info c_info = new Course_Info
+            ("*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", "*", -1, "*", "*", -1, -1);
 
     public static Course_Fragment getInstance(String title) {
         Course_Fragment fra = new Course_Fragment();
@@ -120,23 +127,34 @@ public class Course_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_course, container, false);
+        //绑定knife
         ButterKnife.bind(this, v);
+        //加载课程数据
         initData();
-        initView(v);  //init the view
+        //加载课程视图
+        initView(v);
+        //加载背景图片
         load_image();
         return v;
     }
 
 
     //init the view
-    private void initView(View v) {
+    private void initView(final View v) {
         mCourseTable.setLayoutManager(new GridLayoutManager(getActivity(), 7));
+
         adpter = new Course_new_adapter(R.layout.item_course_card, mLastList);
         mCourseTable.setAdapter(adpter);
+
         adpter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), ToolbarActivity.class).putExtra("course_id",mLastList.get(position).getId()));
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int pos) {
+                if (mLastList.get(pos).getId() == -1) {
+                    Toast.makeText(getActivity(), "系统回收错误，自动刷新课表", Toast.LENGTH_SHORT).show();
+                    initView(v);
+                } else {
+                    startActivity(new Intent(getActivity(), ToolbarActivity.class).putExtra("course_id", mLastList.get(pos).getId()));
+                }
             }
         });
         //列表滑动监听
@@ -150,6 +168,7 @@ public class Course_Fragment extends Fragment {
             }
         });
 
+
         //屏蔽触摸滑动
         mScrollview.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -157,12 +176,18 @@ public class Course_Fragment extends Fragment {
                 return true;
             }
         });
+
     }
 
-    //load the Curriculum schedule
+
+    /**
+     * TODO：2017年10月23日19:33:09加载课程算法优化
+     */
     private void initData() {
+        //清空列表
         mCourseList.clear();
         mLastList.clear();
+        //加载默认用户
         if (other_user_string.equals("1")) {
             user = 0;
         } else {
@@ -174,16 +199,16 @@ public class Course_Fragment extends Fragment {
                 SharedPreferencesUtil.Save(getActivity(), "user_flag", user);
             }
         }
-        week_number_for_todays_course =Integer.parseInt(TimeUtil.GetWeekNumber());
-        //read the sqlite list
+        //读取数据库全部课程
         mCourseList = DataSupport.findAll(Course_Info.class);
-        //load the week
+        //加载本周
         choose_week = SharedPreferencesUtil.Read(getActivity(), "choice_week", 0);
 
-        //表格为6*7
+        //初始化全部表格
         for (int j = 0; j < 42; j++) {
-            mLastList.add(null);
+            mLastList.add(c_info);
         }
+
         for (int i = 0; i < mCourseList.size(); i++) {
             try {
                 course_info = mCourseList.get(i);
@@ -209,23 +234,16 @@ public class Course_Fragment extends Fragment {
 
         //周筛选
         for (int e = 0; e < mLastList.size(); e++) {
-            if (mLastList.get(e) != null) {
+            if (mLastList.get(e) != c_info) {
+                //正则解析:提取数字
+                week_range = PatternUtil.getNumber(mLastList.get(e).getWeek());
                 if (mLastList.get(e).getWeek().contains("-")) {
-
-                    //正则解析:提取数字
-                    List<String> week_range = PatternUtil.getNumber(mLastList.get(e).getWeek());
-
-                    for (int i = Integer.parseInt(week_range.get(0)); i <= Integer.parseInt(week_range.get(1)); i++) {
-                        number_b += (i + ",");
+                    if (!(Integer.parseInt(week_range.get(0)) <= choose_week && Integer.parseInt(week_range.get(1)) >= choose_week)) {
+                        mLastList.set(e, c_info);
                     }
-                    if (!(number_b.contains("," + choose_week + ","))) {
-                        mLastList.set(e, null);
-                    }
-                    number_b = ",";
                 } else {
-                    String help_week = ("," + mLastList.get(e).getWeek().substring(2, mLastList.get(e).getWeek().length() - 2) + ",");
-                    if (!(help_week.contains("," + choose_week + ","))) {
-                        mLastList.set(e, null);
+                    if (week_range.indexOf(choose_week + "") == -1) {
+                        mLastList.set(e, c_info);
                     }
                 }
             }
@@ -249,7 +267,7 @@ public class Course_Fragment extends Fragment {
                                         SharedPreferencesUtil.Save(getActivity(), "TOOLBAR_C", vibrant.getRgb());
                                         EventBus.getDefault().post(new SimpleEvent(6, vibrant.getRgb() + ""));
                                         SetTextColor(vibrant.getTitleTextColor());
-                                    }else {
+                                    } else {
                                         SharedPreferencesUtil.Save(getActivity(), "TOOLBAR_C", R.color.colorPrimary);
                                     }
                                 }
@@ -281,5 +299,11 @@ public class Course_Fragment extends Fragment {
             initData();
             adpter.notifyDataSetChanged();
         }
+    }
+
+
+    @OnClick(R.id.fab_sch_zone)
+    public void onViewClicked() {
+        startActivity(new Intent(getActivity(), PanActivity.class));
     }
 }

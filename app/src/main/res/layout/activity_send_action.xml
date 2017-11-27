@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color2"
+    tools:context="com.surine.tustbox.UI.SendActionActivity">
+   <include layout="@layout/toolbar"
+       android:id="@+id/toolbar_send"
+       />
+     <android.support.v7.widget.CardView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         app:cardElevation="1dp"
+         android:id="@+id/cardView">
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="90dp"
+             android:padding="10dp"
+             android:orientation="vertical"
+             android:id="@+id/relativeLayout"
+             >
+             <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="#树洞#"
+                  android:id="@+id/topic_show"
+                  android:paddingStart="20dp"
+                  android:textColor="@color/colorAccent"
+                  />
+
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="0"
+                     android:id="@+id/num_show"
+                     android:layout_alignParentEnd="true"
+                     android:layout_marginEnd="20dp"
+                     />
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="/"
+                     android:id="@+id/xie"
+                     android:layout_toStartOf="@+id/num_show"
+                     />
+                 <TextView
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentTop="true"
+                     android:id="@+id/num_pic"
+                     android:layout_toStartOf="@+id/xie"
+                     android:text="0"
+                     />
+              </RelativeLayout>
+             <RelativeLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="10dp"
+                 android:padding="10dp"
+                 >
+                 <ImageView
+                     android:layout_width="50dp"
+                     android:layout_height="match_parent"
+                     android:src="@drawable/ic_action_shape"
+                     android:id="@+id/topic"
+                     android:padding="3dp"
+                     android:background="?android:attr/selectableItemBackground"
+                     android:layout_marginLeft="5dp"
+                     android:layout_marginRight="5dp"
+                     android:layout_centerVertical="true"
+                     android:layout_alignParentStart="true"
+                     tools:ignore="NewApi"/>
+                 <ImageView
+                     android:layout_width="50dp"
+                     android:layout_height="match_parent"
+                     android:src="@drawable/ic_action_pic"
+                     android:id="@+id/imageView3"
+                     android:padding="3dp"
+                     android:layout_marginLeft="5dp"
+                     android:background="?android:attr/selectableItemBackground"
+                     android:layout_marginRight="5dp"
+                     android:layout_alignParentTop="true"
+                     android:layout_alignParentBottom="true"
+                     android:layout_toEndOf="@+id/topic"
+                     tools:ignore="NewApi"/>
+
+                 <ImageView
+                     android:id="@+id/send_button"
+                     android:layout_width="50dp"
+                     android:layout_height="match_parent"
+                     android:layout_alignParentEnd="true"
+                     android:src="@drawable/ic_action_send"/>
+             </RelativeLayout>
+
+         </LinearLayout>
+     </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/rec_pic"
+        tools:ignore="NewApi"
+        android:layout_above="@+id/cardView"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentStart="true"></android.support.v7.widget.RecyclerView>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="分享你的心情吧！"
+        android:gravity="start"
+        android:padding="5dp"
+        android:layout_above="@id/rec_pic"
+        android:maxEms="140"
+        android:id="@+id/edit"
+        android:background="@null"
+        android:layout_below="@id/toolbar_send"/>
+
+
+</RelativeLayout>

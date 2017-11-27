@@ -53,7 +53,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="2dp"
-            android:hint="校园网密码"
+            android:hint="密码"
             android:inputType="textPassword"
             android:maxLines="1"
             app:layout_constraintBottom_toTopOf="@+id/button"

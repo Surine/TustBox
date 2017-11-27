@@ -20,6 +20,7 @@ import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.Eventbus.Net_EventBus;
 import com.surine.tustbox.Fragment.network.Fragment_charge;
 import com.surine.tustbox.Fragment.network.Fragment_login;
+import com.surine.tustbox.Init.SystemUI;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
 import com.surine.tustbox.Util.CheckWifi_then_login_util;
@@ -63,7 +64,8 @@ public class NetWorkActivity extends TustBaseActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
+        //设置toolbar颜色
+        SystemUI.color_toolbar(this,actionBar);
         if(!SharedPreferencesUtil.Read(this,"IS_LOGIN_NETWORK",false)) {
             //登陆
             ShowLoginDialog();
@@ -92,6 +94,12 @@ public class NetWorkActivity extends TustBaseActivity {
 
                     Log_net();
                 }
+            }
+        });
+        builder.setNegativeButton("退出", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
             }
         });
         builder.show();

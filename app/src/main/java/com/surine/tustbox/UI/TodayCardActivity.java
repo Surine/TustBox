@@ -3,17 +3,16 @@ package com.surine.tustbox.UI;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
-import com.surine.tustbox.Util.SharedPreferencesUtil;
 
-public class TodayCardActivity extends AppCompatActivity {
+public class TodayCardActivity extends TustBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +22,8 @@ public class TodayCardActivity extends AppCompatActivity {
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         ImageView imageView = (ImageView) findViewById(R.id.art_back);
         setSupportActionBar(toolbar);
-        //设置toolbar颜色
-        collapsingToolbarLayout.setContentScrimColor(SharedPreferencesUtil.Read(this,"TOOLBAR_C", R.color.colorPrimary));
         collapsingToolbarLayout.setTitle(getIntent().getStringExtra("ART_TITLE"));
-        collapsingToolbarLayout.setStatusBarScrimColor(SharedPreferencesUtil.Read(this,"TOOLBAR_C", R.color.colorPrimary));
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);

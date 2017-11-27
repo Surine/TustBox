@@ -2,6 +2,7 @@ package com.surine.tustbox.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.surine.tustbox.Data.FormData;
@@ -9,7 +10,6 @@ import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.Init.SystemUI;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
-import com.surine.tustbox.Util.EncryptionUtil;
 import com.surine.tustbox.Util.HttpUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
 
@@ -31,7 +31,10 @@ public class SplashActivity extends TustBaseActivity {
     private String token_string;
     private JSONObject jdata;
     private String token;
-
+    String nick_name;
+    String sign;
+    String face;
+    String college;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,21 +43,32 @@ public class SplashActivity extends TustBaseActivity {
         SystemUI.hide_statusbar(this);
 
         //get the server week
-        getServerWeek();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getServerWeek();
+            }
+        }).start();
 
-        //Check Token
-        Check_Token();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+               //Check Token
+                Check_Token();
+            }
+        }).start();
+
 
     }
 
     private void Check_Token() {
-        //构建TOKEN验证表单（携带账号密码，减少操作步骤）
+        //构建TOKEN验证表单（携带账号及加密密码，减少操作步骤）
         FormBody formBody = new FormBody.Builder()
                 .add(FormData.tust_number_server, SharedPreferencesUtil.Read(this
                         ,"tust_number","000000"))
                 .add(FormData.token,SharedPreferencesUtil.Read_safe(this,"TOKEN",""))
-                .add(FormData.pass_server, EncryptionUtil.base64_de(SharedPreferencesUtil.Read(this
-                        ,"pswd","000000")))
+                .add(FormData.pass_server, SharedPreferencesUtil.Read(this
+                        ,"pswd","000000"))
                 .build();
 
         //发起TOKEN验证请求
@@ -72,7 +86,7 @@ public class SplashActivity extends TustBaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 token_string = response.body().string().toString();
-               // Log.d("XXX",token_string);
+                Log.d("XXX",token_string);
                 runOnUiThread(new Runnable() {
                     public JSONObject jsonObject;
                     @Override
@@ -90,9 +104,12 @@ public class SplashActivity extends TustBaseActivity {
                                 jdata = jsonObject.getJSONObject("jdata");
                                 token = jdata.getString("token");
                                 SharedPreferencesUtil.Save_safe(SplashActivity.this,"TOKEN",token);
+                                Log.d("XXX","本机TOKEN"+SharedPreferencesUtil.Read_safe(SplashActivity.this,"TOKEN",""));
+                                SaveInfo(jdata);
                             }else if(jcode == 201){
-                                //啥都不干
                                 //进入token验证成功状态，可自由访问数据
+                                jdata = jsonObject.getJSONObject("jdata");
+                                SaveInfo(jdata);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -105,13 +122,28 @@ public class SplashActivity extends TustBaseActivity {
 
     }
 
+    private void SaveInfo(JSONObject jdata) {
+      //储存用户数据防止二次加载
+        try {
+            nick_name = jdata.getString("nick_name");
+            sign = jdata.getString("sign");
+            face = jdata.getString("face");
+            college = jdata.getString("college");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        SharedPreferencesUtil.Save_safe(SplashActivity.this,"nick_name",nick_name);
+        SharedPreferencesUtil.Save_safe(SplashActivity.this,"sign",sign);
+        SharedPreferencesUtil.Save_safe(SplashActivity.this,"face",face);
+        SharedPreferencesUtil.Save_safe(SplashActivity.this,"college",college);
+    }
 
 
     private void Register_user() {
         String tust_number = SharedPreferencesUtil.Read(SplashActivity.this,"tust_number","");
-        String pswd = EncryptionUtil.base64_de(SharedPreferencesUtil.Read(SplashActivity.this,"pswd",""));
+        String pswd = SharedPreferencesUtil.Read(SplashActivity.this,"pswd","");
         if(tust_number.equals("")||pswd.equals("")){
-            Toast.makeText(SplashActivity.this, "注册用户失败，本地数据错误，请重新登录", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(SplashActivity.this, "注册用户失败，本地数据错误，请重新登录", Toast.LENGTH_SHORT).show();
             return;
         }
         FormBody formBody = new FormBody.Builder()
@@ -170,7 +202,6 @@ public class SplashActivity extends TustBaseActivity {
         if (!SharedPreferencesUtil.Read(SplashActivity.this, "is_login", false)) {
             //intent
             Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra("other_user", "no");
             startActivity(intent);
             //start mainActivity
         } else {
@@ -205,7 +236,9 @@ public class SplashActivity extends TustBaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                SharedPreferencesUtil.Save(SplashActivity.this, "choice_week", week_from_server);
+                if(week_from_server != 0){
+                    SharedPreferencesUtil.Save(SplashActivity.this, "choice_week", week_from_server);
+                }
                 Intent();
             }
         });

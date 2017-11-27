@@ -20,8 +20,8 @@ import android.widget.Toast;
 import com.cooltechworks.views.ScratchTextView;
 import com.surine.tustbox.Bean.Score_Info;
 import com.surine.tustbox.Fragment.gp_download.GP_download_Fragment;
-import com.surine.tustbox.Fragment.library.Library_Fragment;
 import com.surine.tustbox.Fragment.score.Score_Fragment;
+import com.surine.tustbox.Init.SystemUI;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
 
@@ -56,7 +56,7 @@ public class Box_info_Activty extends TustBaseActivity {
         if(actionBar !=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
+        SystemUI.color_toolbar(this,actionBar);
         //Load the Fragment according to the intent
         initFragment(getIntent().getStringExtra("item_box"));
     }
@@ -71,7 +71,7 @@ public class Box_info_Activty extends TustBaseActivity {
                break;
            case "图书":
                Flag = 1;
-               replaceFragment(Library_Fragment.getInstance("Library"));
+               Toast.makeText(Box_info_Activty.this,"图书馆系统不稳定，开发哥哥正在努力修复！",Toast.LENGTH_SHORT).show();
                break;
            case "GP":
                Flag = 2;
@@ -81,8 +81,7 @@ public class Box_info_Activty extends TustBaseActivity {
            case "网络":
                Flag = 3;
                setTitle(getString(R.string.school_network));
-               Toast.makeText(this,"出现了一点小问题，哎哟！",Toast.LENGTH_SHORT).show();
-             //  replaceFragment(School_NetWork_Fragment.getInstance("School_NetWork"));
+               startActivity(new Intent(Box_info_Activty.this,NetWorkActivity.class));
                break;
        }
     }

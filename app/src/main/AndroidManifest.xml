@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.surine.tustbox">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -18,8 +19,10 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">
         <activity
             android:name=".UI.SplashActivity"
             android:label="@string/app_name"
@@ -93,7 +96,16 @@
             android:name=".UI.TodayCardActivity"
             android:theme="@style/myTransparent">
         </activity>
-
+        <activity android:name=".UI.WebViewActivity">
+        </activity>
+        <activity
+            android:name=".UI.SendActionActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity android:name=".UI.SchZoneActivity">
+        </activity>
+        <activity android:name=".UI.PanActivity">
+        </activity>
     </application>
 
 </manifest>

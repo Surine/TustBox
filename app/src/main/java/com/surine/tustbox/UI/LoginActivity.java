@@ -7,11 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.surine.tustbox.Bean.Course_Info;
 import com.surine.tustbox.Bean.Student_info;
@@ -44,10 +43,9 @@ import okhttp3.Response;
 public class LoginActivity extends TustBaseActivity {
     private static final String TAG = "LoginActivity";  //tag for log
     private static final int CONNECT_TIMEOUT = 10;   //network connect timeout(10s)
-    private static final String EXTRA = "other_user";   //more user intent flag
     private EditText tust_number;    //input tust number
     private EditText pswd;      //input tust password
-    private TextView warning;
+    private CheckBox warning;
     private Button login_btn;
     String tust_number_string = null;
     String pswd_string = null;
@@ -86,17 +84,13 @@ public class LoginActivity extends TustBaseActivity {
     private int slec_color;
     String intent_string = "-1";
     int user=0;
+    private Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Intent intent = getIntent();
-        intent_string = intent.getStringExtra(EXTRA);
-        //null
-        if(intent_string == null){
-            intent_string = "-1";
-        }
         //hidden the  stautusbar
         SystemUI.hide_statusbar(this);
 
@@ -113,11 +107,14 @@ public class LoginActivity extends TustBaseActivity {
         set_listen();
     }
 
+
+
     private void initView() {
         tust_number = (EditText) findViewById(R.id.tust_number);
         pswd = (EditText) findViewById(R.id.pswd);
         login_btn = (Button) findViewById(R.id.btn_login);
-        warning = (TextView) findViewById(R.id.warning);
+        login_btn.setText(R.string.please_read_me);
+        warning = (CheckBox) findViewById(R.id.warning);
     }
 
     private void set_listen() {
@@ -148,9 +145,25 @@ public class LoginActivity extends TustBaseActivity {
         warning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                builder.setMessage(R.string.note)
-                        .setPositiveButton(R.string.ok, null).show();
+
+                if(warning.isChecked()){
+                    intent = new Intent(LoginActivity.this,WebViewActivity.class);
+                    intent.putExtra("url",UrlData.notice_and_introduce);
+                    intent.putExtra("title",getString(R.string.user_know));
+                    login_btn.setEnabled(true);
+                    new Handler().postDelayed(new Runnable(){
+                        public void run() {
+                            startActivity(intent);
+                            login_btn.setBackgroundResource(R.drawable.login_shape);
+                            login_btn.setText(R.string.login);
+                        }
+                    }, 300);
+
+                }else{
+                    login_btn.setText(R.string.please_read_me);
+                    login_btn.setEnabled(false);
+                    login_btn.setBackgroundResource(R.drawable.login_shape_cacel);
+                }
             }
         });
     }
@@ -192,11 +205,7 @@ public class LoginActivity extends TustBaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 //save the pswd and id
-                if(intent_string!=null) {
-                    if (!intent_string.equals(EXTRA)) {
-                        saveUserInfo(tust_number_string, pswd_string);
-                    }
-                }
+                saveUserInfo(tust_number_string, pswd_string);
                 String str = response.body().string().toString();
                 Document doc = Jsoup.parse(str);
                 String back_title = doc.title();
@@ -259,7 +268,6 @@ public class LoginActivity extends TustBaseActivity {
         *
         * */
         if (save_tag == 1) {
-                if (!intent_string.equals(EXTRA)) {
                     //get the save_tag and use the Jsoup to analyze the html  (td)
                     Document doc2 = Jsoup.parse(my_student_info_str);
                     content = doc2.select("td");
@@ -286,20 +294,13 @@ public class LoginActivity extends TustBaseActivity {
                     SaveStudentInfo(this.content.get(79).text(), this.content.get(80).text());
                     SaveStudentInfo(this.content.get(83).text(), this.content.get(84).text());
                     SaveStudentInfo(this.content.get(115).text(), this.content.get(119).text());
-                }
+
             } else if (save_tag == 2) {
                 //get the tr tag
                 Document doc2 = Jsoup.parse(my_course_info_str);
                 content2 = doc2.select("tr");
                 for (int i = 22; i < content2.size(); i++) {
-                    //set the value of user(int)
-                    if (intent_string != null) {
-                        if (intent_string.equals(EXTRA)) {
-                            user = 1;   //other
-                        } else if (intent_string.equals("-1")) {
-                            user = 0;   //the first user
-                        }
-                    }
+                      user = 0;   //the first user
                /*
                *the data obtained are classifiled into two cases
                * full line & half a line
@@ -471,20 +472,10 @@ public class LoginActivity extends TustBaseActivity {
     //start intent
     private void Intent_Activity() {
         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-
-        if(intent_string!=null) {
-            if (!intent_string.equals(EXTRA)) {
-                intent.putExtra("other_user", "no");
-                startActivity(intent);
-                finish();
-            } else {
-                intent.putExtra("other_user", "other_user");
-                SharedPreferencesUtil.Save(LoginActivity.this,"other_user_is_login", true);
-                startActivity(intent);
-                finish();
-            }
-        }
+        startActivity(intent);
+        finish();
     }
+
 
     private Handler myHandler = new Handler() {
         @Override
@@ -497,12 +488,6 @@ public class LoginActivity extends TustBaseActivity {
                     GetStudentInfo();
                     //get
                     GetCourseInfo();
-                    if(intent_string!=null) {
-                        if (!intent_string.equals(EXTRA)) {
-                            //get
-                            GetHead();
-                        }
-                    }
                     break;
             }
         }

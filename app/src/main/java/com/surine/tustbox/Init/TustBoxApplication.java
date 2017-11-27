@@ -2,6 +2,9 @@ package com.surine.tustbox.Init;
 
 import android.app.Application;
 
+import com.lzy.ninegrid.NineGridView;
+import com.surine.tustbox.Util.GlideImageLoader;
+
 import org.litepal.LitePalApplication;
 
 
@@ -16,7 +19,7 @@ public class TustBoxApplication extends Application {
         super.onCreate();
         //init the litepal
         LitePalApplication.initialize(getApplicationContext());
-
+        NineGridView.setImageLoader(new GlideImageLoader());
     }
 }
 

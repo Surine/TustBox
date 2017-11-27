@@ -42,7 +42,7 @@ public class SharedPreferencesUtil {
     }
 
 
-    //储存部分重载
+    //储存部分重载（值加密，key无加密）
     public static void Save_safe(Context context,String key, String value){
         SharedPreferences.Editor editor = context.getSharedPreferences("data",MODE_PRIVATE).edit();
         editor.putString(key,EncryptionUtil.base64_en(value));
@@ -58,7 +58,7 @@ public class SharedPreferencesUtil {
         editor.putBoolean(key, Boolean.parseBoolean(EncryptionUtil.base64_en(String.valueOf(value))));
         editor.apply();
     }
-    //读取部分重载
+    //读取部分重载（值解密）
     public static int Read_safe(Context context,String key,int normal){
         SharedPreferences pref = context.getSharedPreferences("data",MODE_PRIVATE);
         return Integer.parseInt(EncryptionUtil.base64_de(String.valueOf(pref.getInt(key,normal))));

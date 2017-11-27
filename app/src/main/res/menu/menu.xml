@@ -3,10 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
    <item android:id="@+id/week"
          app:showAsAction="always"
+
          android:title="@string/change_week_in_main_page"/>
 
-
-    <item android:id="@+id/other_user"
-          app:showAsAction="never"
-          android:title="@string/More_User"/>
 </menu>

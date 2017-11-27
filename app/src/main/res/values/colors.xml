@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0f88eb</color>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimary2">#1a7ae1</color>
     <color name="multiple_image_select_primaryDark">#0d6bb9</color>
-    <color name="colorPrimaryDark">#0d6bb9</color>
-    <color name="colorAccent">#0d6bb9</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">#FF4081</color>
     <color name="Tust_White">#ffffff</color>
     <color name="Tust_Black">#000000</color>
     <color name="Tust_Grey">#4e4242</color>
@@ -34,4 +35,7 @@
     <color name="color3">#e6e5e5</color>
     <color name="trans_white">#00ffffff</color>
     <color name="transparent">#00000000</color>
+    <color name="transparent_blue">#de0f88eb</color>
+    <color name="school_head_shape">#deeab631</color>
+    <color name="transparent_white">#50ffffff</color>
 </resources>

@@ -4,15 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.preference.SwitchPreference;
 import android.widget.Toast;
 
-import com.surine.tustbox.UI.SettingActivity;
-import com.surine.tustbox.Eventbus.SimpleEvent;
 import com.surine.tustbox.R;
+import com.surine.tustbox.UI.SettingActivity;
 import com.surine.tustbox.Util.IOUtil;
-
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by surine on 2017/4/8.
@@ -20,7 +16,6 @@ import org.greenrobot.eventbus.EventBus;
 
 public class SettingFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
     private Preference Setting_back;
-    private SwitchPreference setting_close_show_picture;
     private Preference About;
     private Preference clear_cache;
 
@@ -35,7 +30,6 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     private void setLinsener() {
         Setting_back.setOnPreferenceClickListener(this);
         About.setOnPreferenceClickListener(this);
-        setting_close_show_picture.setOnPreferenceClickListener(this);
         clear_cache.setOnPreferenceClickListener(this);
     }
 
@@ -46,16 +40,12 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         clear_cache = findPreference("clear_cache");
         Setting_back = findPreference("setting_back");
         Setting_back = findPreference("setting_back");
-        setting_close_show_picture = (SwitchPreference) findPreference("setting_close_show_picture");
     }
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
         if(preference == Setting_back){
             startActivity(new Intent(getActivity(),SettingActivity.class).putExtra("set_",1));
-        }else if(preference == setting_close_show_picture){
-            //发送数据
-            EventBus.getDefault().post(new SimpleEvent(1,"UPDATE"));
         }else if(preference == About){
             //about
             startActivity(new Intent(getActivity(),SettingActivity.class).putExtra("set_",2));

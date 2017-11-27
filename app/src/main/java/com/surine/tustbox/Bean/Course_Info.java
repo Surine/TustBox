@@ -29,6 +29,35 @@ public class Course_Info extends DataSupport{
     private String homework;  //作业
     private int color;   //颜色
     private int user;  //用户
+    public Course_Info(String dev, String course_number, String course_name, String class_number, String score, String tag, String exm, String teacher, String method, String status, String week, String week_number, String class_, String class_count, String school, String building, String classroom, int id, String note, String homework, int color, int user) {
+        this.dev = dev;
+        this.course_number = course_number;
+        this.course_name = course_name;
+        this.class_number = class_number;
+        this.score = score;
+        this.tag = tag;
+        this.exm = exm;
+        this.teacher = teacher;
+        this.method = method;
+        this.status = status;
+        this.week = week;
+        this.week_number = week_number;
+        this.class_ = class_;
+        this.class_count = class_count;
+        this.school = school;
+        this.building = building;
+        this.classroom = classroom;
+        this.id = id;
+        this.note = note;
+        this.homework = homework;
+        this.color = color;
+        this.user = user;
+    }
+
+    public Course_Info() {
+    }
+
+
 
     public int getUser() {
         return user;

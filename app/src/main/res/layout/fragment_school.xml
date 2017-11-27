@@ -2,17 +2,50 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
-              android:background="@color/Tust_White"
+              android:background="@color/color2"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button2"
-        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
-        android:layout_width="match_parent"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="15dp"
+        app:elevation="1dp"
+        app:fabSize="mini"
+        app:srcCompat="@drawable/ic_edit_black_24dp"/>
+
+    <RelativeLayout
+         android:background="@drawable/school_shape"
+         android:layout_width="match_parent"
+         android:layout_margin="10dp"
+         android:paddingTop="5dp"
+         android:id="@+id/relativeLayout"
+         android:gravity="center_vertical"
+         android:paddingBottom="5dp"
+         android:layout_height="wrap_content">
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:paddingStart="15dp"
+             android:textColor="@color/Tust_White"
+             android:text="校园系统试运行公告"
+             android:textSize="10sp"
+             />
+     </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/res_list"
+        android:background="@color/color2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="255dp"
-        android:text="校园系统构建中"/>
+        android:layout_below="@+id/relativeLayout">
+
+    </android.support.v7.widget.RecyclerView>
+
 </RelativeLayout>

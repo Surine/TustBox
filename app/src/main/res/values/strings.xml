@@ -4,16 +4,10 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="name">小天盒子 开发版2.0 @surine</string>
-    <string name="version">小天盒子 2.0.6-Beta</string>
-    <string name="about">萌新么？看看关于我吧！</string>
+    <string name="version">小天盒子 2.0.7-Beta1</string>
+    <string name="about">我已认真阅读使用说明与协议！</string>
     <string name="warning_text">注意</string>
-    <string name="note">1.\t\t为了确保您的帐号安全，主要功能仅限使用校园网，
-        因此登录之前请检查您的网络是否连接至校园网，
-        包括校园TUST无线网络或者宿舍网络接口路由器，
-        如果未连接校园网可能会产生登录不上的情况。\n
-        2.\t\t默认登录密码是身份证后六位，如果身份证包含X，则X大写。\n
-        3.\t\t建议新用户使用之前阅读APP说明。
-    </string>
+
     <string name="ok">确定</string>
     <string name="wrong">帐号或者密码错误！</string>
     <string name="success">请求成功！</string>
@@ -68,7 +62,7 @@
     <string name="get_error">获取信息失败，请重新登录</string>
     <string name="get_success">信息获取成功</string>
     <string name="clear_success">数据清除成功</string>
-    <string name="album_view">选择课表背景图片</string>
+    <string name="album_view">选择图片</string>
     <string name="image_view">单击选择图片</string>
     <string name="add">确定</string>
     <string name="selected">已选</string>
@@ -94,20 +88,19 @@
     <string name="surine_is_me">新世纪的Android爱好者，xiaxiaxia~</string>
     <string name="qq_number">635622188</string>
     <string name="qq_is_copy">QQ已经复制到剪贴板</string>
-    <string name="welcome">欢迎使用小天盒子：</string>
-    <string name="more_share">让更多人遇见小天</string>
+    <string name="welcome">初次见面，请多关照：</string>
+    <string name="more_share">我是一只盒子。</string>
     <string name="type">你要使用什么方式联系盒子呢？</string>
     <string name="what_do_you_want_to_say">想说点什么？</string>
     <string name="welcome_send_bug">欢迎给盒子提出意见：</string>
     <string name="qq_email">2234503567@qq.com</string>
     <string name="qq_email_mo">mailto:2234503567@qq.com</string>
     <string name="log">日志</string>
-    <string name="new_log"> 小天[V2.0.6.20170927]，每一个小需求都应被实现\n
-         · 课程表增加日视图，每天给你的最清晰。\n
-         · 主题色可以随着背景图的改变而改变，拒绝纯蓝的单调。\n
-         · 课程背景修改为浅色系，有木有充满活力?\n
-         · 课程表与节次联动[逼死强迫症系列得到了修复]\n
-         · 部分代码重构，提升系统稳定性\n
+    <string name="new_log"> 小天[V3.0.0],盒子，在探索中进步。\n
+        · 我在尝试如何将Material Design升华，设计出一个独特的Android版的软件，我不是专业的设计师
+        我也肯定做不到让大家都满意的设计，但是挑战才能进步，小天盒子3.0.0，跨版本升级带给你不一样的体验。\n
+        · 简洁设计/便捷操作/运行速度/使用体验\n
+        · 修复2.x系列版本相关bug（如果你喜欢2.x版本，仍然可以通过我们的链接下载）
     </string>
     <string name="hide">隐藏证件照</string>
     <string name="hide_summary">开启后将替换您的证件照</string>
@@ -126,9 +119,9 @@
         小天会将您的密码加密储存在本地，并且不会以任何方式发送出去，小伙伴们就放心使用吧！不过小伙伴们也要谨慎保管好自己的密码哦！
         另外，去你的桌面上找找会出现一个一键登录校园网的快捷方式，以后就不用进来点我头上的按钮啦！
     </string>
-    <string name="info_trans">Ubuntu16.04/Apache2.0/Thinkphp/MD5</string>
+    <string name="info_trans">Base64/SHA1/MD5</string>
     <string name="info_trans_title">后台及传输加密策略</string>
-    <string name="change_week_in_main_page">切换周</string>
+    <string name="change_week_in_main_page">周</string>
     <string name="Exit">退出登录</string>
     <string name="More_User">多用户</string>
     <string name="Course_week_toolbar_title">第%1$d周</string>
@@ -144,6 +137,16 @@
     <string name="bus_helper">校车时刻表</string>
     <string name="network_error">网络（非校园网）未连接</string>
     <string name="token_error_info">身份认证失败，请重新进入APP，将会自动验证身份</string>
+    <string name="user_know">用户须知</string>
+    <string name="please_read_me">请先阅读说明</string>
+    <string name="network_no_connect">无网络</string>
+    <string name="my_info_from_server">我的资料</string>
+    <string name="send_status">发表心情</string>
+    <string name="send_success">发送成功</string>
+    <string name="para_null">参数为空</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="sch_zone">课表广场</string>
 
 </resources>
 

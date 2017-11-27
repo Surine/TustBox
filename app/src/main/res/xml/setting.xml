@@ -16,15 +16,6 @@
    </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/me"
-        >
-        <SwitchPreference
-            android:key="setting_close_show_picture"
-            android:title="@string/hide"
-            android:summary="@string/hide_summary"
-            />
-    </PreferenceCategory>
-    <PreferenceCategory
         android:title="@string/safe"
         >
         <Preference

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                   android:id="@+id/toolbar"
+                                   app:layout_behavior="@string/appbar_scrolling_view_behavior"
                                    android:layout_width="match_parent"
-                                   android:layout_height="?attr/actionBarSize"
-                                   app:theme="@style/CustomToolbarTheme"
-                                   android:background="@color/colorPrimary">
+                                   android:layout_height="@dimen/toolbar_height"
+                                   android:paddingTop="@dimen/toolbar_height_padding"
+                                   android:background="?attr/colorPrimary"
+                                   android:fitsSystemWindows="true"
+                                   android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                                   app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 </android.support.v7.widget.Toolbar>

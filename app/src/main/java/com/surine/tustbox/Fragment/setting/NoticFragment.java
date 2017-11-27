@@ -23,7 +23,7 @@ public class NoticFragment extends Fragment{
         getActivity().setTitle(getString(R.string.notice2));
         WebView webView = (WebView) view.findViewById(R.id.gpa_file_Webview);
         //WebView :load url at assets
-        webView.loadUrl(UrlData.notice_url);
+        webView.loadUrl(UrlData.notice_and_introduce);
         return view;
     }
 }

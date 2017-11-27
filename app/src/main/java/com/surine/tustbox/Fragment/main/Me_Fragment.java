@@ -1,12 +1,10 @@
 package com.surine.tustbox.Fragment.main;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,17 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.surine.tustbox.Bean.Book_Info;
-import com.surine.tustbox.Bean.Course_Info;
-import com.surine.tustbox.Bean.Score_Info;
-import com.surine.tustbox.Bean.Student_info;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.Eventbus.SimpleEvent;
 import com.surine.tustbox.R;
-import com.surine.tustbox.UI.LoginActivity;
 import com.surine.tustbox.UI.SettingActivity;
-import com.surine.tustbox.UI.ToolbarActivity;
 import com.surine.tustbox.UI.UserInfoActivity;
 import com.surine.tustbox.Util.HttpUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
@@ -36,9 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.litepal.crud.DataSupport;
 
-import java.io.File;
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -122,56 +112,13 @@ public class Me_Fragment extends Fragment {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Exit();
+                //Exit();
             }
         });
         return v;
     }
 
-    //exit()
-    private void Exit() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.exit);
-        builder.setMessage(R.string.exit_info);
-        builder.setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
 
-            }
-        });
-        builder.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //1:delete all of the database
-                //2:delete SharedPreferences
-                //3.start the login activty
-                //4. make a toast
-
-                DataSupport.deleteAll(Course_Info.class);
-                DataSupport.deleteAll(Student_info.class);
-                DataSupport.deleteAll(Score_Info.class);
-                DataSupport.deleteAll(Book_Info.class);
-                File file = new File(String.valueOf(getActivity().getFilesDir() + "/head.jpg"));
-                deletefile(file);
-                file = new File("/data/data/com.surine.tustbox/shared_prefs/data.xml");
-                deletefile(file);
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-                Toast.makeText(getActivity(),
-                        R.string.clear_success,
-                        Toast.LENGTH_SHORT).show();
-                getActivity().finish();
-            }
-        });
-        builder.show();
-    }
-
-    private void deletefile(File file) {
-        if (file.exists()) {
-            if (file.isFile()) {
-                file.delete();   //delete the head or SharedPreferences
-            }
-        }
-    }
 
 
     private void loadHead() {

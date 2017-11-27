@@ -57,5 +57,7 @@ public class OslFragment extends Fragment {
         mOsl_infos.add(oi);
         oi = new Osl_info("Butterknife","http://jakewharton.github.io/butterknife/");
         mOsl_infos.add(oi);
+        oi = new Osl_info("Ninegridview","http://github.com/jeasonlzy/NineGridView");
+        mOsl_infos.add(oi);
     }
 }

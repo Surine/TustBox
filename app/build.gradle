@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '27.0.0'
     defaultConfig {
         applicationId "com.surine.tustbox"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 5
-        versionName "2.0.6 Beta-20170924"
+        versionCode 6
+        versionName "2.0.7 Beta1.0-20171104"
         testInstrumentationRunner "android.support.widget.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        aaptOptions.cruncherEnabled = false
         ndk {
             abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a', 'x86', 'x86_64', 'mips', 'mips64'
         }
@@ -45,5 +45,18 @@ dependencies {
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.28'
     compile 'com.jakewharton:butterknife:8.4.0'
     testCompile 'junit:junit:4.12'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.lzy.widget:ninegridview:0.2.0'
+
+    implementation 'com.android.support:mediarouter-v7:27.0.1'
+}
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '25.2.0'
+            }
+        }
+    }
 }

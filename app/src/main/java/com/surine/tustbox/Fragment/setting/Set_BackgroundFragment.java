@@ -108,7 +108,7 @@ public class Set_BackgroundFragment extends TakePhotoFragment {
                 .getSystemService(Context.WINDOW_SERVICE);
         int width = wm.getDefaultDisplay().getWidth();
         int height = wm.getDefaultDisplay().getHeight()-140;
-        int maxSize = 204800;
+        int maxSize = 409600;
         CompressConfig config=new CompressConfig.Builder()
                 .setMaxSize(maxSize)
                 .setMaxPixel(width>=height? width:height)

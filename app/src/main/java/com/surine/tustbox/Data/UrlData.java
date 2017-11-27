@@ -36,10 +36,7 @@ public class UrlData {
     public static String download_url = "http://surine.cn/TustBox/index.php/Home/AppManager/download";
     //github
     public static String github_url = "https://github.com/surine/TustBox";
-    //osl
-    public static String osl_url ="file:///android_asset/Html/osl.html";
-    //notice
-    public static String notice_url ="file:///android_asset/Html/notice.html";
+
     //get server week
     public static String getServerWeek ="http://surine.cn/TustBoxServer/Course/GetWeek.php";
     public static String celitea_url ="http://celitea.cn";
@@ -52,10 +49,16 @@ public class UrlData {
     //get head
     public static String get_head_url ="http://surine.cn/TustBox/index.php/Home/User/getHead";
 
-    //schoolnetwork url
+    //校园网登录页面
     public static final String net_post_url = "http://59.67.0.245/a30.htm";
     //校园网登录重定向
     public static final String net_get_url = "http://59.67.0.245";
     //网费充值
     public static final String charge_page = "http://59.67.5.142/WebPay/toRecharge";
+
+    //用户须知和使用说明
+    public static final String notice_and_introduce = "http://surine.cn/TustBox/WebPage/user_login_page";
+
+    //云盘登录
+    public static final String pan_login = "http://pan.tust.edu.cn/v1/auth/sign_in?link_name=web&link_device=web&";
 }

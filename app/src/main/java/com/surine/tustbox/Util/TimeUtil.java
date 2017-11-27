@@ -98,4 +98,11 @@ public class TimeUtil {
         return number;
     }
 
+    public static String GetNavTime() {
+        long time=System.currentTimeMillis();
+        Date date=new Date(time);
+        SimpleDateFormat format=new SimpleDateFormat("dd/MM月 yy E");
+        return format.format(date);
+    }
 }
+

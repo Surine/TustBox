@@ -4,9 +4,7 @@ package com.surine.tustbox.Fragment.course;
  * Created by surine on 2017/9/16.
  */
 
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -144,12 +142,12 @@ public class Course_Fragment_Today extends Fragment{
                                    public void onClick(View view) {
                                        Intent intent = new Intent(getActivity(),TodayCardActivity.class).
                                                putExtra("ART",web_url).putExtra("ART_TITLE",title).putExtra("ART_IMAGE",picture_url);
-                                       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                           startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(
-                                                   getActivity(),view,"art_image").toBundle());
-                                       }else{
+//                                       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                                           startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(
+//                                                   getActivity(),view,"art_image").toBundle());
+//                                       }else{
                                            startActivity(intent);
-                                       }
+                                       //}
                                    }
                                });
                            }
@@ -217,14 +215,7 @@ public class Course_Fragment_Today extends Fragment{
                 });
                 today_adapter.setEmptyView(noView);
 
-//                View headerView = getHeaderView(0, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                    }
-//                });
-//
-//                today_adapter.addHeaderView(headerView);
+
                 today_adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                     @Override
                     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -232,16 +223,6 @@ public class Course_Fragment_Today extends Fragment{
                     }
                 });
             }
-
-
-//    private View getHeaderView(int type, View.OnClickListener listener) {
-//                View view = getActivity().getLayoutInflater().inflate(R.layout.view_header, (ViewGroup) mRecyclerView.getParent(), false);
-//                if (type == 0) {
-//                }
-//                view.setOnClickListener(listener);
-//                return view;
-//            }
-
 
             @Subscribe
             public void GetMessage(SimpleEvent event) {

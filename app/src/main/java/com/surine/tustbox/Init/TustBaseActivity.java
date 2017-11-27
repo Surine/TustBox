@@ -10,8 +10,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-
 /**
  * Created by surine on 2017/3/28.\
  * BaseActivity:管理活动
@@ -38,8 +36,8 @@ public class TustBaseActivity extends AppCompatActivity {
         Log.d("BaseActivity", getClass().getSimpleName());
         //活动管理器添加活动
         ActivityCollector.addActivity(this);
-        SystemUI.StatusUISetting(this,"#50000000");
-        ButterKnife.bind(this);
+        SystemUI.StatusUISetting(this,"#30000000");
+
     }
 
 

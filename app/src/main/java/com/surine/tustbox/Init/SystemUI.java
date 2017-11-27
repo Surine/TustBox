@@ -2,9 +2,13 @@ package com.surine.tustbox.Init;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.surine.tustbox.Util.SharedPreferencesUtil;
 
 /**
  * Created by surine on 2017/2/17.
@@ -28,6 +32,7 @@ public class SystemUI {
     }
 
 
+    //颜色
     public static void StatusUISetting(Activity context, String color){
         if (Build.VERSION.SDK_INT >= 21) {
             View decorView = context.getWindow().getDecorView();
@@ -47,4 +52,12 @@ public class SystemUI {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
+    public static  void color_toolbar(Activity activity,ActionBar ab){
+        //设置toolbar颜色
+        int color = Integer.parseInt
+                (String.valueOf(SharedPreferencesUtil.Read(activity,"TOOLBAR_C", -1)));
+        if(color != -1){
+            ab.setBackgroundDrawable(new ColorDrawable(color));
+        }
+    }
 }

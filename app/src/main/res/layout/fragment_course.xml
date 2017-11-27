@@ -143,15 +143,17 @@
 
              android:gravity="center"
              />
+
          <TextView
+             android:id="@+id/text_course_3"
              android:layout_width="match_parent"
              android:layout_height="86dp"
              android:layout_weight="1"
-             android:text="3"
-             android:id="@+id/text_course_3"
-
              android:gravity="center"
+
+             android:text="3"
              />
+
          <TextView
              android:layout_width="match_parent"
              android:layout_height="86dp"
@@ -184,7 +186,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="516dp"
         android:id="@+id/course_table"
         android:overScrollMode="never"
         android:layout_marginStart="32dp"
@@ -194,4 +196,15 @@
         >
 
     </android.support.v7.widget.RecyclerView>
+
+   <android.support.design.widget.FloatingActionButton
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentEnd="true"
+       android:layout_marginBottom="16dp"
+       android:layout_marginEnd="16dp"
+       app:fabSize="mini"
+       android:id="@+id/fab_sch_zone"
+       app:srcCompat="@drawable/tooltip_image"/>
 </RelativeLayout>

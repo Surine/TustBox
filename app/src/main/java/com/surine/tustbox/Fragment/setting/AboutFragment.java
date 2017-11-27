@@ -71,7 +71,7 @@ public class AboutFragment extends Fragment{
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                share();
+                //share();
             }
         });
 
@@ -197,14 +197,7 @@ public class AboutFragment extends Fragment{
         }
     }
 
-    private void share() {
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.welcome)+UrlData.download_url);
-        intent.setType("text/plain");
-        //设置分享列表的标题，并且每次都显示分享列表  
-        startActivity(Intent.createChooser(intent, getString(R.string.more_share)));
-    }
+
 
     private void sendbug() {
         // 必须明确使用mailto前缀来修饰邮件地址,如果使用  
