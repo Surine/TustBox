@@ -7,11 +7,10 @@
           android:icon="@drawable/ic_action_sty"
          android:title="主题"
         ></item>
-    <item
-        android:id="@+id/night"
-        android:title="夜间"
-        android:icon="@drawable/ic_action_night"
-        app:actionLayout="@layout/switch_item"/>
+    <!--<item android:id="@+id/night"-->
+        <!--android:icon="@drawable/ic_action_night"-->
+        <!--android:title="夜间（测试性）"-->
+        <!--&gt;</item>-->
     <item android:id="@+id/setting"
           android:icon="@drawable/ic_action_setting"
           android:title="设置"

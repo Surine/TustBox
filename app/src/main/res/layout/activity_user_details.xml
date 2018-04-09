@@ -86,6 +86,7 @@ tools:context="com.surine.tustbox.UI.TodayCardActivity">
                     android:layout_below="@+id/name_from_server"
                     android:layout_marginTop="5dp"
                     />
+
             </RelativeLayout>
 
             <de.hdodenhof.circleimageview.CircleImageView

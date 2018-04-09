@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.surine.tustbox">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.surine.tustbox">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
         android:name=".Init.TustBoxApplication"
@@ -24,47 +25,66 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
         <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
             android:name=".UI.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".UI.MainActivity"
+            android:label="首页"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".UI.LoginActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".UI.ToolbarActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".UI.Box_info_Activty"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".UI.SettingActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".UI.NetWorkActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".UI.UserInfoActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.EditCourseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.ActionInfoActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".UI.ShortActivity"
             android:icon="@drawable/ic_short"
             android:label="一键登录校园网"
+            android:screenOrientation="portrait"
             android:theme="@style/myTransparent">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -73,38 +93,73 @@
             android:name=".Widget.WidgetProvider"
             android:label="小天课表">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="com.widget.surine.WidgetProvider.MY_UPDATA_CHANGE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.widget.surine.WidgetProvider.MY_UPDATA_CHANGE" />
                 <!-- 接收点击列表的响应事件 -->
-                <action android:name="com.surine.tustbox.COLLECTION_VIEW_ACTION"/>
+                <action android:name="com.surine.tustbox.COLLECTION_VIEW_ACTION" />
                 <!-- 接收点击按钮_refresh的响应事件 -->
-                <action android:name="com.surine.tustbox.BT_REFRESH_ACTION"/>
-                <action android:name="com.surine.tust_box.UPDATE_ALL"/>
+                <action android:name="com.surine.tustbox.BT_REFRESH_ACTION" />
+                <action android:name="com.surine.tust_box.UPDATE_ALL" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_info"/>
+                android:resource="@xml/appwidget_info" />
         </receiver>
 
         <service
             android:name=".Widget.WidgetService"
             android:exported="false"
-            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <activity
             android:name=".UI.TodayCardActivity"
-            android:theme="@style/myTransparent">
-        </activity>
-        <activity android:name=".UI.WebViewActivity">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/myTransparent" />
+        <activity
+            android:name=".UI.WebViewActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".UI.SendActionActivity"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-        <activity android:name=".UI.SchZoneActivity">
-        </activity>
-        <activity android:name=".UI.PanActivity">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".UI.SchZoneActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.PanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.ScoreActiviy"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.ReplyInCommentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UI.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".UI.EditUserInfoActivity" />
+
+        <provider
+            android:name="com.tencent.bugly.beta.utils.BuglyFileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="name,authorities,exported,grantUriPermissions">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"
+                tools:replace="name,resource" />
+        </provider>
+
+        <activity android:name=".UI.CardActivity"
+            android:label="Beta3.0"
+            >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
     </application>
 

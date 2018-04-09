@@ -18,9 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cooltechworks.views.ScratchTextView;
-import com.surine.tustbox.Bean.Score_Info;
+import com.surine.tustbox.Bean.ScoreInfo;
 import com.surine.tustbox.Fragment.gp_download.GP_download_Fragment;
-import com.surine.tustbox.Fragment.score.Score_Fragment;
+import com.surine.tustbox.Fragment.score.ScoreNewTermFragment;
 import com.surine.tustbox.Init.SystemUI;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
@@ -40,8 +40,8 @@ public class Box_info_Activty extends TustBaseActivity {
     double score;
     double credit_add;
     private String my_score_report = "成绩列表：";
-    private List<Score_Info> mscore_infos = new ArrayList<>();
-    private List<Score_Info> mLastScore_infos = new ArrayList<>();
+    private List<ScoreInfo> mscore_infos = new ArrayList<>();
+    private List<ScoreInfo> mLastScore_infos = new ArrayList<>();
     private int Flag = 1;
 
     @Override
@@ -67,7 +67,7 @@ public class Box_info_Activty extends TustBaseActivity {
                Flag = 0;
                //loading score fragment
                setTitle(getString(R.string.loading));
-               replaceFragment(Score_Fragment.getInstance("School_Score"));
+               replaceFragment(ScoreNewTermFragment.getInstance("School_Score"));
                break;
            case "图书":
                Flag = 1;
@@ -163,7 +163,7 @@ public class Box_info_Activty extends TustBaseActivity {
 
     //share my score to mom
     private void share_my_grade() {
-        List<Score_Info> mscore_infos = DataSupport.findAll(Score_Info.class);
+        List<ScoreInfo> mscore_infos = DataSupport.findAll(ScoreInfo.class);
         for(int i = 0;i<mscore_infos.size();i++) {
           my_score_report =my_score_report + mscore_infos.get(i).getName()
                   +":"+mscore_infos.get(i).getScore()+"\n";
@@ -208,8 +208,8 @@ public class Box_info_Activty extends TustBaseActivity {
     //calculate the GPA
     private double GetGPA() {
         try {
-            mscore_infos = DataSupport.findAll(Score_Info.class);
-            for(Score_Info score:mscore_infos){
+            mscore_infos = DataSupport.findAll(ScoreInfo.class);
+            for(ScoreInfo score:mscore_infos){
                 if(score.getType().equals("THIS")){
                     mLastScore_infos.add(score);
                 }

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/itemLayout"
     android:layout_margin="1dp"
-    android:layout_height="68dp"
+    android:layout_height="@dimen/widget_item_height"
     android:layout_width="match_parent">
 
     <ImageView
@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="10sp"
-        android:maxLength="4"
+        android:maxLength="7"
         android:ellipsize="end"
         android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"

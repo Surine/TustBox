@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.jph.takephoto.model.InvokeParam;
+import com.surine.tustbox.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by surine on 2017/3/28.\
+ * Created by surine on 2017/3/28.
  * BaseActivity:管理活动
  */
 
@@ -37,6 +40,8 @@ public class TustBaseActivity extends AppCompatActivity {
         //活动管理器添加活动
         ActivityCollector.addActivity(this);
         SystemUI.StatusUISetting(this,"#30000000");
+
+      //  setTheme(R.style.BaseAPPDark);
 
     }
 

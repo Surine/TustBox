@@ -8,11 +8,11 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:background="@color/colorPrimary"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:tabIndicatorColor="@color/colorAccent"
-        app:tabSelectedTextColor="@color/Tust_Black"/>
+        app:tabGravity="center"
+        app:tabIndicatorColor="@color/Tust_Black"
+        app:tabSelectedTextColor="@color/Tust_Black" />
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -60,7 +61,7 @@ public class LoginActivity extends TustBaseActivity {
     Course_Info course_info;
     Course_Info help_course;
     int times = 1;
-    final int[] colors = new int[]{
+    public static final int[] colors = new int[]{
             R.color.Tust_1,
             R.color.Tust_2,
             R.color.Tust_3,
@@ -81,7 +82,7 @@ public class LoginActivity extends TustBaseActivity {
 
     private OkHttpClient.Builder builder;
     private OkHttpClient okHttpClient;
-    private int slec_color;
+    private int slec_color = 0;
     String intent_string = "-1";
     int user=0;
     private Intent intent;
@@ -339,6 +340,9 @@ public class LoginActivity extends TustBaseActivity {
                     } else {
                         //color
                         slec_color = colors[i % 15];
+                        if(slec_color == 0){
+                            slec_color = colors[0];
+                        }
                         content_Text = content2.get(i).select("td");
                         help_course = creat_course(
                                 content_Text.get(0).text(),

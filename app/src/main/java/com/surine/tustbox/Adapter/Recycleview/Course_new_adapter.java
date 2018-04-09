@@ -1,8 +1,10 @@
 package com.surine.tustbox.Adapter.Recycleview;
 
 import android.content.res.Resources;
+import android.os.Build;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,8 +27,10 @@ public class Course_new_adapter extends BaseQuickAdapter<Course_Info, BaseViewHo
         super(layoutResId, data);
     }
 
+
     @Override
     protected void convert(BaseViewHolder holder, Course_Info course_info) {
+
         if (!course_info.getCourse_name().equals("*")) {
 
                 holder.setText(R.id.course_text, course_info.getCourse_name());
@@ -34,13 +38,17 @@ public class Course_new_adapter extends BaseQuickAdapter<Course_Info, BaseViewHo
                     holder.setBackgroundColor(R.id.back_color, mContext.getResources().getColor(course_info.getColor()));
                 } catch (Resources.NotFoundException e) {
                     e.printStackTrace();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        holder.setBackgroundColor(R.id.back_color, mContext.getColor(R.color.colorPrimary2));
+                    }else{
+                        holder.setBackgroundColor(R.id.back_color, mContext.getResources().getColor(R.color.colorPrimary2));
+                    }
                     Toast.makeText(mContext,
-                            "颜色加载错误，请重新获取或者联系开发者", Toast.LENGTH_LONG).show();
+                            "颜色加载错误，请重新登录", Toast.LENGTH_LONG).show();
                 }
                 holder.setText(R.id.loca_text, "@" + course_info.getBuilding() + course_info.getClassroom());
                 holder.addOnClickListener(R.id.back_color);
-                Log.d("XD", "加载课程" + course_info.getCourse_name());
-                Log.d("XD", "加载课程" + course_info.getId());
+
 
         }
     }

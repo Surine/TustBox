@@ -29,7 +29,7 @@
               <TextView
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="#树洞#"
+                  android:text="暂无分类"
                   android:id="@+id/topic_show"
                   android:paddingStart="20dp"
                   android:textColor="@color/colorAccent"
@@ -65,38 +65,28 @@
                  android:layout_marginTop="10dp"
                  android:padding="10dp"
                  >
-                 <ImageView
-                     android:layout_width="50dp"
-                     android:layout_height="match_parent"
-                     android:src="@drawable/ic_action_shape"
-                     android:id="@+id/topic"
-                     android:padding="3dp"
-                     android:background="?android:attr/selectableItemBackground"
-                     android:layout_marginLeft="5dp"
-                     android:layout_marginRight="5dp"
-                     android:layout_centerVertical="true"
-                     android:layout_alignParentStart="true"
-                     tools:ignore="NewApi"/>
+
                  <ImageView
                      android:layout_width="50dp"
                      android:layout_height="match_parent"
                      android:src="@drawable/ic_action_pic"
-                     android:id="@+id/imageView3"
-                     android:padding="3dp"
+                     android:id="@+id/takePicture"
+                     android:padding="2dp"
                      android:layout_marginLeft="5dp"
                      android:background="?android:attr/selectableItemBackground"
                      android:layout_marginRight="5dp"
                      android:layout_alignParentTop="true"
                      android:layout_alignParentBottom="true"
-                     android:layout_toEndOf="@+id/topic"
                      tools:ignore="NewApi"/>
 
                  <ImageView
                      android:id="@+id/send_button"
                      android:layout_width="50dp"
+                     android:background="?android:attr/selectableItemBackgroundBorderless"
                      android:layout_height="match_parent"
                      android:layout_alignParentEnd="true"
-                     android:src="@drawable/ic_action_send"/>
+                     android:src="@drawable/ic_action_send"
+                     tools:ignore="NewApi" />
              </RelativeLayout>
 
          </LinearLayout>
@@ -117,10 +107,11 @@
         android:layout_height="match_parent"
         android:hint="分享你的心情吧！"
         android:gravity="start"
-        android:padding="5dp"
+        android:padding="15dp"
         android:layout_above="@id/rec_pic"
-        android:maxEms="140"
+        android:maxEms="240"
         android:id="@+id/edit"
+        android:maxLength="140"
         android:background="@null"
         android:layout_below="@id/toolbar_send"/>
 

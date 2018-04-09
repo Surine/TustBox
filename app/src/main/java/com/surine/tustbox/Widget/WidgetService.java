@@ -7,15 +7,21 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+import android.widget.Toast;
 
 import com.surine.tustbox.Bean.Course_Info;
+import com.surine.tustbox.Fragment.PageFragment.SencondPageFragment;
 import com.surine.tustbox.R;
 import com.surine.tustbox.Util.PatternUtil;
+import com.surine.tustbox.Util.SharedPreferencesUtil;
+import com.surine.tustbox.Util.TimeUtil;
 
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.surine.tustbox.Fragment.PageFragment.SencondPageFragment.c_info;
 
 /**
  * Created by surine on 2017/4/12.
@@ -32,6 +38,7 @@ public class WidgetService extends RemoteViewsService {
     String number_b = ",";
     int number;
     String help_string;
+    private List<String> week_range;
 
 
     @Override
@@ -136,6 +143,70 @@ public class WidgetService extends RemoteViewsService {
 
         }
 
+        /**
+         * 2017年10月23日19:33:09加载课程算法优化
+         * 2018年3月12日16点51分加载课程算法优化
+         */
+        private void initData() throws Exception{
+            //清空列表
+            mCourse_infos.clear();
+            mLastList.clear();
+            //TODO：在这里删掉了用户处理的部分不知道会不会出问题
+            //读取数据库全部课程
+            mCourse_infos = DataSupport.findAll(Course_Info.class);
+            //加载本周
+            SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+            choose_week =  pref.getInt("choice_week",0);
+
+            //初始化全部表格
+            for (int j = 0; j < 42; j++) {
+                mLastList.add(null);
+            }
+
+
+            //周筛选(此时mCourseList是数据库所有数据，mLastList是c_info)
+            for (int e = 0; e < mCourse_infos.size(); e++) {
+                if (mCourse_infos.get(e) != null) {
+                    //正则解析:提取数字(上课周)
+                    week_range = PatternUtil.getNumber(mCourse_infos.get(e).getWeek());
+                    if (mCourse_infos.get(e).getWeek().contains("-")) {
+                        //连周上课（当上课周不在这个区间）
+                        if (!(Integer.parseInt(week_range.get(0)) <= choose_week && Integer.parseInt(week_range.get(1)) >= choose_week)) {
+                            mCourse_infos.set(e,null);
+                        }
+                    } else {
+                        if (week_range.indexOf(choose_week + "") == -1) {
+                            //不是在本周上课
+                            //   Log.d("DEBUG",mCourseList.get(e).getCourse_name()+"被移除");
+                            mCourse_infos.set(e,null);
+                        }
+                    }
+                }
+            }
+
+
+            for (int i = 0; i < mCourse_infos.size(); i++) {
+                try {
+                    course_info = mCourse_infos.get(i);
+                    if (course_info != null ) {
+                        //out of some cases(they may cause App ANR,for example:network course,etc)
+                        if (course_info.getMethod().contains("正常") && !(course_info.getCourse_number().contains("WL"))) {
+                            mLastList.set(Integer.parseInt(PatternUtil.getNumber(course_info.getWeek_number()).get(0))- 1
+                                    + (TimeUtil.GetNumber(course_info.getClass_()) - 1) * 7, course_info);
+                            //4节课
+                            if (course_info.getClass_count().contains("4")) {
+                                mLastList.set(Integer.parseInt(PatternUtil.getNumber(course_info.getWeek_number()).get(0)) - 1
+                                        + (TimeUtil.GetNumber(course_info.getClass_()) - 1) * 7 + 7, course_info);
+                            }
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
         @Override
         public void onCreate() {
             Log.d(TAG, "onCreate");
@@ -173,7 +244,12 @@ public class WidgetService extends RemoteViewsService {
         @Override
         public void onDataSetChanged() {
             Log.d(TAG, "onDataSetChanged: ");
-            initGridViewData();
+           // initGridViewData();
+            try {
+                initData();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         @Override

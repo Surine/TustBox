@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.surine.tustbox.Fragment.Me.Me_info_fragment;
-import com.surine.tustbox.Fragment.course.Course_info_Fragment;
+import com.surine.tustbox.Fragment.course.CourseInfoFragment;
 import com.surine.tustbox.Fragment.setting.OslFragment;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
@@ -40,10 +40,9 @@ public class ToolbarActivity extends TustBaseActivity{
 
         if (flag == 0) {
             setTitle(getString(R.string.course_info));
-            replaceFragment(Course_info_Fragment.getInstance(getString(R.string.course_info)));
+            replaceFragment(CourseInfoFragment.getInstance(getString(R.string.course_info)));
         }else if(flag == 1){
-            setTitle(getString(R.string.my_info));
-            replaceFragment(Me_info_fragment.getInstance(getString(R.string.my_info)));
+
         }else if(flag == 2){
             //load the open source list
             setTitle(R.string.osl2);

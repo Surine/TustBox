@@ -16,17 +16,16 @@
    </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/safe"
+        android:title="@string/string_action"
         >
-        <Preference
-            android:title="@string/pswd"
-            android:summary="@string/pswd_summary"
-            />
-        <Preference
-            android:title="@string/info_trans_title"
-            android:summary="@string/info_trans"
+        <SwitchPreference
+            android:key="pic_crop"
+            android:title="@string/pic_crop"
+            android:summary="@string/pic_crop_info"
             />
     </PreferenceCategory>
+
+
     <PreferenceCategory
         android:title="@string/about_app"
         >
@@ -34,5 +33,26 @@
             android:key="about"
             android:title="@string/about_tustbox"
             />
+        <Preference
+            android:key="qq"
+            android:title="@string/qq"
+            android:summary="@string/qq_number"
+            />
+        <Preference
+            android:key="bug"
+            android:title="@string/bug_or"
+            android:summary="@string/bug_to_qq"
+            />
+        <Preference
+            android:key="alipay"
+            android:title="@string/help"
+            android:summary="@string/help_Alipay"
+            />
+        <Preference
+            android:key="notice"
+            android:title="@string/notice2"
+            android:summary="@string/notice_info"
+            />
+
     </PreferenceCategory>
 </PreferenceScreen>

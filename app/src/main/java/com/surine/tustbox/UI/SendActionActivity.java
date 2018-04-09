@@ -1,6 +1,8 @@
 package com.surine.tustbox.UI;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -15,14 +17,17 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
+import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.model.InvokeParam;
 import com.jph.takephoto.model.TContextWrap;
 import com.jph.takephoto.model.TResult;
@@ -31,31 +36,48 @@ import com.jph.takephoto.permission.InvokeListener;
 import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.PermissionManager.TPermissionType;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
+import com.qiniu.android.common.FixedZone;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.Configuration;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UploadManager;
 import com.surine.tustbox.Adapter.Recycleview.ImageChooseAdapter;
+import com.surine.tustbox.Data.FormData;
+import com.surine.tustbox.Data.UrlData;
+import com.surine.tustbox.Eventbus.SimpleEvent;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
 import com.surine.tustbox.Util.HttpUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
 
+import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.Response;
+
+import static com.surine.tustbox.Util.UploadQiniuService.buildFileUrl;
 
 public class SendActionActivity extends TustBaseActivity implements TakePhoto.TakeResultListener, InvokeListener {
 
     private static final String TAG = "SendActionActivity";
     @BindView(R.id.toolbar_send)
     Toolbar mToolbar;
-    @BindView(R.id.topic)
-    ImageView mTopic;
-    @BindView(R.id.imageView3)
+    @BindView(R.id.takePicture)
     ImageView mImageView3;
     @BindView(R.id.rec_pic)
     RecyclerView mRecPic;
-
     @BindView(R.id.num_show)
     TextView mNumShow;
     @BindView(R.id.num_pic)
@@ -66,12 +88,34 @@ public class SendActionActivity extends TustBaseActivity implements TakePhoto.Ta
     ImageView mSendButton;
     @BindView(R.id.cardView)
     CardView mCardView;
+    @BindView(R.id.topic_show)
+    TextView topicShow;
+    @BindView(R.id.relativeLayout)
+    LinearLayout relativeLayout;
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
     private ImageChooseAdapter adapter;
     private List<String> data = new ArrayList<>();
+    private List<String> dataFromQiniu = new ArrayList<>();
     int pic_size = 0;
     private int log_a;
+    private String tokenFromServer = null;
+    Configuration config = new Configuration.Builder()
+            .chunkSize(512 * 1024)        // 分片上传时，每片的大小。 默认256K
+            .putThreshhold(1024 * 1024)   // 启用分片上传阀值。默认512K
+            .connectTimeout(10)           // 链接超时。默认10秒
+            .responseTimeout(60)          // 服务器响应超时。默认60秒
+            .zone(FixedZone.zone0)        // 设置区域，指定不同区域的上传域名、备用域名、备用IP。
+            .build();
+    UploadManager uploadManager = new UploadManager(config);
+    private int qiniupics = 0;  //for循环
+    private String keyFromQiniu;
+    private int picNumToQiniu = 0;  //发送到七牛服务器的图片数量
+    private StringBuilder ids;
+    private String Content;  //文本内容
+    private Context context;
+    private String topic = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,15 +123,21 @@ public class SendActionActivity extends TustBaseActivity implements TakePhoto.Ta
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_action);
         ButterKnife.bind(this);
+        context = this;
         setSupportActionBar(mToolbar);
         //设置toolbar颜色
-       // SystemUI.color_toolbar(this,getSupportActionBar());
+        // SystemUI.color_toolbar(this,getSupportActionBar());
         setTitle(getString(R.string.send_status));
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
+        topic = getIntent().getStringExtra(FormData.messages_topic);
+        //TODO:默认话题
+        if (topic == null) {
+            topic = "#校园";
+        }
+        topicShow.setText(topic);
         mEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -126,7 +176,7 @@ public class SendActionActivity extends TustBaseActivity implements TakePhoto.Ta
             }
         });
 
-        mEdit.setText(SharedPreferencesUtil.Read_safe(this,"EditTextContent",""));
+        mEdit.setText(SharedPreferencesUtil.Read_safe(this, "EditTextContent", ""));
     }
 
 
@@ -142,96 +192,206 @@ public class SendActionActivity extends TustBaseActivity implements TakePhoto.Ta
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-       if(keyCode == KeyEvent.KEYCODE_BACK){
-           finish_save();
-       }
-       return super.onKeyDown(keyCode, event);
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish_save();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void finish_save() {
         //保存草稿
-        if(!mEdit.getText().toString().equals("")){
-            SharedPreferencesUtil.Save_safe(SendActionActivity.this,"EditTextContent",mEdit.getText().toString());
+        if (!mEdit.getText().toString().equals("")) {
+            SharedPreferencesUtil.Save_safe(SendActionActivity.this, "EditTextContent", mEdit.getText().toString());
             Toast.makeText(SendActionActivity.this, "已保存草稿！", Toast.LENGTH_SHORT).show();
         }
         //延时结束
-        new Handler().postDelayed(new Runnable(){
+        new Handler().postDelayed(new Runnable() {
             public void run() {
-               finish();
+                finish();
             }
         }, 300);
     }
 
-    @OnClick({R.id.toolbar_send, R.id.topic, R.id.imageView3,R.id.send_button})
+    @OnClick({R.id.toolbar_send, R.id.takePicture, R.id.send_button})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_send:
                 break;
-            case R.id.topic:
-                //话题
-                Toast.makeText(SendActionActivity.this, "开发小哥哥正在加班加点研发！", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.imageView3:
+            case R.id.takePicture:
                 //相册
                 takePhoto = getTakePhoto();
+                Config_compress(takePhoto);
                 TakePhotoOptions.Builder builder = new TakePhotoOptions.Builder();
                 builder.setWithOwnGallery(true);
                 takePhoto.setTakePhotoOptions(builder.create());
                 takePhoto.onPickMultiple(12);
                 break;
             case R.id.send_button:
-                //准备发送
-
-                if(!mEdit.getText().toString().equals("")){
-                    log_a = Send();
-                }
-
-                switch (log_a){
-                    case 200:
-                       //发送成功
-                        Toast.makeText(SendActionActivity.this, getString(R.string.send_success), Toast.LENGTH_SHORT).show();
-                        break;
-                    case 400:
-                        //无网络
-                        Toast.makeText(SendActionActivity.this, getString(R.string.network_no_connect), Toast.LENGTH_SHORT).show();
-                        break;
-                    case 401:
-                        Toast.makeText(SendActionActivity.this, getString(R.string.para_null), Toast.LENGTH_SHORT).show();
-                        break;
-                    case 505:break;
+                String type = SharedPreferencesUtil.Read_safe(context, FormData.USER_TYPE, "0");
+                if (type.equals("3")) {
+                    Toast.makeText(this, R.string.SendActionActivityAccountError, Toast.LENGTH_SHORT).show();
+                } else {
+                    picNumToQiniu = 0;
+                    //准备发送
+                    //获取七牛上传token
+                    Toast.makeText(this, R.string.SendActionActivityUploading, Toast.LENGTH_SHORT).show();
+                    startGetToken();
                 }
                 break;
         }
     }
 
-    private int Send() {
-        /**
-         * 准备参数
-         * @parm 心情内容
-         * @parm 图片数据集
-         * @parm IP
-         * @parm TOKEN
-         * @parm Tust_number
-         * @parm Topic
-         * */
-         int code = 0;
-         String Token = SharedPreferencesUtil.Read_safe(SendActionActivity.this,"TOKEN","");
-         String Tust_number = SharedPreferencesUtil.Read(SendActionActivity.this,"tust_number","000000");
-         //TODO:默认话题
-         String topic = "TUSTBOX_MOOD";
-         String mo_content = mEdit.getText().toString();
-         String ip = HttpUtil.getIPAddress(SendActionActivity.this);
-         if(ip == null){
-             //无网络
-             code = 400;
-         }else{
-             if(mo_content.equals("")||Token.equals("")||Tust_number.equals("")){
-                 code  = 401;
-             }else{
-                // HttpUtil.post_file()
-             }
-         }
-         return code;
+    private void startGetToken() {
+        if (data.size() == 0) {
+            sendAction();
+        } else {
+            HttpUtil.get(UrlData.getToken).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mSendButton.setEnabled(true);
+                            Toast.makeText(SendActionActivity.this, R.string.network_no_connect, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String s = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject jsonObject = new JSONObject(s);
+                                tokenFromServer = jsonObject.getString("token");
+                                if (tokenFromServer != null) {
+                                    for (qiniupics = 0; qiniupics < data.size(); qiniupics++) {
+                                        Log.d("TAF", data.get(qiniupics));
+                                        //TODO：图片压缩
+                                        //TODO：多线程发送
+                                        //七牛上传服务
+                                        Toast.makeText(SendActionActivity.this, "正在发送第" + (qiniupics + 1) + "张图片……", Toast.LENGTH_SHORT).show();
+                                        uploadManager.put(new File(data.get(qiniupics)), buildFileUrl(context, data.get(qiniupics)), tokenFromServer,
+                                                new UpCompletionHandler() {
+                                                    @Override
+                                                    public void complete(String key, ResponseInfo info, JSONObject res) {
+                                                        //res包含hash、key等信息，具体字段取决于上传策略的设置
+                                                        if (info.isOK()) {
+                                                            Log.i("qiniu", "Upload Success");
+                                                            try {
+                                                                keyFromQiniu = res.getString("key");
+                                                                dataFromQiniu.add(keyFromQiniu);
+                                                                picNumToQiniu++;
+                                                                //上传成功
+                                                                if (picNumToQiniu == data.size()) {
+                                                                    //发送
+                                                                    sendAction();
+                                                                }
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        } else {
+                                                            mSendButton.setEnabled(true);
+                                                            Log.i("qiniu", "Upload Fail");
+                                                            //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
+                                                            Toast.makeText(SendActionActivity.this, R.string.SendActionActivityQiniuError, Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                }, null);
+
+                                    }
+
+                                } else {
+                                    Toast.makeText(SendActionActivity.this, R.string.SendActionActivityQiniuTokenError, Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+                }
+            });
+        }
+
+    }
+
+
+    private void sendAction() {
+        Content = mEdit.getText().toString();
+        ids = new StringBuilder();
+        if (dataFromQiniu.size() >= 1) {
+            for (String url : dataFromQiniu) {
+                ids.append(url + ",");
+            }
+        } else {
+            if (Content.equals("")) {
+                Toast.makeText(this, R.string.SendActionActivityNullParam, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            ids.append("");
+        }
+
+
+        String Token = SharedPreferencesUtil.Read_safe(SendActionActivity.this, "TOKEN", "");
+        String Tust_number = SharedPreferencesUtil.Read(SendActionActivity.this, "tust_number", "000000");
+
+        String ip = HttpUtil.getIPAddress(SendActionActivity.this);
+        String device = Build.BRAND + "-" + Build.MODEL;
+
+        FormBody formbody = new FormBody.Builder()
+                .add(FormData.token, Token)
+                .add(FormData.tust_number_server, Tust_number)
+                .add(FormData.messages_info, Content)
+                .add(FormData.messages_topic, topic)
+                .add(FormData.messages_device, device)
+                .add(FormData.pic_ids, ids.toString())
+                .build();
+
+        HttpUtil.post(UrlData.sendAction, formbody).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSendButton.setEnabled(true);
+                        Toast.makeText(SendActionActivity.this, R.string.network_no_connect, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String x = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(x);
+                            if (jsonObject.getInt("jcode") == 400) {
+                                //发布成功
+                                //成功之后清理pic_ids列表
+                                ids = new StringBuilder();
+                                dataFromQiniu.clear();
+                                //清空草稿
+                                SharedPreferencesUtil.Save_safe(SendActionActivity.this, "EditTextContent", "");
+                                Toast.makeText(SendActionActivity.this, R.string.SendActionActivtySendSuccess, Toast.LENGTH_SHORT).show();
+                                //通知更新
+                                EventBus.getDefault().post(new SimpleEvent(1, "S"));
+                                //结束活动
+                                finish();
+                            } else {
+                                Toast.makeText(SendActionActivity.this, R.string.SendActionActivtySendError, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
     }
 
 
@@ -281,6 +441,21 @@ public class SendActionActivity extends TustBaseActivity implements TakePhoto.Ta
     @Override
     public void takeCancel() {
         Log.i(TAG, getResources().getString(R.string.msg_operation_canceled));
+    }
+
+    private void Config_compress(TakePhoto takePhoto) {
+        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        int width = (int) (wm.getDefaultDisplay().getWidth() * 0.2);
+        int height = (int) (wm.getDefaultDisplay().getHeight() * 0.2);
+        int maxSize = 200;
+        CompressConfig config = new CompressConfig.Builder()
+                .enableQualityCompress(true)
+                .enablePixelCompress(true)
+                .setMaxSize(maxSize)
+                .setMaxPixel(width >= height ? width : height)
+                .enableReserveRaw(true)
+                .create();
+        takePhoto.onEnableCompress(config, true);
     }
 
 

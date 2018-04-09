@@ -124,8 +124,8 @@ public class Library_Fragment extends Fragment{
 
         //2.使用fragment 的list集合管理碎片
         fragments.add(Borrow_book_fragment.getInstance("1"));
-        // fragments.add(This_School_Term_Score_Fragment.getInstance("2"));
-        // fragments.add(This_School_Term_Score_Fragment.getInstance("3"));
+        // fragments.add(AllScoreFragment.getInstance("2"));
+        // fragments.add(AllScoreFragment.getInstance("3"));
 
         //3.使用string的list集合来添加标题
         titles.add("借阅书籍");

@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
+    android:background="@color/Tust_White"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -14,7 +15,43 @@
     android:orientation="vertical"
     tools:context="com.surine.tustbox.UI.MainActivity">
 
-   <include layout="@layout/toolbar"/>
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:paddingTop="@dimen/toolbar_height_padding"
+        android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/Tran"
+          >
+          <TextView
+              android:layout_width="@dimen/toolbar_height"
+              android:layout_height="@dimen/toolbar_height"
+              android:textColor="@color/Tust_Black"
+              android:gravity="center_vertical"
+              android:textSize="18sp"
+              android:id="@+id/title"
+              />
+          <TextView
+              android:layout_width="@dimen/toolbar_height"
+              android:layout_height="@dimen/toolbar_height"
+              android:padding="10dp"
+              android:id="@+id/toolbar_message"
+              android:layout_alignParentEnd="true"
+              android:textColor="@color/Tust_Black"
+              android:text="消息"
+              android:background="?android:attr/selectableItemBackgroundBorderless"
+              android:gravity="center"
+              />
+      </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
@@ -30,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/Tust_White"
         android:fitsSystemWindows="true"
         app:menu="@menu/activity_drawer_layout"/>
 </android.support.v4.widget.DrawerLayout>

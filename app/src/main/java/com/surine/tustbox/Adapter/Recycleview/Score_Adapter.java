@@ -11,17 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.surine.tustbox.Bean.Score_Info;
+import com.surine.tustbox.Bean.ScoreInfo;
 import com.surine.tustbox.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Score_Adapter extends RecyclerView.Adapter<Score_Adapter.ViewHolder> {
-    private List<Score_Info> mScoreInfoList = new ArrayList<>();
+    private List<ScoreInfo> mScoreInfoList = new ArrayList<>();
     private Context mContext;
 
-    public Score_Adapter(List<Score_Info> courseList, Context context) {
+    public Score_Adapter(List<ScoreInfo> courseList, Context context) {
         mScoreInfoList = courseList;
         mContext = context;
     }
@@ -36,7 +36,7 @@ public class Score_Adapter extends RecyclerView.Adapter<Score_Adapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-            Score_Info score_info = mScoreInfoList.get(position);
+            ScoreInfo score_info = mScoreInfoList.get(position);
             holder.name_view.setText(score_info.getName());
             holder.eng_view.setText(score_info.getEnglish_name());
             holder.score_view.setText(score_info.getScore());
@@ -65,7 +65,7 @@ public class Score_Adapter extends RecyclerView.Adapter<Score_Adapter.ViewHolder
             name_view = (TextView) itemView.findViewById(R.id.book_name);
             mTextView = (TextView) itemView.findViewById(R.id.textView17);
             eng_view = (TextView) itemView.findViewById(R.id.english_view);
-            score_view = (TextView) itemView.findViewById(R.id.socre_view);
+            score_view = (TextView) itemView.findViewById(R.id.score_view);
             credit = (TextView) itemView.findViewById(R.id.credit);
             ranking_view = (TextView) itemView.findViewById(R.id.ranking_view);
             ave_view = (TextView) itemView.findViewById(R.id.ave_view);

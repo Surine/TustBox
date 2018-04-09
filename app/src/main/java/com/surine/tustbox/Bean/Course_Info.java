@@ -29,6 +29,35 @@ public class Course_Info extends DataSupport{
     private String homework;  //作业
     private int color;   //颜色
     private int user;  //用户
+
+    @Override
+    public String toString() {
+        return "Course_Info{" +
+                "dev='" + dev + '\'' +
+                ", course_number='" + course_number + '\'' +
+                ", course_name='" + course_name + '\'' +
+                ", class_number='" + class_number + '\'' +
+                ", score='" + score + '\'' +
+                ", tag='" + tag + '\'' +
+                ", exm='" + exm + '\'' +
+                ", teacher='" + teacher + '\'' +
+                ", method='" + method + '\'' +
+                ", status='" + status + '\'' +
+                ", week='" + week + '\'' +
+                ", week_number='" + week_number + '\'' +
+                ", class_='" + class_ + '\'' +
+                ", class_count='" + class_count + '\'' +
+                ", school='" + school + '\'' +
+                ", building='" + building + '\'' +
+                ", classroom='" + classroom + '\'' +
+                ", id=" + id +
+                ", note='" + note + '\'' +
+                ", homework='" + homework + '\'' +
+                ", color=" + color +
+                ", user=" + user +
+                '}';
+    }
+
     public Course_Info(String dev, String course_number, String course_name, String class_number, String score, String tag, String exm, String teacher, String method, String status, String week, String week_number, String class_, String class_count, String school, String building, String classroom, int id, String note, String homework, int color, int user) {
         this.dev = dev;
         this.course_number = course_number;

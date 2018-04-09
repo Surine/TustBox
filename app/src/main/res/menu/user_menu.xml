@@ -4,7 +4,7 @@
       tools:context="com.surine.tustbox.UI.TodayCardActivity">
     <item
         android:id="@+id/action_edit"
-        android:icon="@drawable/ic_edit_black_24dp"
+        android:icon="@drawable/item_edit_black"
         android:orderInCategory="100"
         android:title="编辑资料"
         app:showAsAction="always"/>

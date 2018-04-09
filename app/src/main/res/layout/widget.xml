@@ -2,8 +2,8 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-        android:background="#81ffffff"
-                android:id="@+id/touch_view"
+              android:background="@drawable/widget_shape_big"
+              android:id="@+id/touch_view"
     >
 
 
@@ -31,6 +31,7 @@
             android:id="@+id/widget_week"
             android:textColor="#000"
             android:textSize="10sp"
+            android:layout_marginStart="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -49,7 +50,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="周一"
+            android:text="一"
             android:id="@+id/mon"
             android:textColor="#000"
             android:gravity="top|center_horizontal"
@@ -59,7 +60,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="周二"
+            android:text="二"
             android:textColor="#000"
             android:id="@+id/tus"
             android:gravity="top|center_horizontal"
@@ -69,7 +70,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="周三"
+            android:text="三"
             android:textColor="#000"
             android:id="@+id/wes"
             android:gravity="top|center_horizontal"
@@ -79,7 +80,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="周四"
+            android:text="四"
             android:textColor="#000"
             android:id="@+id/thr"
             android:gravity="top|center_horizontal"
@@ -89,9 +90,29 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="周五"
+            android:text="五"
             android:textColor="#000"
             android:id="@+id/fri"
+            android:gravity="top|center_horizontal"
+
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="六"
+            android:textColor="#000"
+            android:id="@+id/sat"
+            android:gravity="top|center_horizontal"
+
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="日"
+            android:textColor="#000"
+            android:id="@+id/sun"
             android:gravity="top|center_horizontal"
 
             />
@@ -105,42 +126,42 @@
         >
         <TextView
             android:layout_width="match_parent"
-           android:layout_height="68dp"
+           android:layout_height="@dimen/widget_item_height"
             android:text="1"
             android:textColor="#000"
             android:gravity="center"
             />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="@dimen/widget_item_height"
             android:text="2"
             android:textColor="#000"
             android:gravity="center"
             />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="@dimen/widget_item_height"
             android:text="3"
             android:textColor="#000"
             android:gravity="center"
             />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="@dimen/widget_item_height"
             android:text="4"
             android:textColor="#000"
             android:gravity="center"
             />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="@dimen/widget_item_height"
             android:text="5"
             android:textColor="#000"
             android:gravity="center"
             />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="68dp"
+            android:layout_height="@dimen/widget_item_height"
             android:text="6"
             android:textColor="#000"
             android:gravity="center"
@@ -150,12 +171,13 @@
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="408dp"
-        android:numColumns="5"
+        android:numColumns="7"
+        android:scrollbars="none"
         android:layout_below="@id/lin_week"
-        android:verticalSpacing="4dp"
+        android:verticalSpacing="2dp"
         android:layout_marginStart="30dp"
-        android:horizontalSpacing="4dp"
-        android:columnWidth="80dip"
+        android:horizontalSpacing="2dp"
+        android:columnWidth="82dip"
         android:gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"/>

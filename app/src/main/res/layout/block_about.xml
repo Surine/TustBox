@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/Tust_BACK"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:src="@drawable/tust2"
+        android:contentDescription="@string/logo"
+        android:id="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView3"
+        android:layout_centerHorizontal="true"
+        android:text="V3.0.0"
+        android:textColor="@color/Tust_Black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/ad"
+            android:layout_below="@id/textView16"
+            android:layout_marginTop="30dp"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="@dimen/ad_circle_radius"
+                android:src="@color/Tust_RED"
+                android:id="@+id/circleImageView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/circleImageView"
+                android:gravity="center"
+                android:text="简洁" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="@dimen/ad_circle_radius"
+                android:src="@color/Tust_Green"
+                android:id="@+id/circleImageView2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/circleImageView"
+                android:gravity="center"
+                android:text="高效" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:padding="@dimen/ad_circle_radius"
+                android:src="@color/Tust_Blue"
+                android:id="@+id/circleImageView3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/circleImageView"
+                android:gravity="center"
+                android:text="向往" />
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@id/ad"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:id="@+id/osl_layout"
+        android:layout_marginTop="20dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/osl2"
+            android:id="@+id/osltext"
+            android:background="@color/Tust_White"
+            android:gravity="center_vertical"
+            android:textColor="@color/Tust_Black"
+            android:paddingStart="20dp"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/update_layout"
+        android:layout_below="@id/osl_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginTop="1dp"
+        tools:ignore="NewApi">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/check_update"
+            android:id="@+id/update"
+            android:background="@color/Tust_White"
+            android:gravity="center_vertical"
+            android:textColor="@color/Tust_Black"
+            android:paddingStart="20dp"
+            />
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="10sp"
+        android:layout_marginBottom="2dp"
+        android:layout_alignParentBottom="true"
+        android:text="@string/copyright"
+        />
+</RelativeLayout>

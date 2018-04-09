@@ -13,4 +13,23 @@
     <style name="myTransparent" parent="AppTheme">
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+
+    <!--构建两套主题，日间和夜间-->
+    <!--<style name="BaseAPPLight" parent="AppTheme">-->
+      <!--<item name="android:background">@android:color/transparent</item>-->
+      <!--<item name="android:windowIsTranslucent">true</item>-->
+      <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+      <!--<item name="android:textColor">@android:color/black</item>-->
+    <!--</style>-->
+
+    <!--<style name="BaseAPPDark" parent="AppTheme">-->
+        <!--<item name="colorPrimary">@color/colorPrimaryNight</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDarkNight</item>-->
+        <!--<item name="colorAccent">@color/colorAccentNight</item>-->
+        <!--<item name="android:background"></item>-->
+        <!--&lt;!&ndash;<item name="android:windowIsTranslucent">true</item>&ndash;&gt;-->
+        <!--&lt;!&ndash;<item name="android:windowBackground">@android:color/transparent</item>&ndash;&gt;-->
+        <!--<item name="android:textColor">@android:color/white</item>-->
+    <!--</style>-->
 </resources>

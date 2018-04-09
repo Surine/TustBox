@@ -10,6 +10,7 @@ import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.Init.SystemUI;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
+import com.surine.tustbox.Util.EncryptionUtil;
 import com.surine.tustbox.Util.HttpUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
 
@@ -35,6 +36,9 @@ public class SplashActivity extends TustBaseActivity {
     String sign;
     String face;
     String college;
+    private String type;
+    private String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,11 +69,14 @@ public class SplashActivity extends TustBaseActivity {
         //构建TOKEN验证表单（携带账号及加密密码，减少操作步骤）
         FormBody formBody = new FormBody.Builder()
                 .add(FormData.tust_number_server, SharedPreferencesUtil.Read(this
-                        ,"tust_number","000000"))
-                .add(FormData.token,SharedPreferencesUtil.Read_safe(this,"TOKEN",""))
+                        ,FormData.tust_number_server,""))
+                .add(FormData.token,SharedPreferencesUtil.Read_safe(this,FormData.TOKEN,""))
                 .add(FormData.pass_server, SharedPreferencesUtil.Read(this
-                        ,"pswd","000000"))
+                        ,FormData.pswd,"000000"))
                 .build();
+
+        Log.d("TAG","帐号"+SharedPreferencesUtil.Read(this
+                ,FormData.tust_number_server,""));
 
         //发起TOKEN验证请求
         HttpUtil.post(UrlData.login_server_url,formBody).enqueue(new Callback() {
@@ -86,7 +93,7 @@ public class SplashActivity extends TustBaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 token_string = response.body().string().toString();
-                Log.d("XXX",token_string);
+                Log.d("TAG","验证"+token_string);
                 runOnUiThread(new Runnable() {
                     public JSONObject jsonObject;
                     @Override
@@ -129,17 +136,21 @@ public class SplashActivity extends TustBaseActivity {
             sign = jdata.getString("sign");
             face = jdata.getString("face");
             college = jdata.getString("college");
+            type = jdata.getString("user_type");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        //TODO:编码
         SharedPreferencesUtil.Save_safe(SplashActivity.this,"nick_name",nick_name);
         SharedPreferencesUtil.Save_safe(SplashActivity.this,"sign",sign);
         SharedPreferencesUtil.Save_safe(SplashActivity.this,"face",face);
         SharedPreferencesUtil.Save_safe(SplashActivity.this,"college",college);
+        SharedPreferencesUtil.Save_safe(SplashActivity.this, FormData.USER_TYPE,type);
     }
 
 
     private void Register_user() {
+        Log.d("TAG","准备注册：");
         String tust_number = SharedPreferencesUtil.Read(SplashActivity.this,"tust_number","");
         String pswd = SharedPreferencesUtil.Read(SplashActivity.this,"pswd","");
         if(tust_number.equals("")||pswd.equals("")){
@@ -168,6 +179,7 @@ public class SplashActivity extends TustBaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 login_string = response.body().string().toString();
+                Log.d("TAG","注册信息"+login_string);
                 runOnUiThread(new Runnable() {
                     public JSONObject jsonObject;
                     @Override

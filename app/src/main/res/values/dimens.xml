@@ -8,4 +8,15 @@
     <dimen name="app_bar_height">250dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <!--首页碎片标题字大小-->
+    <dimen name="index_page_title_size">16sp</dimen>
+    <!--工具块列表高度（item高度）-->
+    <dimen name="block_tool_height">105dp</dimen>
+    <!--工具块item图标长宽-->
+    <dimen name="block_tool_icon_height">39dp</dimen>
+    <!--关于页面 圆形图标大小-->
+    <dimen name="ad_circle_radius">16dp</dimen>
+    <dimen name="widget_item_height">65dp</dimen>
+
 </resources>

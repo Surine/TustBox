@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.surine.tustbox.UI.SchZoneActivity">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <include layout="@layout/toolbar"/>
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:paddingTop="@dimen/toolbar_height_padding"
-        android:background="?attr/colorPrimary"
-        android:fitsSystemWindows="true"
-        android:elevation="2dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-</RelativeLayout>
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <include layout="@layout/block_sch_zone_null_course"/>
+            <include layout="@layout/block_sch_zone_share_course"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

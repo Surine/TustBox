@@ -18,8 +18,8 @@ public class GlideImageLoader implements NineGridView.ImageLoader {
         if (url != null) {
             try {
                 Glide.with(context).load(url)//
-                        .placeholder(R.drawable.head)//
-                        .error(R.drawable.head)//
+                        .placeholder(R.drawable.school_shape)//
+                        .error(R.drawable.school_shape)//
                         .into(imageView);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();

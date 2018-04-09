@@ -108,7 +108,7 @@ public class PanActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                   //获取数据失败
-                  Toast.makeText(PanActivity.this,"数据获取成功",Toast.LENGTH_SHORT).show();
+                     Toast.makeText(PanActivity.this,"数据获取成功",Toast.LENGTH_SHORT).show();
                     }
                 });
             }

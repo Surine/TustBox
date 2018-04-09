@@ -21,14 +21,23 @@ public class EncryptionUtil {
         return "error";
     }
 
-    //Base64加密
+    //Base64编码
     public static String base64_en(String a){
-        return Base64.encodeToString(a.getBytes(), Base64.DEFAULT);
+        try {
+            return Base64.encodeToString(a.getBytes(), Base64.DEFAULT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
-    //Base64解密
+    //Base64解码
     public static String base64_de(String a){
-        return new String
-                (Base64.decode(a.getBytes(), Base64.DEFAULT));
+        try {
+            return new String(Base64.decode(a.getBytes(), Base64.DEFAULT));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

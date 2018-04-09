@@ -11,26 +11,33 @@ import android.view.ViewGroup;
 
 import com.surine.tustbox.Adapter.Recycleview.StuInfoAdapter;
 import com.surine.tustbox.Bean.Student_info;
+import com.surine.tustbox.Bean.User;
 import com.surine.tustbox.R;
-
-import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by surine on 2017/5/12.
  */
 
-public class Me_info_fragment extends Fragment{
+public class Me_info_fragment extends Fragment {
+    @BindView(R.id.recycleview)
+    RecyclerView recycleview;
+    Unbinder unbinder;
     private List<Student_info> mstudent_infos = new ArrayList<>();
-    private RecyclerView student_res;
-    private static final String ARG_ = "Me_info_fragment";
 
-    public static Me_info_fragment getInstance(String title) {
+    private static final String ARG_ = "Me_info_fragment";
+    private User user;
+
+    public static Me_info_fragment getInstance(User user) {
         Me_info_fragment fra = new Me_info_fragment();
         Bundle bundle = new Bundle();
-        bundle.putString(ARG_, title);
+        bundle.putSerializable(ARG_, user);
         fra.setArguments(bundle);
         return fra;
     }
@@ -39,19 +46,33 @@ public class Me_info_fragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
+        user = (User) bundle.get(ARG_);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_me_info, container, false);
+        View v = inflater.inflate(R.layout.recycleview, container, false);
+        unbinder = ButterKnife.bind(this, v);
 
-        mstudent_infos = DataSupport.findAll(Student_info.class);
-        student_res = (RecyclerView) v.findViewById(R.id.student_info);
-        student_res.setLayoutManager(new LinearLayoutManager(getActivity()));
-        student_res.setAdapter(new StuInfoAdapter(mstudent_infos));
+        Student_info student_info = new Student_info("学院：",user.getCollege());
+        mstudent_infos.add(student_info);
+        student_info = new Student_info("性别：",user.getSex());
+        mstudent_infos.add(student_info);
+        student_info = new Student_info("创建时间：",user.getCrtime());
+        mstudent_infos.add(student_info);
+        if(user.getTust_number() != null)
+        student_info = new Student_info("年级：","20"+user.getTust_number().substring(0,2));
+        mstudent_infos.add(student_info);
+        recycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recycleview.setAdapter(new StuInfoAdapter(mstudent_infos));
 
         return v;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }

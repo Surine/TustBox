@@ -226,4 +226,9 @@ public class PictureUtil {
         bitmap.setPixels(pix, 0, w, 0, 0, w, h);
         return (bitmap);
     }
+
+    //图片简单压缩
+    public static void compressImageToFile(){
+
+    }
 }

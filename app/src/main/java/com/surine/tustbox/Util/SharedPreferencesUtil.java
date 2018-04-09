@@ -49,9 +49,13 @@ public class SharedPreferencesUtil {
         editor.apply();
     }
     public static void Save_safe(Context context,String key, int value){
-        SharedPreferences.Editor editor = context.getSharedPreferences("data",MODE_PRIVATE).edit();
-        editor.putInt(key, Integer.parseInt(EncryptionUtil.base64_en(String.valueOf(value))));
-        editor.apply();
+        try {
+            SharedPreferences.Editor editor = context.getSharedPreferences("data",MODE_PRIVATE).edit();
+            editor.putInt(key, Integer.parseInt(EncryptionUtil.base64_en(String.valueOf(value))));
+            editor.apply();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
     public static void Save_safe(Context context,String key, boolean value){
         SharedPreferences.Editor editor = context.getSharedPreferences("data",MODE_PRIVATE).edit();

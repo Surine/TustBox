@@ -59,5 +59,11 @@ public class OslFragment extends Fragment {
         mOsl_infos.add(oi);
         oi = new Osl_info("Ninegridview","http://github.com/jeasonlzy/NineGridView");
         mOsl_infos.add(oi);
+        oi = new Osl_info("Badgeview","https://github.com/qstumn/BadgeView");
+        mOsl_infos.add(oi);
+        oi = new Osl_info("七牛云存储","https://www.qiniu.com/");
+        mOsl_infos.add(oi);
+        oi = new Osl_info("腾讯Bugly","https://bugly.qq.com");
+        mOsl_infos.add(oi);
     }
 }

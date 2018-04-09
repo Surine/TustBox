@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                                     xmlns:app="http://schemas.android.com/apk/res-auto"
                                     android:orientation="vertical"
-                                    android:layout_marginTop="2dp"
+                                    android:layout_marginTop="5dp"
                                     android:layout_marginBottom="3dp"
                                     android:layout_width="match_parent"
                                     android:background="?android:attr/selectableItemBackground"
@@ -16,129 +16,100 @@
       >
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/action_head"
+        android:id="@+id/action_info_head"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/bkg_03_mar"
         />
 
     <TextView
-        android:id="@+id/user_name"
+        android:id="@+id/action_info_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="28dp"
-        android:layout_toRightOf="@id/action_head"
-        android:text="@string/app_name"
-        android:textColor="@color/Tust_Black"
+        android:layout_marginTop="22dp"
+        android:layout_toRightOf="@id/action_info_head"
         />
 
     <TextView
-        android:id="@+id/update_time"
+        android:id="@+id/action_info_update_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/user_name"
+        android:layout_below="@+id/action_info_user_name"
         android:layout_marginStart="10dp"
         android:layout_marginTop="2dp"
-        android:layout_toRightOf="@id/action_head"
-        android:text="10-30 15:08"
+        android:layout_toRightOf="@id/action_info_head"
         android:textSize="10sp"
         />
 
     <TextView
-        android:id="@+id/tv2"
+        android:id="@+id/action_info_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/action_head"
-        android:layout_marginTop="5dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/action_info_update_time"
         android:ellipsize="end"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="3dp"
+        android:lineSpacingExtra="7sp"
         android:maxLines="10"
         android:paddingEnd="10dp"
         android:paddingStart="10dp"
         android:paddingTop="5dp"
-        android:text="@string/new_log"
+        android:textAlignment="textStart"
         android:textColor="@color/Tust_Black"
-        >
-    </TextView>
+        android:textSize="15sp"></TextView>
 
     <com.lzy.ninegrid.NineGridView
         android:id="@+id/iv_ngrid_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv2"
+        android:layout_below="@id/action_info_message"
         android:layout_marginEnd="12dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="5dp"
-        app:ngv_singleImageRatio="2"/>
+        app:ngv_mode="grid"
+        app:ngv_singleImageRatio="0.5"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/iv_ngrid_layout"
-        android:layout_margin="15dp"
-        android:gravity="center_vertical"
-        >
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/iv_ngrid_layout"
+        android:layout_marginTop="14dp"
+        android:gravity="center_vertical">
 
       <TextView
           android:layout_width="wrap_content"
-          android:layout_height="20dp"
-          android:layout_margin="5dp"
+          android:layout_height="40dp"
+          android:layout_marginStart="15dp"
+          android:layout_marginBottom="5dp"
           android:gravity="center"
-          android:text="#树洞#"
-          android:textColor="@color/colorAccent"
-          />
+          android:id="@+id/action_topic"
+          android:textColor="@color/colorAccent" />
 
       <ImageView
-          android:id="@+id/fun1"
-          android:layout_width="50dp"
-          android:layout_height="20dp"
+          android:id="@+id/more"
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:padding="8dp"
+          android:background="?android:attr/selectableItemBackgroundBorderless"
           android:layout_alignParentEnd="true"
-          android:layout_margin="5dp"
-          android:src="@drawable/more"
-          />
-      <TextView
-          android:id="@+id/textView17"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignBottom="@+id/fun2"
-          android:layout_alignEnd="@+id/fun2"
-          android:layout_alignStart="@+id/fun2"
-          android:layout_alignTop="@+id/fun2"
-          android:textSize="8sp"
-          android:gravity="bottom|end"
-          android:text="100"/>
-      <ImageView
-          android:id="@+id/fun2"
-          android:layout_width="50dp"
-          android:layout_height="20dp"
-          android:background="?android:attr/selectableItemBackground"
-          android:layout_margin="5dp"
-          android:layout_toLeftOf="@id/fun1"
-          android:src="@drawable/comment"
-          />
+          android:layout_marginBottom="5dp"
+          android:src="@drawable/more" />
 
-      <TextView
-          android:id="@+id/textView16"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignBottom="@+id/fun3"
-          android:layout_alignEnd="@+id/fun3"
-          android:layout_alignStart="@+id/fun3"
-          android:layout_alignTop="@+id/fun3"
-          android:textSize="8sp"
-          android:gravity="bottom|end"
-          android:text="10"/>
+
       <ImageView
-          android:id="@+id/fun3"
-          android:layout_width="50dp"
-          android:layout_height="20dp"
-          android:layout_margin="5dp"
-          android:background="?android:attr/selectableItemBackground"
-          android:layout_toLeftOf="@id/fun2"
-          android:src="@drawable/love"
-          />
+          android:id="@+id/love"
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:padding="8dp"
+          android:layout_marginEnd="10dp"
+          android:layout_alignParentTop="true"
+          android:layout_toStartOf="@+id/more"
+          android:background="?android:attr/selectableItemBackgroundBorderless"
+          android:src="@drawable/love" />
     </RelativeLayout>
   </RelativeLayout>
 

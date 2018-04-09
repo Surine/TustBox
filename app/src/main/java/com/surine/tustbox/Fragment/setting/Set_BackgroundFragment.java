@@ -65,11 +65,11 @@ public class Set_BackgroundFragment extends TakePhotoFragment {
     }
 
     private void showImg(ArrayList<TImage> images) {
-        Log.d("show_url", "showImg: "+images.get(0).getCompressPath());
+        Log.d("show_url", "showImg: "+images.get(0).getOriginalPath());
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("data", MODE_PRIVATE).edit();
-        editor.putString("my_picture_path",images.get(0).getCompressPath());
+        editor.putString("my_picture_path",images.get(0).getOriginalPath());
         editor.apply();
-        Glide.with(this).load(new File(images.get(0).getCompressPath())).into(imageview);
+        Glide.with(this).load(new File(images.get(0).getOriginalPath())).into(imageview);
     }
 
     private void initView(View view) {

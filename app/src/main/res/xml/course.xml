@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="课程基本信息"
+        >
+        <EditTextPreference
+            android:key="courseName"
+            android:title="课程名称"
+            android:summary="填写课程的完整名字"
+            />
+        <EditTextPreference
+            android:key="courseBuilding"
+            android:title="教学楼"
+            android:summary="填写上课所在的教学楼，需带 - 符号（示例：8-）"
+            />
+        <ListPreference
+            android:key="courseClass_"
+            android:title="节次"
+            android:entries="@array/list_bj_class_"
+            android:entryValues="@array/list_bj_class_number"
+            android:summary="第几节课，一到六（示例：四）"
+            />
+        <EditTextPreference
+            android:key="courseClassRoom"
+            android:title="教室"
+            android:summary="在哪个教室上课 [示例：210(d)]"
+            />
+        <ListPreference
+            android:key="courseClassSchool"
+            android:title="校区"
+            android:entries="@array/list_bj_school"
+            android:entryValues="@array/list_bj_school_number"
+            android:summary="在哪个校区上课"
+            />
+        <EditTextPreference
+            android:key="courseScore"
+            android:title="学分"
+            android:summary="课程学分，不确定默认为0 (示例：3.5)"
+            />
+        <EditTextPreference
+            android:key="courseTeacher"
+            android:title="教师"
+            android:summary="上课教师 (示例：张XX)"
+            />
+        <EditTextPreference
+            android:key="courseWeek"
+            android:title="上课周"
+            android:summary="填写上课的周，格式如1-12或者1，3，5…… (需要严格按照给定的格式填写，否则可能导致解析失败)"
+            />
+        <ListPreference
+            android:key="courseWeekNumber"
+            android:title="周几"
+            android:entries="@array/list_bj_week"
+            android:entryValues="@array/list_bj_week_number"
+            android:summary="选择周几上课"
+            />
+        <ListPreference
+            android:key="courseCourseNumber"
+            android:title="节数"
+            android:entries="@array/list_bj_course"
+            android:entryValues="@array/list_bj_course_number"
+            android:summary="该课程是2小节还是4小节（普通课程为2小节，大课为4小节）"
+            />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="课程辅助信息"
+        >
+        <Preference
+            android:key="courseuser"
+            android:title="用户"
+            android:summary="0 [不需要修改]"
+            />
+        <Preference
+            android:key="course_number"
+            android:title="课程号"
+            android:summary="根据学号和时间戳生成，无需修改"
+            />
+        <Preference
+            android:key="course_color"
+            android:title="课程颜色"
+            android:summary="根据系统随机生成，无需修改"
+            />
+        <Preference
+            android:key="tust_number"
+            android:title="学号"
+            android:summary="用于建立课程云端数据库"
+            />
+    </PreferenceCategory>
+</PreferenceScreen>
