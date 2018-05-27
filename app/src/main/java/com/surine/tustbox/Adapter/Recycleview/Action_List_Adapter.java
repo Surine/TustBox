@@ -5,6 +5,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -81,6 +82,12 @@ public class Action_List_Adapter extends BaseQuickAdapter<Action, BaseViewHolder
         if(item.getMessages_time()!=null){
             helper.setText(R.id.action_info_update_time,item.getMessages_time());
         }
+
+        //设置点赞数
+        if(item.getMessages_agreenum()!=null){
+            helper.setText(R.id.love_num,item.getMessages_agreenum());
+        }
+
         //设置文字内容
         if(item.getMessages_info()!=null){
             helper.setText(R.id.action_info_message,item.getMessages_info());
@@ -97,6 +104,7 @@ public class Action_List_Adapter extends BaseQuickAdapter<Action, BaseViewHolder
         }
 
         if(item.getPic_ids() != null && !item.getPic_ids().equals("")){
+            nineGridView.setVisibility(View.VISIBLE);
             //有图像
             String[] pics = item.getPic_ids().split(",");
             String ThumbnailUrl;
@@ -122,7 +130,7 @@ public class Action_List_Adapter extends BaseQuickAdapter<Action, BaseViewHolder
             nineGridView.setAdapter((new NineGridViewClickAdapter(mContext, imageInfo)));
         }else{
             nineGridView.setAdapter((new NineGridViewClickAdapter(mContext, null)));
-
+            nineGridView.setVisibility(View.GONE);
         }
 
 

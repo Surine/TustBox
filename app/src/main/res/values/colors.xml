@@ -3,7 +3,7 @@
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimary2">#1a7ae1</color>
     <color name="multiple_image_select_primaryDark">#0d6bb9</color>
-    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorPrimaryDark">#dcdbdb</color>
     <color name="colorAccent1">#FF4081</color>
     <color name="Tust_RED">#ff0008</color>
     <color name="colorAccent">#1a7ae1</color>
@@ -13,7 +13,7 @@
     <color name="Tust_Grey">#4e4242</color>
     <color name="Tust_Grey2">#cdcdcd</color>
     <color name="Tust_Grey3">#ececec</color>
-    <color name="Tust_BACK">#dbececec</color>
+    <color name="Tust_BACK">#cfececec</color>
     <color name="Tust_Green">#f33b9c1e</color>
     <color name="Tust_Red">#ebdc2055</color>
     <color name="Tust_Green_1">#0ed99c</color>

@@ -39,13 +39,11 @@ import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
-import com.surine.tustbox.Eventbus.SimpleEvent;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
 import com.surine.tustbox.Util.HttpUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -77,6 +75,8 @@ public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.
     RelativeLayout changeSex;
     @BindView(R.id.change_college)
     RelativeLayout changeCollege;
+    @BindView(R.id.head_rela)
+    RelativeLayout headRela;
     private Context context;
     private TakePhoto takePhoto;
     public InvokeParam invokeParam;
@@ -93,7 +93,7 @@ public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.
     private String buildUrl;
     private int yourChoice;
     final String[] str = new String[]{
-            "男","女","保密"
+            "男", "女", "保密"
     };
 
     @Override
@@ -124,31 +124,38 @@ public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.
         return true;
     }
 
-    @OnClick({R.id.edit_head, R.id.edit_sign,R.id.change_nick_name, R.id.change_sex, R.id.change_college})
+    @OnClick({R.id.head_rela,R.id.edit_head, R.id.edit_sign, R.id.change_nick_name, R.id.change_sex, R.id.change_college})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.head_rela:
+                startGetPhoto();
+                break;
             case R.id.edit_head:
-                //相册
-                takePhoto = getTakePhoto();
-                TakePhotoOptions.Builder builder = new TakePhotoOptions.Builder();
-                builder.setWithOwnGallery(true);
-                takePhoto.setTakePhotoOptions(builder.create());
-                Config_compress(takePhoto);
-                takePhoto.onPickFromDocumentsWithCrop(Config_the_file(), getCropOptions());
+                startGetPhoto();
                 break;
             case R.id.edit_sign:
-                showEditDialog(1,"修改您的个性签名");
+                showEditDialog(1, "修改您的个性签名");
                 break;
             case R.id.change_nick_name:
-                showEditDialog(2,"修改您的昵称");
+                showEditDialog(2, "修改您的昵称");
                 break;
             case R.id.change_sex:
                 changeSex();
                 break;
             case R.id.change_college:
-                showEditDialog(3,"修改您的学院信息");
+                showEditDialog(3, "修改您的学院信息");
                 break;
         }
+    }
+
+    private void startGetPhoto() {
+        //相册
+        takePhoto = getTakePhoto();
+        TakePhotoOptions.Builder builder = new TakePhotoOptions.Builder();
+        builder.setWithOwnGallery(true);
+        takePhoto.setTakePhotoOptions(builder.create());
+        Config_compress(takePhoto);
+        takePhoto.onPickFromDocumentsWithCrop(Config_the_file(), getCropOptions());
     }
 
     private void changeSex() {
@@ -166,7 +173,7 @@ public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (yourChoice != -1) {
-                     changeSexToServer(str[yourChoice]);
+                    changeSexToServer(str[yourChoice]);
                 }
             }
         });
@@ -188,7 +195,7 @@ public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String x = response.body().string();
-                Log.d("TAG",x);
+                Log.d("TAG", x);
                 try {
                     JSONObject jsonObject = new JSONObject(x);
                     if (jsonObject.getInt(FormData.JCODE) == 400) {
@@ -198,7 +205,7 @@ public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.
                                 Toast.makeText(context, R.string.EditUserInfoActivityUpdateSuccess, Toast.LENGTH_SHORT).show();
                             }
                         });
-                    }else{
+                    } else {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -270,7 +277,7 @@ public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.
             public void onClick(DialogInterface dialog, int which) {
                 //发送
                 if (!editText.getText().equals("")) {
-                   changeSignToServer(editText.getText().toString(),i);
+                    changeSignToServer(editText.getText().toString(), i);
                 } else {
                     Toast.makeText(context, R.string.SendActionActivityNullParam, Toast.LENGTH_SHORT).show();
                 }
@@ -281,30 +288,30 @@ public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.
     }
 
     private void changeSignToServer(String s, int i) {
-        if(s.equals("")){
+        if (s.equals("")) {
             return;
         }
-        if(i == 1){
-            if(s.length() > 25){
+        if (i == 1) {
+            if (s.length() > 25) {
                 return;
             }
-        }else if(i == 2){
-            if(s.length() > 8){
+        } else if (i == 2) {
+            if (s.length() > 8) {
                 return;
             }
-        }else if(i == 3){
-            if(s.length() > 20){
+        } else if (i == 3) {
+            if (s.length() > 20) {
                 return;
             }
         }
         String tust_number = SharedPreferencesUtil.Read(context, FormData.tust_number_server, "");
         String token = SharedPreferencesUtil.Read_safe(context, FormData.token, "");
 
-        if(i == 1){
+        if (i == 1) {
             buildUrl = UrlData.setUserSign + "?" + FormData.token + "=" + token + "&" + FormData.uid + "=" + tust_number + "&" + FormData.sign_server + "=" + s;
-        }else if(i == 2){
+        } else if (i == 2) {
             buildUrl = UrlData.setUserName + "?" + FormData.token + "=" + token + "&" + FormData.uid + "=" + tust_number + "&" + FormData.school_name_server + "=" + s;
-        }else if(i == 3){
+        } else if (i == 3) {
             buildUrl = UrlData.setUserCollege + "?" + FormData.token + "=" + token + "&" + FormData.uid + "=" + tust_number + "&" + FormData.college_server + "=" + s;
         }
 
@@ -317,7 +324,7 @@ public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String x = response.body().string();
-                Log.d("TAG",x);
+                Log.d("TAG", x);
                 try {
                     JSONObject jsonObject = new JSONObject(x);
                     if (jsonObject.getInt(FormData.JCODE) == 400) {
@@ -487,5 +494,6 @@ public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.
     public void takeCancel() {
 
     }
+
 
 }

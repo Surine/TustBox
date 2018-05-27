@@ -71,26 +71,6 @@ public class HttpUtil {
         return okHttpClient.newCall(new Request.Builder().post(formBody).url(url).build());
     }
 
-//    //post file
-    public static Call post_file(String url, final Map<String, Object> map,File file){
-        OkHttpClient.Builder builder = new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS);//设置连接超时时间;
-        OkHttpClient okHttpClient = builder.cookieJar(new JavaNetCookieJar()).build();
-        MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        if(file != null){
-            // MediaType.parse() 里面是上传的文件类型。
-            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
-            String filename = file.getName();
-            // 参数分别为， 请求key ，文件名称 ， RequestBody
-            requestBody.addFormDataPart("headImage", file.getName(), body);
-        }
-        if (map != null) {
-            // map 里面是请求中所需要的 key 和 value
-            for (Map.Entry entry : map.entrySet()) {
-                requestBody.addFormDataPart(valueOf(entry.getKey()), valueOf(entry.getValue()));
-            }
-        }
-        return okHttpClient.newCall(new Request.Builder().post(requestBody.build()).url(url).build());
-    }
 
 
     public static String getIPAddress(Context context) {

@@ -68,7 +68,7 @@ public class AboutFragment extends Fragment {
 
         unbinder = ButterKnife.bind(this, view);
 
-        textView16.setText("VERSION-"+getAppInfo());
+        textView16.setText("v-"+getAppInfo());
         return view;
     }
 

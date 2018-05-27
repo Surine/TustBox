@@ -4,8 +4,11 @@ package com.surine.tustbox.Fragment.main;
  * Created by surine on 2017/9/16.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -19,6 +22,8 @@ import com.surine.tustbox.Fragment.PageFragment.ThirdPageFragment;
 import com.surine.tustbox.Fragment.PageFragment.SencondPageFragment;
 import com.surine.tustbox.Fragment.PageFragment.FisrtPageFragment;
 import com.surine.tustbox.R;
+import com.surine.tustbox.UI.SchZoneActivity;
+import com.surine.tustbox.UI.SendActionActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,6 +45,7 @@ public class MainFragment extends Fragment{
      * 2017年11月14日22:25:20 更新混合UI调整
      * */
     Fragment mSchoolFragment = new ThirdPageFragment();
+    private FloatingActionButton fab;
 
     public static MainFragment getInstance(String title){
         MainFragment fragment = new MainFragment();
@@ -71,39 +77,72 @@ public class MainFragment extends Fragment{
     }
 
     private void initViewPager() {
-        //1.实例化viewpager和tablayout
         viewpager = (ViewPager) v.findViewById(R.id.viewpager);
         tab = (TabLayout)v. findViewById(R.id.tabs);
-
-        //2.使用fragment 的list集合管理碎片
         fragments.add(FisrtPageFragment.getInstance("1"));
         fragments.add(SencondPageFragment.getInstance("2"));
         fragments.add(mSchoolFragment);
-        //3.使用string的list集合来添加标题
-       // titles.add(TimeUtil.GetWeek());
         titles.add("首页");
         titles.add("课表");
         titles.add("校园");
-
-
-        //4.初始化适配器（传入参数：FragmentManager，碎片集合，标题）
         pagerAdapter = new SimpleFragmentPagerAdapter
                 (getActivity().getSupportFragmentManager(), fragments, titles);
-        //5.设置viewpager适配器
         viewpager.setAdapter(pagerAdapter);
-        //6.设置缓存
         viewpager.setOffscreenPageLimit(3);
-        //7.关联viewpager
         tab.setupWithViewPager(viewpager);
 
-//        TabLayout.Tab tab_one = tab.getTabAt(0);
-//        TabLayout.Tab tab_two = tab.getTabAt(1);
-//        TabLayout.Tab tab_three = tab.getTabAt(2);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            tab_one.setIcon(getResources().getDrawable(R.drawable.home,null));
-//            tab_two.setIcon(getResources().getDrawable(R.drawable.calendar_today,null));
-//            tab_three.setIcon(getResources().getDrawable(R.drawable.fan,null));
-//        }
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v,"新功能即将上线",Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            //滚动监听器
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            //页卡选中监听器
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        fab.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Snackbar.make(v,"新功能即将上线",Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
+                        break;
+                    case 1:
+                        fab.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(getActivity(), SchZoneActivity.class));
+                            }
+                        });
+                        break;
+                    case 2:
+                        fab.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(getActivity(), SendActionActivity.class));
+                            }
+                        });
+                        break;
+                }
+            }
+
+            //滚动状态变化监听器
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+
 
     }
 

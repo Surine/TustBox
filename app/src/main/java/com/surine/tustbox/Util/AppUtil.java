@@ -10,7 +10,7 @@ import android.content.Context;
 public class AppUtil {
 
     /**
-     * 获取APP
+     * 获取APP VersionName
      * */
 
     public static String getVersionName(Context context) {

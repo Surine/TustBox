@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:background="@color/Tust_White"
         android:layout_marginTop="1dp"
+        android:id="@+id/head_rela"
         android:layout_height="80dp">
         <TextView
             android:layout_width="wrap_content"

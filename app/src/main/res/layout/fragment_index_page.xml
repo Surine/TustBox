@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:scrollbars="none"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@color/Tust_BACK"
     xmlns:android="http://schemas.android.com/apk/res/android">
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:orientation="vertical">
        <include
-           android:layout_marginTop="10dp"
-           layout="@layout/block_today_course"
-           android:layout_height="wrap_content"
-           android:layout_width="match_parent" />
+           layout="@layout/block_day_info"
+           android:layout_height="@dimen/first_fragment_day_info_card_height"
+           android:layout_width="match_parent"
+           />
        <include
            layout="@layout/block_tool"
            android:layout_height="wrap_content"
@@ -25,16 +23,13 @@
        <include
            layout="@layout/block_message"
            android:layout_height="wrap_content"
-           android:layout_marginTop="10dp"
            android:layout_width="match_parent"
            />
+
+
        <include
-           layout="@layout/block_end"
+           layout="@layout/block_today_course"
            android:layout_height="wrap_content"
-           android:layout_marginTop="10dp"
-           android:layout_marginBottom="15dp"
-           android:layout_width="match_parent"
-           />
+           android:layout_width="match_parent" />
    </LinearLayout>
 </ScrollView>
-</LinearLayout>

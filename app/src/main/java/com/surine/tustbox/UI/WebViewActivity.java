@@ -26,12 +26,20 @@ public class WebViewActivity extends TustBaseActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         Intent intent = getIntent();
-        String url = intent.getStringExtra("url");
+        String data = intent.getStringExtra("url");
         String title = intent.getStringExtra("title");
+        int flag = intent.getIntExtra("flag",0);
         setTitle(title);
 
         final WebView webView = (WebView)findViewById(R.id.webview);
-        webView.loadUrl(url);
+        //加载网页源码还是url，默认是url（0）
+        if(flag != 0){
+            webView.loadDataWithBaseURL(null,data,"text/html","UTF-8",null);
+        }else{
+            webView.loadUrl(data);
+        }
+
+
         //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
         webView.setWebViewClient(new WebViewClient(){
             @Override

@@ -4,10 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -25,29 +25,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.surine.tustbox.Bean.Book_Info;
-import com.surine.tustbox.Bean.Course_Info;
-import com.surine.tustbox.Bean.ScoreInfo;
-import com.surine.tustbox.Bean.Student_info;
-import com.surine.tustbox.Data.Constants;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.Eventbus.SimpleEvent;
 import com.surine.tustbox.Fragment.main.MainFragment;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
-import com.surine.tustbox.Util.AppUtil;
 import com.surine.tustbox.Util.ClearDataUtil;
 import com.surine.tustbox.Util.HttpUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
-import com.surine.tustbox.Util.TimeUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.litepal.crud.DataSupport;
 
-import java.io.File;
 import java.io.IOException;
 
 import butterknife.BindView;
@@ -65,7 +56,7 @@ import q.rorbin.badgeview.QBadgeView;
 
 
 public class MainActivity extends TustBaseActivity {
-    final String[] str = new String[]{
+    final static String[] str = new String[]{
             "第一周", "第二周", "第三周", "第四周", "第五周", "第六周",
             "第七周", "第八周", "第九周", "第十周", "第十一周", "第十二周",
             "第十三周", "第十四周", "第十五周", "第十六周", "第十七周", "第十八周",
@@ -83,6 +74,8 @@ public class MainActivity extends TustBaseActivity {
     TextView toolbarMessage;
     @BindView(R.id.title)
     TextView title;
+    @BindView(R.id.floatingActionButton)
+    FloatingActionButton floatingActionButton;
 
 
     private String update_message;
@@ -104,7 +97,7 @@ public class MainActivity extends TustBaseActivity {
         //设置toolbar
         setSupportActionBar(mToolbar);
         //设置标题
-      //  setTitle("第" + (SharedPreferencesUtil.Read(MainActivity.this, "choice_week", 0)) + "周");
+        //  setTitle("第" + (SharedPreferencesUtil.Read(MainActivity.this, "choice_week", 0)) + "周");
         title.setText("第" + (SharedPreferencesUtil.Read(MainActivity.this, "choice_week", 0)) + "周");
         //设置界面框架
         FragmentTransaction tran = getSupportFragmentManager().beginTransaction();
@@ -115,14 +108,6 @@ public class MainActivity extends TustBaseActivity {
 
         //更新桌面小部件
         updateWidget();
-//        //子线程更新
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                //获取新版本
-//                getNewVersion();
-//            }
-//        }).start();
 
 
         /**
@@ -147,7 +132,6 @@ public class MainActivity extends TustBaseActivity {
         View nav_view = mNavView.inflateHeaderView(R.layout.nav_header_drawer_layout);
         //侧滑顶部点击事件
         ImageView head = (ImageView) nav_view.findViewById(R.id.nav_head);
-        TextView time = (TextView) nav_view.findViewById(R.id.nav_time);
         TextView name = (TextView) nav_view.findViewById(R.id.nav_name);
         //初始化头像和昵称
         //免流量加载
@@ -159,12 +143,11 @@ public class MainActivity extends TustBaseActivity {
         if (!nick_name.equals("")) {
             name.setText(nick_name);
         }
-        time.setText(TimeUtil.GetNavTime());
         head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String uid = SharedPreferencesUtil.Read(MainActivity.this, FormData.tust_number_server, "");
-                Intent intent = new Intent(MainActivity.this, UserInfoActivity.class).putExtra(FormData.uid,uid);
+                Intent intent = new Intent(MainActivity.this, UserInfoActivity.class).putExtra(FormData.uid, uid);
                 startActivity(intent);
             }
         });
@@ -189,7 +172,7 @@ public class MainActivity extends TustBaseActivity {
                                 break;
                             case R.id.about:
                                 //关于
-                                startActivity(new Intent(MainActivity.this,SettingActivity.class).putExtra("set_",2));
+                                startActivity(new Intent(MainActivity.this, SettingActivity.class).putExtra("set_", 2));
                                 break;
                             case R.id.share:
                                 //分享
@@ -234,7 +217,7 @@ public class MainActivity extends TustBaseActivity {
                             @Override
                             public void run() {
                                 try {
-                                    if(badge!=null){
+                                    if (badge != null) {
                                         badge.hide(true);
                                     }
                                     badge = new QBadgeView(MainActivity.this).bindTarget(toolbarMessage).setBadgeNumber(jsonObject.getInt(FormData.JDATA)).setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
@@ -257,7 +240,7 @@ public class MainActivity extends TustBaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if(badge!=null){
+                                if (badge != null) {
                                     badge.hide(true);
                                 }
                             }
@@ -343,15 +326,6 @@ public class MainActivity extends TustBaseActivity {
                 //3.start the login activty
                 //4. make a toast
 
-//                DataSupport.deleteAll(Course_Info.class);
-//                DataSupport.deleteAll(Student_info.class);
-//                DataSupport.deleteAll(ScoreInfo.class);
-//                DataSupport.deleteAll(Book_Info.class);
-//                File file = new File(String.valueOf(MainActivity.this.getFilesDir() + Constants.HEAD_FILE_PATH));
-//                deletefile(file);
-//                file = new File(Constants.DATA_FILE_PATH);
-//                deletefile(file);
-
                 //TODO：清除APP全部数据
                 ClearDataUtil clearDataUtil = new ClearDataUtil(MainActivity.this);
                 clearDataUtil.clearAllDataOfApplication();
@@ -365,14 +339,6 @@ public class MainActivity extends TustBaseActivity {
             }
         });
         builder.show();
-    }
-
-    private void deletefile(File file) {
-        if (file.exists()) {
-            if (file.isFile()) {
-                file.delete();   //delete the head or SharedPreferences
-            }
-        }
     }
 
 
@@ -434,7 +400,7 @@ public class MainActivity extends TustBaseActivity {
                     //储存，通知更新UI
                     SharedPreferencesUtil.Save(MainActivity.this, "choice_week", yourChoice + 1);
                     Toast.makeText(MainActivity.this, getString(R.string.choose_) + str[yourChoice], Toast.LENGTH_SHORT).show();
-                   // setTitle("第" + (SharedPreferencesUtil.Read(MainActivity.this, "choice_week", 0)) + "周");
+                    // setTitle("第" + (SharedPreferencesUtil.Read(MainActivity.this, "choice_week", 0)) + "周");
                     title.setText("第" + (SharedPreferencesUtil.Read(MainActivity.this, "choice_week", 0)) + "周");
                     updateWidget();
                     //发送周更新通知
@@ -451,85 +417,18 @@ public class MainActivity extends TustBaseActivity {
         sendBroadcast(updateIntent);
     }
 
-    //the method is a control menu update
-    //we can use the supportInvalidateOptionsMenu() to update our menu
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        super.onPrepareOptionsMenu(menu);
-//        MenuItem week = menu.findItem(R.id.week);
-//        MenuItem other_user = menu.findItem(R.id.other_user);
-//        if (Flag == 1) {
-//            week.setVisible(true);
-//            other_user.setVisible(true);
-//        } else if (Flag == 2) {
-//            week.setVisible(false);
-//            other_user.setVisible(false);
-//        } else {
-//            week.setVisible(false);
-//            other_user.setVisible(false);
-//        }
-//        return true;
-//    }
-
-    private void getNewVersion() {
-        HttpUtil.get(UrlData.update_url).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                //failure
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(MainActivity.this, "网络好像出现了点问题！", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                update_message = response.body().string().toString();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        JSONObject jsonObject = null;
-                        try {
-                            //获取相关信息
-                            jsonObject = new JSONObject(update_message);
-                            version = jsonObject.getString("version");
-                            log = jsonObject.getString("log");
-                            //is_ness = Integer.parseInt(jsonObject.getString("is_ness"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        if (version.equals(AppUtil.getVersionName(MainActivity.this)) || version.equals("") || version == null) {
-                            //
-                        } else {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                            //new version
-                            builder.setTitle("小天发现新版本啦！");
-                            builder.setMessage(log);
-                            builder.setPositiveButton("现在更新", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    String url = UrlData.download_url;
-                                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                                    intent.setData(Uri.parse(url));
-                                    startActivity(intent);
-
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.setNegativeButton("残忍拒绝", null);
-                            builder.show();
-                        }
-
-                    }
-                });
-            }
-        });
-
+    @OnClick({R.id.toolbar_message, R.id.floatingActionButton})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_message:
+                startActivity(new Intent(MainActivity.this, MessageActivity.class));
+                break;
+            case R.id.floatingActionButton:
+                break;
+        }
     }
 
-    @OnClick(R.id.toolbar_message)
-    public void onViewClicked() {
-        startActivity(new Intent(MainActivity.this, MessageActivity.class));
-    }
+
+
+
 }

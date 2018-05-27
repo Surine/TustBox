@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
@@ -9,15 +9,18 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/colorPrimary"
-        app:tabGravity="center"
-        app:tabIndicatorColor="@color/Tust_Black"
-        app:tabSelectedTextColor="@color/Tust_Black" />
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@color/Tust_White"
+        app:tabIndicatorColor="@color/colorAccent"
+        app:tabSelectedTextColor="@color/colorAccent" />
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
+        android:layout_below="@id/tabs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 
-</LinearLayout>
+</RelativeLayout>

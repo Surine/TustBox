@@ -185,6 +185,15 @@
     <string name="EditUserInfoActivityUpdateSuccess">更新成功！</string>
     <string name="SendActionActivityAccountError">您的帐号已经冻结！</string>
     <string name="scorenewtermfragmentnetnoconn">网络貌似走丢了，点我或返回首页重试！</string>
+    <string name="empty_class_room">空教室查询</string>
+    <string name="empty_classroom_title">好好自习,\n天天向上!</string>
+    <string name="empty_classroom_notice">欢迎使用空教室查询功能：\n
+        1.请选择正确信息进行查询，查询结果仅供参考。\n
+        2.所有数据来自天津科技大学官方，请勿利用此数据做违纪之事，否则后果自负。\n
+        3.本功能可以在非校园网下使用。\n
+        4.感谢张璞同学提供数据源。
+    </string>
+    <string name="no_net_or_permission">网络未连接或者教务处拒绝访问！</string>
 
 </resources>
 

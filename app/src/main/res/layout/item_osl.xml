@@ -1,42 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/osl_card"
+<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="90dp"
-    android:layout_margin="7dp"
-    android:background="?android:attr/selectableItemBackgroundBorderless"
-    android:elevation="1dp"
-    android:orientation="vertical"
-    app:cardUseCompatPadding="true"
-    tools:ignore="NewApi">
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    android:id="@+id/osl_card"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="10dp"
+    android:background="?android:attr/selectableItemBackground"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/osl_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/osl_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:paddingStart="20dp"
-            android:paddingTop="10dp"
-            android:text="Okhttp"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:text="Okhttp"
+        android:textColor="@color/Tust_Black"
+        android:textSize="20sp" />
 
         <TextView
             android:id="@+id/osl_url"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/osl_title"
             android:paddingStart="20dp"
             android:paddingTop="8dp"
             android:text="Okhttp"
 
             />
-    </RelativeLayout>
-</android.support.v7.widget.CardView>
+</RelativeLayout>

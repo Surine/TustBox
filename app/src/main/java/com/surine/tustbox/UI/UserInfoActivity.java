@@ -207,7 +207,7 @@ public class UserInfoActivity extends TustBaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                finishAfterTransition();
                 break;
             case R.id.action_edit:
                 String tust_number = SharedPreferencesUtil.Read(UserInfoActivity.this, FormData.tust_number_server,"");

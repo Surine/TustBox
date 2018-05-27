@@ -4,6 +4,7 @@ package com.surine.tustbox.Fragment.PageFragment;
  * Created by surine on 2017/9/16.
  */
 
+import android.app.ActivityOptions;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,6 +37,7 @@ import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.Eventbus.SimpleEvent;
 import com.surine.tustbox.R;
 import com.surine.tustbox.UI.ActionInfoActivity;
+import com.surine.tustbox.UI.SchZoneActivity;
 import com.surine.tustbox.UI.SendActionActivity;
 import com.surine.tustbox.UI.UserInfoActivity;
 import com.surine.tustbox.UI.WebViewActivity;
@@ -78,8 +80,7 @@ public class ThirdPageFragment extends Fragment {
     @BindView(R.id.res_list)
     RecyclerView resList;
     Unbinder unbinder;
-    @BindView(R.id.floatingActionButton)
-    FloatingActionButton floatingActionButton;
+
     @BindView(R.id.rec_tag_list)
     RecyclerView recTagList;
     @BindView(R.id.srl)
@@ -134,7 +135,7 @@ public class ThirdPageFragment extends Fragment {
 
         //设置动态列表及适配器
         adapter = new Action_List_Adapter(R.layout.item_action, actions);
-        adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
+        adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         resList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
@@ -166,7 +167,8 @@ public class ThirdPageFragment extends Fragment {
                     positionInActions = position;
                     showMoreDialog();
                 }else if(view == adapter.getViewByPosition(resList,position,R.id.action_info_head)){
-                    startActivity(new Intent(getActivity(), UserInfoActivity.class).putExtra(FormData.uid,actions.get(position).getUid()));
+                    Intent intent = new Intent(getActivity(),UserInfoActivity.class).putExtra(FormData.uid,actions.get(position).getUid());
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity(),view,"head").toBundle());
                 }
             }
         });
@@ -175,7 +177,6 @@ public class ThirdPageFragment extends Fragment {
 
         //初始化加载最新数据
         initServerData(DOWNTOREFRESH,1);
-
         return v;
     }
 
@@ -357,7 +358,8 @@ public class ThirdPageFragment extends Fragment {
                             public void run() {
                               //点赞成功
                                actions.get(postion).setIslove(true);
-                               adapter.notifyItemChanged(postion);
+                                actions.get(postion).setMessages_agreenum(String.valueOf(Integer.parseInt(actions.get(postion).getMessages_agreenum()) + 1));
+                                adapter.notifyItemChanged(postion);
                             }
                         });
                     }else if(jsonObject.getInt(FormData.JCODE) == 401){
@@ -379,6 +381,7 @@ public class ThirdPageFragment extends Fragment {
                             public void run() {
                               //取消赞
                                 actions.get(postion).setIslove(false);
+                                actions.get(postion).setMessages_agreenum(String.valueOf(Integer.parseInt(actions.get(postion).getMessages_agreenum()) - 1));
                                 adapter.notifyItemChanged(postion);
                             }
                         });
@@ -541,10 +544,6 @@ public class ThirdPageFragment extends Fragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.floatingActionButton)
-    public void onViewClicked() {
-        startActivity(new Intent(getActivity(), SendActionActivity.class));
-    }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)

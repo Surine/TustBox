@@ -16,10 +16,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -123,7 +125,10 @@ public class ActionInfoActivity extends TustBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setEnterTransition(new Explode().setDuration(500).setInterpolator(new AccelerateInterpolator()));
+        getWindow().setReturnTransition(new Explode().setDuration(500));
         setContentView(R.layout.activity_action_info);
+
         EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         context = this;

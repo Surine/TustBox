@@ -104,6 +104,7 @@ public class UrlData {
     public static String setUserCollege = baseUrl+"/TustBox/index.php/Home/User/setUserCollege";
     //更新头像
     public static String setUserFace = baseUrl+"/TustBox/index.php/Home/User/setUserFace";
+    public static String getEmptyClassRoomInfo = baseUrl+"/TustBox/index.php/Home/EmptyClassRoom/getEmptyClassRoom";
     //默认头像
     public static String normalFace = "https://i.loli.net/2017/10/18/59e71d7296e0c.jpg";
 

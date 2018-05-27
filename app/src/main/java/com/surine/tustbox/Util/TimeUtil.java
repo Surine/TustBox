@@ -23,6 +23,18 @@ public class TimeUtil {
     }
 
     //获取时间
+    public static String GetTime() {
+        SimpleDateFormat df = new SimpleDateFormat("mm:ss");//设置日期格式
+        return df.format(new Date());// new Date()为获取当前系统时间
+    }
+
+    //获取时间
+    public static int GetHour() {
+        SimpleDateFormat df = new SimpleDateFormat("HH");//设置日期格式
+        return Integer.parseInt(df.format(new Date()));// new Date()为获取当前系统时间
+    }
+
+    //获取时间
     public static String GetDate_or() {
         SimpleDateFormat df = new SimpleDateFormat("MM月dd日");//设置日期格式
         return df.format(new Date());// new Date()为获取当前系统时间

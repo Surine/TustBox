@@ -17,6 +17,7 @@ public class GlideImageLoader implements NineGridView.ImageLoader {
     public void onDisplayImage(Context context, ImageView imageView, String url) {
         if (url != null) {
             try {
+               // imageView.setBackgroundColor(context.getResources().getColor(R.color.Tust_Blue));
                 Glide.with(context).load(url)//
                         .placeholder(R.drawable.school_shape)//
                         .error(R.drawable.school_shape)//

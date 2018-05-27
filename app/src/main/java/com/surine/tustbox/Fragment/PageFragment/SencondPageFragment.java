@@ -89,8 +89,7 @@ public class SencondPageFragment extends Fragment {
     ScrollView mScrollview;
     @BindView(R.id.course_table)
     RecyclerView mCourseTable;
-    @BindView(R.id.fab_sch_zone)
-    FloatingActionButton mFabSchZone;
+
     private List<Course_Info> mCourseList = new ArrayList<>();
     private List<Course_Info> mLastList = new ArrayList<>();
     int user;
@@ -136,6 +135,7 @@ public class SencondPageFragment extends Fragment {
         initView(v);
         //加载背景图片
         load_image();
+
         return v;
     }
 
@@ -311,8 +311,4 @@ public class SencondPageFragment extends Fragment {
     }
 
 
-    @OnClick(R.id.fab_sch_zone)
-    public void onViewClicked() {
-        startActivity(new Intent(getActivity(), SchZoneActivity.class));
-     }
 }

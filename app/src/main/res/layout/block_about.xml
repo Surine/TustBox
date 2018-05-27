@@ -23,104 +23,52 @@
         android:layout_alignBottom="@+id/imageView3"
         android:layout_centerHorizontal="true"
         android:text="V3.0.0"
-        android:textColor="@color/Tust_Black"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textSize="18sp" />
 
 
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="40dp"
+        app:cardElevation="1dp"
+        android:layout_below="@id/textView16"
+        android:layout_height="wrap_content">
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:id="@+id/ad"
-            android:layout_below="@id/textView16"
-            android:layout_marginTop="30dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:id="@+id/osl_layout"
             >
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:padding="@dimen/ad_circle_radius"
-                android:src="@color/Tust_RED"
-                android:id="@+id/circleImageView" />
-
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/circleImageView"
-                android:gravity="center"
-                android:text="简洁" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:padding="@dimen/ad_circle_radius"
-                android:src="@color/Tust_Green"
-                android:id="@+id/circleImageView2" />
-
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/osl2"
+                android:id="@+id/osltext"
+                android:paddingStart="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:textColor="@color/Tust_Black"
+                />
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/circleImageView"
-                android:gravity="center"
-                android:text="高效" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:padding="@dimen/ad_circle_radius"
-                android:src="@color/Tust_Blue"
-                android:id="@+id/circleImageView3" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/circleImageView"
-                android:gravity="center"
-                android:text="向往" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/check_update"
+                android:id="@+id/update"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:textColor="@color/Tust_Black"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:paddingStart="20dp"
+                />
         </LinearLayout>
+    </android.support.v7.widget.CardView>
 
-    <LinearLayout
-        android:layout_below="@id/ad"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:id="@+id/osl_layout"
-        android:layout_marginTop="20dp"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/osl2"
-            android:id="@+id/osltext"
-            android:background="@color/Tust_White"
-            android:gravity="center_vertical"
-            android:textColor="@color/Tust_Black"
-            android:paddingStart="20dp"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/update_layout"
-        android:layout_below="@id/osl_layout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:layout_marginTop="1dp"
-        tools:ignore="NewApi">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/check_update"
-            android:id="@+id/update"
-            android:background="@color/Tust_White"
-            android:gravity="center_vertical"
-            android:textColor="@color/Tust_Black"
-            android:paddingStart="20dp"
-            />
-    </LinearLayout>
 
 
     <TextView
@@ -128,7 +76,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="10sp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginBottom="5dp"
         android:layout_alignParentBottom="true"
         android:text="@string/copyright"
         />

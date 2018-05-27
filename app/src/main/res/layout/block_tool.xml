@@ -1,34 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <RelativeLayout
-        android:id="@+id/relativielayout_title_tool"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_below="@id/rec_today_course"
-        android:gravity="center_vertical">
-
-        <View
-            android:id="@+id/view_tool_title_color"
-            android:layout_width="5dp"
-            android:layout_height="18dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/colorPrimary2" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@id/view_tool_title_color"
-            android:gravity="center"
-            android:textColor="@color/Tust_Black"
-            android:text="盒子工具"
-            android:textSize="@dimen/index_page_title_size"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
+    android:layout_width="match_parent"
+    android:background="@color/Tust_White"
+    android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,6 +10,5 @@
         android:nestedScrollingEnabled="false"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_below="@id/relativielayout_title_tool"
         ></android.support.v7.widget.RecyclerView>
 </RelativeLayout>

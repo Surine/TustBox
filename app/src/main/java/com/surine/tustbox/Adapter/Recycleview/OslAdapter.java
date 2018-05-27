@@ -3,11 +3,11 @@ package com.surine.tustbox.Adapter.Recycleview;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.surine.tustbox.Bean.Osl_info;
@@ -58,12 +58,12 @@ public class OslAdapter extends RecyclerView.Adapter<OslAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private TextView content;
-        private CardView card;
+        private RelativeLayout card;
         public ViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.osl_title);
             content = (TextView) itemView.findViewById(R.id.osl_url);
-            card = (CardView) itemView.findViewById(R.id.osl_card);
+            card = (RelativeLayout) itemView.findViewById(R.id.osl_card);
         }
     }
 }
