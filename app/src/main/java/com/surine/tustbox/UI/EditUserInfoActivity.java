@@ -6,14 +6,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,15 +38,20 @@ import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
+import com.surine.tustbox.Bean.CourseInfoHelper;
+import com.surine.tustbox.Bean.JwcUserInfo;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.Init.TustBaseActivity;
+import com.surine.tustbox.Mvp.login.LoginMvpActivity;
 import com.surine.tustbox.R;
+import com.surine.tustbox.Util.ClearDataUtil;
 import com.surine.tustbox.Util.HttpUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.litepal.crud.DataSupport;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,6 +83,10 @@ public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.
     RelativeLayout changeCollege;
     @BindView(R.id.head_rela)
     RelativeLayout headRela;
+    @BindView(R.id.edit_name)
+    TextView editName;
+    @BindView(R.id.exit)
+    Button exit;
     private Context context;
     private TakePhoto takePhoto;
     public InvokeParam invokeParam;
@@ -105,26 +115,12 @@ public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.
         Glide.with(this).load(getIntent().getStringExtra(FormData.face_server)).placeholder(R.drawable.school_shape).into(editHead);
         //设置toolbar
         setSupportActionBar(toolbar);
-        setTitle("动态详情");
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
+        setTitle("修改");
+        toolbar.setTitleTextAppearance(context, R.style.ToolbarTitle);
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
-        return true;
-    }
-
-    @OnClick({R.id.head_rela,R.id.edit_head, R.id.edit_sign, R.id.change_nick_name, R.id.change_sex, R.id.change_college})
+    @OnClick({R.id.head_rela, R.id.edit_head, R.id.edit_sign, R.id.change_nick_name, R.id.change_sex, R.id.change_college})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.head_rela:
@@ -495,5 +491,66 @@ public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.exit_menu, menu);
+        return true;
+    }
 
+    //set the back button listener
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.exit) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.exit)
+    public void onViewClicked() {
+        exitLogin();
+    }
+
+    private void exitLogin() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_a_text_notice,null);
+        builder.setView(view);
+
+        final AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+
+        Button ok = (Button) view.findViewById(R.id.ok);
+        Button cancel = (Button) view.findViewById(R.id.cancel);
+        TextView label = (TextView) view.findViewById(R.id.label);
+        TextView message = (TextView) view.findViewById(R.id.message);
+
+        label.setText("注销");
+        message.setText(R.string.noticeforlogout);
+        ok.setText("注销");
+        cancel.setText("取消");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            ClearDataUtil clearDataUtil = new ClearDataUtil(context);
+            clearDataUtil.clearAllDataOfApplication();
+            DataSupport.deleteAll(CourseInfoHelper.class);
+            DataSupport.deleteAll(JwcUserInfo.class);
+            startActivity(new Intent(context, LoginMvpActivity.class));
+            Toast.makeText(context,
+                    R.string.clear_success,
+                    Toast.LENGTH_SHORT).show();
+            finish();
+            dialog.dismiss();
+            }
+        });
+    }
 }

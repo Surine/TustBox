@@ -25,6 +25,8 @@ public class NoticeAdapter extends BaseQuickAdapter<Notice, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, Notice item) {
-        helper.setText(R.id.noticeText,item.getText());
+        helper.setText(R.id.notice_title,item.getTitle());
+        helper.setText(R.id.notice_content,item.getContent());
+        helper.setText(R.id.notice_time,item.getCtime());
     }
 }

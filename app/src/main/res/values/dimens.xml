@@ -22,5 +22,6 @@
     <dimen name="empty_classroom_text_padding_10dp">10dp</dimen>
     <dimen name="first_fragment_day_info_card_height">150dp</dimen>
     <dimen name="course_card_height">55dp</dimen>
+    <dimen name="dialog_title_size">30sp</dimen>
 
 </resources>

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -19,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -37,7 +37,7 @@ import com.surine.tustbox.Adapter.ViewPager.SimpleFragmentPagerAdapter;
 import com.surine.tustbox.Bean.Action;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
-import com.surine.tustbox.Eventbus.SimpleEvent;
+import com.surine.tustbox.Bean.EventBusBean.SimpleEvent;
 import com.surine.tustbox.Fragment.action.CommentFragment;
 import com.surine.tustbox.Fragment.action.LoveFragment;
 import com.surine.tustbox.Init.TustBaseActivity;
@@ -68,7 +68,6 @@ import okhttp3.Response;
 
 import static com.surine.tustbox.Data.Constants.HTTP;
 import static com.surine.tustbox.Data.Constants.PIC_CROP;
-import static com.surine.tustbox.Fragment.PageFragment.ThirdPageFragment.DOWNTOREFRESH;
 
 /**
  * Created by Surine on 2018/2/23.
@@ -135,10 +134,9 @@ public class ActionInfoActivity extends TustBaseActivity {
         //设置toolbar
         setSupportActionBar(toolbar);
         setTitle("动态详情");
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        toolbar.setTitleTextAppearance(context,R.style.ToolbarTitle);
+
+
         did = getIntent().getIntExtra(FormData.did, 0);
         initActionInfo(did);
         initViewPager();
@@ -316,13 +314,18 @@ public class ActionInfoActivity extends TustBaseActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.exit_menu, menu);
         return true;
+    }
+
+    //set the back button listener
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.exit) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

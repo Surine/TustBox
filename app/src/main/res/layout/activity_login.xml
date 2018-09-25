@@ -1,147 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Tust_White"
     tools:context="com.surine.tustbox.UI.LoginActivity">
 
-
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="204dp"
-        android:layout_height="184dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/tust2"
-        android:transitionName="transitionImg"
-        tools:ignore="MissingConstraints"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginTop="16dp"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintTop_toTopOf="parent"
+    <EditText
+        android:id="@+id/login_number_edit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView22"
+        android:layout_marginTop="50dp"
+        android:hint="天津科技大学学号"
+        android:paddingStart="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/login_tust_number_edit_back"
+        android:inputType="text"
+        android:maxLines="1"
         />
 
-    <CheckBox
-        android:id="@+id/warning"
+
+    <EditText
+        android:id="@+id/login_pswd_edit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingStart="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_below="@+id/login_number_edit"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/login_tust_number_edit_back"
+        android:hint="教务密码(默认身份证后6位)"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        />
+
+    <TextView
+        android:id="@+id/textView22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
-        android:layout_marginEnd="16dp"
-        android:gravity="center"
-        android:layout_marginRight="16dp"
-        android:text="@string/about"
-        android:textColor="@color/colorAccent"
-        android:padding="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="16dp"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/login_pswd_edit"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="51dp"
+        android:text="@string/loginTustbox"
+        android:textColor="@color/Tust_Black"
+        android:textSize="35sp"
+        tools:layout_editor_absoluteX="61dp"
+        tools:layout_editor_absoluteY="83dp" />
 
-    <!--TODO 对于兼容Android5.0以下设备的background设计-->
+    <TextView
+        android:id="@+id/dknowtustNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_login"
+        android:layout_alignBottom="@+id/btn_login"
+        android:layout_alignStart="@+id/login_pswd_edit"
+        android:text="遇到问题？"
+        android:textColor="@color/colorPrimary2" />
+
+    <TextView
+        android:id="@+id/userl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="3dp"
+        android:textSize="6sp"
+        android:text="登录即同意小天盒子用户协议"
+        />
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="0dp"
-        android:layout_height="42dp"
-        android:layout_margin="30dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:enabled="false"
-        android:background="@drawable/login_shape_cacel"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignEnd="@+id/login_number_edit"
+        android:layout_below="@id/login_pswd_edit"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/school_shape2"
         android:text="登录"
-        android:textColor="#fff"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-        app:layout_constraintVertical_bias="0.328"
-        tools:ignore="MissingConstraints"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"/>
+        android:textColor="#fff" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/help_login"
+        android:layout_width="80dp"
+        android:visibility="gone"
+        android:layout_height="40dp"
+        android:layout_above="@+id/loginWeb"
+        android:layout_toEndOf="@+id/textView22"
+        android:background="@drawable/background_of_message_from_server"
+        android:text="辅助登录" />
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btn_login"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginStart="20dp"
-        tools:targetApi="LOLLIPOP"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        app:layout_constraintVertical_bias="0.438">
-
-        <EditText
-            android:id="@+id/tust_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"
-            android:layout_marginTop="8dp"
-            android:hint="天津科技大学学号"
-            android:inputType="text"
-            android:maxLines="1"
-            app:layout_constraintBottom_toTopOf="@+id/button"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"/>
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:targetApi="LOLLIPOP"
-        app:layout_constraintVertical_bias="0.56"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        app:layout_constraintHorizontal_bias="0.49">
-
-        <EditText
-            android:id="@+id/pswd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"
-            android:layout_marginTop="2dp"
-            android:hint="教务密码(默认身份证6位)"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            app:layout_constraintBottom_toTopOf="@+id/button"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"/>
-    </android.support.design.widget.TextInputLayout>
-
-</android.support.constraint.ConstraintLayout>
+        android:layout_marginBottom="10dp"
+        android:id="@+id/loginWeb"
+        android:layout_above="@+id/userl"
+        />
+</RelativeLayout>

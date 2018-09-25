@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dbname value="TustStore" ></dbname>
-    <version value="9" ></version>
+    <version value="40" ></version>
 
     <list>
         <mapping class="com.surine.tustbox.Bean.Student_info"></mapping>
-        <mapping class="com.surine.tustbox.Bean.Course_Info"></mapping>
         <mapping class="com.surine.tustbox.Bean.ScoreInfo"></mapping>
-        <mapping class="com.surine.tustbox.Bean.Book_Info"></mapping>
+        <mapping class="com.surine.tustbox.Bean.Task"></mapping>
+        <mapping class="com.surine.tustbox.Bean.Course_Info"></mapping>
+        <mapping class="com.surine.tustbox.Bean.CourseInfoHelper"></mapping>
+        <mapping class="com.surine.tustbox.Bean.JwcUserInfo"></mapping>
+        <mapping class="com.surine.tustbox.Bean.ScoreInfoHelper"></mapping>
     </list>
 </resources>

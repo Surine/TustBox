@@ -2,21 +2,19 @@ package com.surine.tustbox.UI;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.surine.tustbox.Data.FormData;
-import com.surine.tustbox.Eventbus.SimpleEvent;
+import com.surine.tustbox.Bean.EventBusBean.SimpleEvent;
 import com.surine.tustbox.Fragment.course.EditCourseFragment;
-import com.surine.tustbox.Fragment.setting.SettingFragment;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -35,19 +33,18 @@ public class EditCourseActivity extends TustBaseActivity {
     @BindView(R.id.share_setting_fragment)
     FrameLayout settingFragment;
     private int id = 0;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_layout);
         ButterKnife.bind(this);
-
+        context = this;
         setSupportActionBar(courseEditToolbar);
         setTitle("编辑课程");
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        courseEditToolbar.setTitleTextAppearance(context,R.style.ToolbarTitle);
+
         id = getIntent().getIntExtra(FormData.id, 0);
         if(getIntent().getStringExtra(FormData.CREATE) != null){
             id = -1;  //id = -1是新建的意思
@@ -68,9 +65,6 @@ public class EditCourseActivity extends TustBaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
             case R.id.ok:
                 if(id == -1){
                     //新建
@@ -90,7 +84,7 @@ public class EditCourseActivity extends TustBaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.ok, menu);
+        getMenuInflater().inflate(R.menu.add_course, menu);
         return true;
     }
 

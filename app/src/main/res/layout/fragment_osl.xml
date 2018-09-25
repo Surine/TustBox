@@ -5,18 +5,9 @@
               android:layout_height="match_parent">
      <android.support.v7.widget.RecyclerView
          android:id="@+id/osl_rec"
+         android:layout_marginStart="10dp"
+         android:layout_marginEnd="10dp"
+         android:layout_marginTop="10dp"
          android:layout_width="match_parent"
          android:layout_height="match_parent"/>
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/floatingActionButton2"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_marginBottom="24dp"-->
-        <!--android:layout_marginEnd="24dp"-->
-        <!--android:clickable="true"-->
-        <!--app:srcCompat="@drawable/ic_action_network"/>-->
-
 </RelativeLayout>

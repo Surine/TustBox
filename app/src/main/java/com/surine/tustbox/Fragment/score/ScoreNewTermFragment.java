@@ -12,24 +12,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
-import com.surine.tustbox.Adapter.Recycleview.MessageAdapter;
 import com.surine.tustbox.Adapter.Recycleview.ScoreBaseAdapter;
-import com.surine.tustbox.Bean.Course_Info;
 import com.surine.tustbox.Bean.ScoreInfo;
+import com.surine.tustbox.Bean.ScoreInfoHelper;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
-import com.surine.tustbox.Eventbus.SimpleEvent;
+import com.surine.tustbox.Bean.EventBusBean.SimpleEvent;
 import com.surine.tustbox.NetWork.JavaNetCookieJar;
 import com.surine.tustbox.R;
 import com.surine.tustbox.Util.EncryptionUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
-import com.surine.tustbox.Util.TimeUtil;
+import com.surine.tustbox.Util.TustBoxUtil;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -38,6 +41,7 @@ import org.litepal.crud.DataSupport;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -46,7 +50,10 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
 import okhttp3.FormBody;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -59,7 +66,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class ScoreNewTermFragment extends Fragment {
     private static final String ARG_ = "ScoreNewTermFragment";
-    private static final long CONNECT_TIMEOUT = 5;
     @BindView(R.id.listScore)
     RecyclerView listScore;
     @BindView(R.id.spin_kit)
@@ -74,11 +80,13 @@ public class ScoreNewTermFragment extends Fragment {
     View v;
     Elements content_Text;
     private DoubleBounce doubleBounce;
-    private List<ScoreInfo> scores = new ArrayList<>();
+    private List<ScoreInfoHelper> scores = new ArrayList<>();
     private ScoreBaseAdapter adapter;
-    private List<ScoreInfo> mScoreFromDB;
+    private List<ScoreInfoHelper> mScoreFromDB;
     private String tag;
     private FragmentActivity mContext;
+    private ConcurrentHashMap<String, List<Cookie>> cookieStore = new ConcurrentHashMap<>();
+    private String tustNumber = null;
 
     public static ScoreNewTermFragment getInstance(String title) {
         ScoreNewTermFragment fra = new ScoreNewTermFragment();
@@ -103,21 +111,44 @@ public class ScoreNewTermFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_now_term, container, false);
         unbinder = ButterKnife.bind(this, v);
 
+        //初始化必要数据
+        tustNumber = new TustBoxUtil(getActivity()).getUid();
 
+        //初始化okhttp
+        initOkhttp();
 
         //首先加载动画
         doubleBounce = new DoubleBounce();
         spinKit.setIndeterminateDrawable(doubleBounce);
-        builder = new OkHttpClient.Builder().connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS);
-        okHttpClient = builder.cookieJar(new JavaNetCookieJar()).build();
+
         //初始化列表
         adapter = new ScoreBaseAdapter(R.layout.item_score, scores);
         adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         listScore.setLayoutManager(new LinearLayoutManager(mContext));
         listScore.setAdapter(adapter);
+
         //建立链接
         startConnect();
         return v;
+    }
+
+    //加载简洁版本请求
+    private void initOkhttp() {
+        okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .cookieJar(new CookieJar() {
+                    @Override
+                    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+                        cookieStore.put(url.host(), cookies);
+                    }
+
+                    @Override
+                    public List<Cookie> loadForRequest(HttpUrl url) {
+                        List<Cookie> cookies = cookieStore.get(url.host());
+                        return cookies != null ? cookies : new ArrayList<Cookie>();
+                    }
+                })
+                .build();
     }
 
     //建立链接
@@ -128,7 +159,8 @@ public class ScoreNewTermFragment extends Fragment {
         }
 
         try {
-            loginJWC();   //登录
+           // loginJWC();   //登录
+            loginJwcNew();  //新版本登录教务处
         } catch (Exception e) {
             e.printStackTrace();
             if(loadingText != null){
@@ -138,7 +170,8 @@ public class ScoreNewTermFragment extends Fragment {
         }
     }
 
-    private void loginJWC() throws Exception{
+    //新版登录教务处
+    private void loginJwcNew() {
 
         try {
             // 对base64加密后的数据进行解密
@@ -147,175 +180,159 @@ public class ScoreNewTermFragment extends Fragment {
             loadingText.setClickable(true);
             loadingText.setText("解码错误，点我重试");
             e.printStackTrace();
+            return;
         }
 
+        //学号为空
+        if(tustNumber == null){
+            return;
+        }
+
+        //构建表单
         FormBody formBody = new FormBody.Builder()
-                .add(FormData.login_id, SharedPreferencesUtil.Read(mContext, "tust_number", ""))
-                .add(FormData.login_pswd, id_card_pswd)
+                .add(FormData.login_id_new, tustNumber)
+                .add(FormData.login_pswd_new, id_card_pswd)
+                .add(FormData.help_var_new, "error")
                 .build();
-        Request request = new Request.Builder().post(formBody).url(UrlData.login_post_url).build();
+
+        Request request = new Request.Builder()
+                .url(UrlData.login_post_url_new)
+                .post(formBody)
+                .build();
+
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                try {
-                    if(mContext == null){
-                        return;
-                    }
-                    mContext.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(loadingText != null){
-                                loadingText.setClickable(true);
-                                loadingText.setText(R.string.scorenewtermfragmentnetnoconn);
-                            }
-
-                        }
-                    });
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String str = response.body().string().toString();
-                if(mContext == null){
+                if(getActivity() == null){
                     return;
                 }
-                mContext.runOnUiThread(new Runnable() {
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //解决Cookies不正确问题
-                        if (times == 2) {
-                            if(loadingText != null) {
-                                loadingText.setClickable(false);
-                                loadingText.setText("登录成功，正在获取本学期成绩……");
-                            }
-                            try {
-                                getScore();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            try {
-                                if(loadingText != null) {
-                                    loadingText.setClickable(false);
-                                    loadingText.setText("首次登录成功，正在确认登录……\n如果您长时间看见本提示，请返回首页重新进入！");
-                                }
-                                times = times + 1;
-                                loginJWC();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-    private void getScore() throws Exception{
-        Request request = new Request.Builder().
-                url(UrlData.socre_get_url).build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                if(mContext == null){
-                    return;
-                }
-                mContext.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(loadingText != null) {
-                            loadingText.setClickable(true);
-                            loadingText.setText(R.string.scorenewtermfragmentnetnoconn);
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String str = response.body().string().toString();
-                if(mContext == null){
-                    return;
-                }
-                mContext.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(loadingText != null) {
-                            loadingText.setClickable(false);
-                            loadingText.setText("正在解析数据……");
-                        }
-                    }
-                });
-                try {
-                    Jsoup_the_Html(str);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    //解析并储存
-    private void Jsoup_the_Html(String str) throws Exception{
-        //删除数据
-        DataSupport.deleteAll(ScoreInfo.class);
-        Document doc = Jsoup.parse(str);
-        Elements content2 = doc.select("tr");
-        try {
-            for (int i = 7; i < content2.size(); i++) {
-                content_Text = content2.get(i).select("td");
-                ScoreInfo score_info = new ScoreInfo();
-                score_info.setType("THIS");
-                score_info.setName(content_Text.get(2).text());
-                score_info.setEnglish_name(content_Text.get(3).text());
-                score_info.setScore(content_Text.get(9).text());
-                score_info.setCredit(content_Text.get(4).text());
-                score_info.setRanking(content_Text.get(10).text());
-                score_info.setAve(content_Text.get(8).text());
-                score_info.save();
-            }
-            if(mContext == null){
-                return;
-            }
-            mContext.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if(loadingText != null) {
-                        loadingText.setClickable(false);
-                        loadingText.setText("解析成功！");
-                    }
-                    updateList();
-                }
-            });
-
-            //抓取全部成绩
-            getAllScore();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            if(mContext == null){
-                return;
-            }
-            mContext.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if(loadingText != null) {
                         loadingText.setClickable(true);
-                        loadingText.setText("数据解析失败！请返回首页重试");
-                    }
-                }
-            });
-        }
+                        loadingText.setText("网络错误，点我重试");                    }
+                });
+            }
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String str = response.body().string();
+                Log.d(ARG_,str);
+                final Document doc = Jsoup.parse(str);
+                if(getActivity() == null){
+                    return;
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(doc.title().equals(getString(R.string.manager_))){
+                            getScoreJWC();
+                        }else{
+                            loadingText.setClickable(true);
+                            loadingText.setText("身份验证失败，点我重试");
+                        }
+                    }
+                });
+            }
+        });
     }
+
+    //获取成绩新版
+    private void getScoreJWC() {
+        Request request = new Request.Builder()
+                .url(UrlData.getScoreUrl)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadingText.setClickable(true);
+                        loadingText.setText("网络错误，点我重试");                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+               String str = response.body().string();
+               Log.d(ARG_,str);
+                //删除数据
+                DataSupport.deleteAll(ScoreInfoHelper.class);
+               try {
+                    //准备解析
+                    JSONObject jsonObj = new JSONObject(str);
+                    //获取成绩列表
+                    String cjList = jsonObj.getString("lnList");
+                    Log.d(ARG_,cjList);
+                    JSONArray jsonArray =  new JSONArray(cjList);
+                   for (int i = 0; i < jsonArray.length(); i++) {
+                       String jsArrayString = jsonArray.getString(i);
+                       JSONObject toGetCjList = new JSONObject(jsArrayString);
+                       //学期
+                      // String termInfo = toGetCjList.getString("cjbh");
+                       //学期编号
+                       String termNumber = String.valueOf(i + 1);
+                       //Log.d(ARG_,"学期"+ termInfo);
+                       JSONArray cjbh = new JSONArray(toGetCjList.getString("cjList"));
+                       for (int j = 0; j < cjbh.length(); j++) {
+                           Log.d(ARG_,"学期"+cjbh.get(j));
+                           JSONObject score = new JSONObject(cjbh.get(j).toString());
+                           String cj = score.getString("cj");
+                           String courseAttributeName = score.getString("courseAttributeName");
+                           String courseName = score.getString("courseName");
+                           String credit = score.getString("credit");
+                           String englishCourseName = score.getString("englishCourseName");
+                           String gradePointScore = score.getString("gradePointScore");
+                           String gradeName = score.getString("gradeName");
+
+                           ScoreInfoHelper scoreInfoHelper = new ScoreInfoHelper();
+                           scoreInfoHelper.setCj(cj);
+                           scoreInfoHelper.setCourseAttributeName(courseAttributeName);
+                           scoreInfoHelper.setCourseName(courseName);
+                           scoreInfoHelper.setCredit(credit);
+                           scoreInfoHelper.setEnglishCourseName(englishCourseName);
+                           scoreInfoHelper.setGradePointScore(gradePointScore);
+                           scoreInfoHelper.setGradeName(gradeName);
+                           scoreInfoHelper.setTermInfo(termNumber);
+                           scoreInfoHelper.save();
+                       }
+                   }
+
+                   if(getActivity() == null){
+                       throw new JSONException("NullPointer");
+                   }
+                   getActivity().runOnUiThread(new Runnable() {
+                       @Override
+                       public void run() {
+                           updateList();  //加载列表
+                       }
+                   });
+
+                   //通知AllScoreFragment来更新数据库
+                   EventBus.getDefault().post(new SimpleEvent(12,""));
+
+
+               } catch (JSONException e) {
+                   loadingText.setClickable(true);
+                   loadingText.setText("解析失败！点我重试");
+                    e.printStackTrace();
+               }
+            }
+        });
+    }
+
 
     private void updateList() {
 
-        mScoreFromDB = DataSupport.where("type = ?", "THIS").find(ScoreInfo.class);
-        for(ScoreInfo score:mScoreFromDB){
+        ScoreInfoHelper scoreInfoHelper = DataSupport.findLast(ScoreInfoHelper.class);
+        if(scoreInfoHelper == null){
+            return;
+        }
+       // mScoreFromDB = DataSupport.order("termInfo DESC").find(ScoreInfoHelper.class);
+        mScoreFromDB = DataSupport.where("termInfo = ?",scoreInfoHelper.getTermInfo()).find(ScoreInfoHelper.class);
+
+        for(ScoreInfoHelper score:mScoreFromDB){
             scores.add(score);
         }
         adapter.notifyDataSetChanged();
@@ -330,54 +347,6 @@ public class ScoreNewTermFragment extends Fragment {
 
     }
 
-    private void getAllScore() {
-        Request request = new Request.Builder().
-                url(UrlData.all_socre_get_url).build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String str = response.body().string().toString();
-                Jsoup_All(str);
-            }
-        });
-    }
-
-    private void Jsoup_All(String str) {
-        try {
-            Document doc = Jsoup.parse(str);
-            Elements content = doc.select("tr");
-            for (int i = 6; i < content.size() - 9; i++) {
-                content_Text = content.get(i).select("td");
-                ScoreInfo score_info = new ScoreInfo();
-                score_info.setType("ALL");
-                score_info.setName(content_Text.get(2).text());
-                score_info.setEnglish_name(content_Text.get(3).text());
-                score_info.setScore(content_Text.get(6).text());
-                score_info.setCredit(content_Text.get(4).text());
-                score_info.setRanking("无");
-                score_info.setAve("无");
-                score_info.save();
-            }
-            String info_string = content.get(content.size() - 8).text();
-            if(mContext != null){
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("data", MODE_PRIVATE).edit();
-                editor.putString("learn_info", info_string);
-                editor.apply();
-            }
-
-
-            EventBus.getDefault().post(new SimpleEvent(12,""));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -386,7 +355,6 @@ public class ScoreNewTermFragment extends Fragment {
 
     @OnClick(R.id.loading_text)
     public void onViewClicked() {
-      //  getActivity().finish();
         startConnect();
     }
 }

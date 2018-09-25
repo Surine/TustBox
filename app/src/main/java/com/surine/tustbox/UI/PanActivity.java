@@ -46,7 +46,7 @@ public class PanActivity extends AppCompatActivity {
 
     private void ShowLoginDialog() {
         final View view = LayoutInflater.from(this).inflate(R.layout.dialog_view_login_work_view,null);
-        final EditText number = (EditText) view.findViewById(R.id.tust_number);
+        final EditText number = (EditText) view.findViewById(R.id.task_name_edit);
         final EditText pswd = (EditText) view.findViewById(R.id.network_passwd);
         pswd.setHint("云盘密码");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

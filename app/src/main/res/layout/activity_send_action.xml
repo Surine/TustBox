@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color2"
+    android:background="@color/Tust_White"
     tools:context="com.surine.tustbox.UI.SendActionActivity">
    <include layout="@layout/toolbar"
        android:id="@+id/toolbar_send"
@@ -110,6 +110,8 @@
         android:padding="15dp"
         android:layout_above="@id/rec_pic"
         android:maxEms="240"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:id="@+id/edit"
         android:maxLength="240"
         android:background="@null"

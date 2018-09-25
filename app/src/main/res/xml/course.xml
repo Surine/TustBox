@@ -45,7 +45,7 @@
         <EditTextPreference
             android:key="courseWeek"
             android:title="上课周"
-            android:summary="填写上课的周，格式如1-12或者1，3，5…… (需要严格按照给定的格式填写，否则可能导致解析失败)"
+            android:summary="填写上课的周，(在本周上就写1，不在本周上就写0，如01111代表2，3，4，5周上，1010101代表1，3，5，7周上)"
             />
         <ListPreference
             android:key="courseWeekNumber"

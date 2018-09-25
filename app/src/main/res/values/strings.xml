@@ -9,14 +9,14 @@
     <string name="warning_text">注意</string>
 
     <string name="ok">确定</string>
-    <string name="wrong">帐号或者密码错误！</string>
+    <string name="wrong">帐号或者密码错误,或者教务处异常！</string>
     <string name="success">请求成功！</string>
-    <string name="manager_">学分制综合教务</string>
+    <string name="manager_">URP综合教务系统首页</string>
     <string name="fail">请求超时！请检查是否校园网连接</string>
     <string name="get">获取</string>
-    <string name="get_info">正在获取个人信息</string>
+    <string name="get_info">正在获取个人信息……</string>
     <string name="login">登录</string>
-    <string name="login_info">正在登录教务处……</string>
+    <string name="login_info">正在登录教务处,请保持良好的校园网环境……</string>
     <string name="save_success">个人信息储存成功</string>
     <string name="title_course">课表</string>
     <string name="box">盒子</string>
@@ -55,7 +55,7 @@
     <string name="f5">不及格</string>
     <string name="this_term_gpa">本学期绩点（仅供参考）：</string>
     <string name="share_your_score_to">把您的成绩分享到？</string>
-    <string name="course_info">课程详情</string>
+    <string name="course_info">详情</string>
     <string name="null_number_and_pswd">学号或者密码为空</string>
     <string name="plan">培养方案</string>
     <string name="error_information">错误信息</string>
@@ -87,8 +87,8 @@
     <string name="app">一个优秀的APP都是要有底线的！</string>
     <string name="osl">· 开源许可</string>
     <string name="osl2">开源许可</string>
-    <string name="help">给开发者丢辣条</string>
-    <string name="help_Alipay">点我复制支付宝</string>
+    <string name="help">赞助开发者</string>
+    <string name="help_Alipay">小可爱们可以自愿捐助我，捐赠收入将用于维护小天盒子服务器！（点击复制支付宝帐号）</string>
     <string name="surine_is_me">新世纪的Android爱好者，xiaxiaxia~</string>
     <string name="qq_number">点我复制QQ群：635622188</string>
     <string name="qq_is_copy">QQ已经复制到剪贴板</string>
@@ -145,18 +145,18 @@
     <string name="please_read_me">请先阅读说明</string>
     <string name="network_no_connect">网络看样子被吃掉了＞﹏＜</string>
     <string name="my_info_from_server">我的资料</string>
-    <string name="send_status">发表心情</string>
+    <string name="send_status">发表</string>
     <string name="send_success">发送成功</string>
     <string name="para_null">参数为空</string>
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
-    <string name="sch_zone">课表广场</string>
+    <string name="sch_zone">课表</string>
     <string name="fragment_courseInfo_score">评分</string>
     <string name="fragment_CourseInfo_Recommand_Btn_Text">为学妹推荐本课程</string>
     <string name="CourseInfoFragment_load_error">未知错误！</string>
     <string name="CourseInfoFragmentsetScoreToTheCourse">为本课程评个分吧！</string>
     <string name="CourseInfoFragmentThanksToYouToSetScore">感谢您的评分！</string>
-    <string name="server_error">服务器错误</string>
+    <string name="server_error">服务器开小差了！</string>
     <string name="CourseInfoFragmentSetScoreSuccess">评分成功！</string>
     <string name="CourseInfoFragmentHelpMe">求求你给我点分吧！</string>
     <string name="SendActionActivityQiniuTokenError">云存储TOKEN错误，请发送反馈给开发者</string>
@@ -185,15 +185,68 @@
     <string name="EditUserInfoActivityUpdateSuccess">更新成功！</string>
     <string name="SendActionActivityAccountError">您的帐号已经冻结！</string>
     <string name="scorenewtermfragmentnetnoconn">网络貌似走丢了，点我或返回首页重试！</string>
-    <string name="empty_class_room">空教室查询</string>
+    <string name="empty_class_room">空教室</string>
     <string name="empty_classroom_title">好好自习,\n天天向上!</string>
-    <string name="empty_classroom_notice">欢迎使用空教室查询功能：\n
-        1.请选择正确信息进行查询，查询结果仅供参考。\n
-        2.所有数据来自天津科技大学官方，请勿利用此数据做违纪之事，否则后果自负。\n
-        3.本功能可以在非校园网下使用。\n
-        4.感谢张璞同学提供数据源。
-    </string>
     <string name="no_net_or_permission">网络未连接或者教务处拒绝访问！</string>
+    <string name="failtoupdatetheweek">网络连接异常，自动更新周失败</string>
+    <string name="failtologinpswderror">登录小天服务器失败，账号或者密码错误</string>
+    <string name="loginTustbox">登录小天</string>
+    <string name="messageMenuTitle">消息</string>
+    <string name="task_please_check_time">请选择时间！</string>
+    <string name="pleasetryrestartapp">系统错误,请尝试重新启动APP</string>
+    <string name="noticeforlogout">非特殊情况建议不要注销，注销后所有教务处数据或本地数据（课表，成绩，任务）等都可能被清除,由于小天盒子依赖于教务处，当教务处关闭的时候，再次登录将取不到数据，为了您的数据安全，请先通过网站检查教务处是否关闭，确认无误后再退出。</string>
+    <string name="readyGetCourse">登录成功，请求课表中……</string>
+    <string name="parseCourse">课表请求成功，准备解析……</string>
+    <string name="loginError">因教务系统改版，需要先通过校园验证才能获取课表,请按照以下步骤获取课表\n
+    1.点击对话框下方的开始验证按钮，加载统一身份验证页面（请在校园网环境下进行）\n
+    2.在统一身份验证页面输入帐号密码（注意密码是您修改过的密码，不一定是身份证后6位）\n
+    3.登录成功之后页面将会跳转到新教务系统，此时点击界面上的辅助登录按钮，小天盒子会自动获取您的课表及相关信息
+    \n4.如果登录不成功，可以在[遇到问题]处反馈。</string>
+    <string name="loginJwcFail_net_error">当您看到这条信息时,说明小天没法请求教务处登录页面，下面是几种原因:\n
+    1.教务处服务维护，也就是说用电脑也登陆不了,您可以等教务处恢复正常后再登录。\n
+    2.您的网络不是校园网，或者校园网和移动数据都处于打开的状态，建议仔细检查。\n
+    3.您已连接校园网，但是很不稳定，通信不足以登录，您可以去图书馆或者其他网络好的地方尝试。\n
+    4.教务处已经更新,请耐心等待开发者适配。\n
+    </string>
+    <string name="loginJwcFail_pass_error">当您看到这条信息时,说明小天没法请求登录教务处，下面是几种原因:\n
+    1.一般是因为帐号密码输入有问题，请检查是否是身份证后六位或者是您修改过的密码。\n
+    2.教务处某些源代码更新，如果确认帐号密码没问题，可以联系开发者适配。\n
+    </string>
+    <string name="loginJwcFail_cookie_error">当您看到这条信息时,说明小天Cookies管理发生异常,这种情况
+        发生的概率比较小，也没有相对应的解决方案，一般可以退出重新登录，如果一直出现该情况，说明教务处可能更新了
+        请耐心等待开发者适配。
+    </string>
+    <string name="loginJwcFail_json_error">当您看到这条信息时,说明小天课表解析失败,主要原因有以下几条:\n
+    1.获取的课表数据错误，请点击反馈按钮反馈错误数据（待开发）\n
+    2.数据库操作错误，部分系统会出现该情况。\n
+    3.教务处更新了部分源代码，导致小天盒子无法识别。\n
+    </string>
+    <string name="loginJwcFail_user_error">当您看到这条信息时,说明小天无法获取您的个人信息,主要原因有以下几条:\n
+    1.Cookies已失效，建议重新登录\n
+    2.教务处登录接口或者个人信息接口已更新。\n
+    3.个人身份认证失败（一般是小概率事件）\n
+    </string>
+    <string name="loginJwcFail_user_parse_error">当您看到这条信息时,说明小天个人信息解析失败,主要原因有以下几条:\n
+    1.获取的个人信息数据错误，请点击反馈按钮反馈错误数据（待开发）\n
+    2.数据库操作错误，部分系统会出现该情况。\n
+    3.教务处更新了部分源代码，导致小天盒子无法识别。\n</string>
+    <string name="loginJwcFail_backup_error">课表云备份中断，请保持网络畅通（校园网登录帐号，或者移动数据，设置后点击重试即可）</string>
+    <string name="loginJwcFail_get_back_error">登录失败，您是否使用了校园网（TUST或者宿舍路由器）？或者如果您有课表云端备份，可以试试拉备份下来。</string>
+    <string name="loginJwcFail_login_notice">请连接校园网并登录帐号，以确保可以请求教务处，同时做课表云备份</string>
+    <string name="loginJwcFail_use_backup">该功能推荐在教务处已关闭的情况下使用。</string>
+    <string name="api_error_msg">尴尬了，网络异常了。</string>
+    <string name="mvp_notice">提示</string>
+    <string name="mvp_login_jwc">正在登录教务处(请使用校园网)，请稍后……</string>
+    <string name="mvp_empty_field">帐号或者密码为空！</string>
+    <string name="parse_error">课表解析失败，请稍后再试吧！</string>
+    <string name="cookie_error">Cookies已失效，请重新登录一次！</string>
+    <string name="parse_info">正在解析个人信息……</string>
+    <string name="parse_info_error">个人信息解析失败!</string>
+    <string name="mvp_retry">重试</string>
+    <string name="backUping">云备份中，请保持网络畅通！</string>
+    <string name="get_backUping">获取云备份中，请保持网络畅通！</string>
+    <string name="null_course_or_401">云端课表不存在，或者身份认证失败！</string>
+    <string name="mvp_get_cloud">获取云备份</string>
 
 </resources>
 

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Tust_White"
+    android:transitionName="mainEdit"
+    android:id="@+id/mainBack"
+    tools:context="com.surine.tustbox.UI.AddTaskActivity">
+  <include layout="@layout/toolbar"/>
+  <EditText
+      android:id="@+id/task_name_edit"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:layout_alignParentStart="true"
+      android:layout_below="@id/toolbar"
+      android:layout_marginTop="20dp"
+      android:hint="任务名称"
+      android:maxLength="15"
+      android:paddingStart="20dp"
+      android:layout_marginStart="30dp"
+      android:layout_marginEnd="30dp"
+      android:background="@drawable/login_tust_number_edit_back"
+      android:inputType="text"
+      android:maxLines="1"
+      />
+
+
+  <EditText
+      android:id="@+id/task_point_edit"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:paddingStart="20dp"
+      android:maxLength="10"
+      android:layout_marginStart="30dp"
+      android:layout_marginEnd="30dp"
+      android:layout_below="@+id/task_name_edit"
+      android:layout_marginTop="10dp"
+      android:background="@drawable/login_tust_number_edit_back"
+      android:hint="任务地点"
+      android:inputType="text"
+      android:maxLines="1"
+      />
+
+  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:paddingTop="5dp"
+        android:id="@+id/tag"
+        android:paddingBottom="5dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/task_point_edit"
+        >
+       <ImageView
+           android:layout_width="0dp"
+           android:layout_weight="1"
+           android:id="@+id/time"
+           android:background="?android:attr/selectableItemBackgroundBorderless"
+           android:src="@drawable/ic_timer_color_24dp"
+           android:layout_height="match_parent" />
+       <ImageView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:id="@+id/tagImage"
+        android:src="@drawable/ic_timelapse_black_24dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:layout_height="match_parent" />
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:id="@+id/color"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_palette_black_24dp"
+        android:layout_height="match_parent" />
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:id="@+id/more"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_important_black_24dp"
+        android:layout_height="match_parent" />
+  </LinearLayout>
+
+
+  <Button
+      android:id="@+id/ok"
+      android:layout_width="60dp"
+      android:layout_height="30dp"
+      android:layout_alignEnd="@+id/tag"
+      android:layout_below="@+id/tag"
+      android:layout_marginTop="20dp"
+      android:textColor="@color/Tust_White"
+      android:background="@drawable/button_first_fragment_sign_in"
+      android:text="确定" />
+
+  <Button
+      android:id="@+id/reset"
+      android:layout_width="60dp"
+      android:layout_height="30dp"
+      android:layout_alignTop="@+id/ok"
+      android:layout_toStartOf="@+id/ok"
+      android:text="重置"
+      android:layout_marginEnd="10dp"
+      android:background="@drawable/background_of_message_from_server"
+      />
+
+
+
+</RelativeLayout>

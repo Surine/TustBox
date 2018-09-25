@@ -20,7 +20,7 @@ import com.surine.tustbox.Adapter.Recycleview.CommentAdapter;
 import com.surine.tustbox.Bean.Comment;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
-import com.surine.tustbox.Eventbus.SimpleEvent;
+import com.surine.tustbox.Bean.EventBusBean.SimpleEvent;
 import com.surine.tustbox.R;
 import com.surine.tustbox.UI.ReplyInCommentActivity;
 import com.surine.tustbox.UI.UserInfoActivity;
@@ -46,8 +46,8 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
-import static com.surine.tustbox.Fragment.PageFragment.ThirdPageFragment.DOWNTOREFRESH;
-import static com.surine.tustbox.Fragment.PageFragment.ThirdPageFragment.UPTOREFRESH;
+import static com.surine.tustbox.Fragment.PageFragment.SchoolPageFragment.DOWNTOREFRESH;
+import static com.surine.tustbox.Fragment.PageFragment.SchoolPageFragment.UPTOREFRESH;
 
 /**
  * Created by Surine on 2018/2/23.
@@ -272,6 +272,9 @@ public class CommentFragment extends Fragment {
                         });
 
                     } else {
+                        if(getActivity() == null){
+                            return;
+                        }
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

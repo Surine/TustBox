@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <TextView
+        android:id="@+id/notice_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:paddingStart="30dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:id="@+id/noticeText"
-        android:text=""/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="30dp"
+        android:text="文本"
+        android:textSize="20sp"
+        android:textColor="@color/Tust_Black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/notice_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/notice_title"
+        android:layout_alignStart="@+id/notice_title"
+        android:layout_below="@+id/notice_title"
+        android:layout_marginTop="13dp"
+        android:text="文本" />
+
+    <TextView
+        android:id="@+id/notice_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="11dp"
+        android:layout_alignEnd="@+id/notice_content"
+        android:layout_below="@+id/notice_content"
+        android:text="文本" />
 </RelativeLayout>

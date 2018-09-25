@@ -55,4 +55,16 @@
             />
 
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="致谢"
+        >
+      <Preference
+          android:title="图标"
+          android:summary="所有图标均来自Material ICON和阿里巴巴矢量图标库"
+          />
+        <Preference
+            android:title="灵感创意"
+            android:summary="感谢使用小天盒子的童鞋们提供的创意和反馈bug，让小天变得更实用，稳定"
+            />
+    </PreferenceCategory>
 </PreferenceScreen>

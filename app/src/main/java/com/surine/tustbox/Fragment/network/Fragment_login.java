@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.surine.tustbox.Eventbus.Net_EventBus;
+import com.surine.tustbox.Bean.EventBusBean.Net_EventBus;
 import com.surine.tustbox.R;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
 

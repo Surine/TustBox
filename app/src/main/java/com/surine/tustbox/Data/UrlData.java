@@ -5,9 +5,21 @@ package com.surine.tustbox.Data;
  */
 
 public class UrlData {
-    public static String baseUrl = "http://surine.cn";
+    public static String baseUrl = "https://surine.cn";
     //请求登陆地址
     public static String login_post_url = "http://jwxt.tust.edu.cn/newLoginAction.do";
+    //新版本教务请求地址
+    public static String login_post_url_new = "http://jwxtxs.tust.edu.cn:46110/j_spring_security_check";
+    public static  String getScoreUrl = "http://jwxtxs.tust.edu.cn:46110/student/integratedQuery/scoreQuery/allPassingScores/callback";
+
+    //天津科技单点登录请求页面
+    public static String id_tust_url = "http://id.tust.edu.cn/authserver/login?service=http%3A%2F%2Fjwxtxs.tust.edu.cn%3A46110%2Fj_spring_cas_security_check";
+    //个人信息
+    public static String user_info_url = "http://jwxtxs.tust.edu.cn:46110/student/rollManagement/rollInfo/index";
+
+
+    //新版本课表请求地址
+    public static String getCourseInfoNew = "http://jwxtxs.tust.edu.cn:46110/student/courseSelect/thisSemesterCurriculum/ajaxStudentSchedule/callback";
     //个人信息请求地址
     public static String get_stu_info_url = "http://jwxt.tust.edu.cn/xjInfoAction.do?oper=xjxx";
     //课程请求地址
@@ -116,12 +128,32 @@ public class UrlData {
     public static final String net_get_url = "http://59.67.0.245";
     //网费充值
     public static final String charge_page = "http://59.67.5.142/WebPay/toRecharge";
+    //ejia
+    public static final String ejiaTv = "http://tv.ejia.net";
+    public static final String myCos = "http://wx.mycospxk.com";
 
     //用户须知和使用说明
     public static final String notice_and_introduce = "http://surine.cn/TustBox/WebPage/user_login_page.html";
     //校园板块公告
     public static final String rulesUrl = "http://surine.cn/TustBox/WebPage/rulesUrl.html";
+    //空教室使用说明
+    public static final String empty_class_room_intro = baseUrl+"/Me/?p=121";
+    public static final String login_introduce = baseUrl+"/Me/?p=137";
 
     //云盘登录
     public static final String pan_login = "http://pan.tust.edu.cn/v1/auth/sign_in?link_name=web&link_device=web&";
+    public static final String pan = "http://pan.tust.edu.cn";
+
+    //help小站
+    public static final String help = "http://help.tust.edu.cn/";
+    //获取主题列表
+    public static final String getSubjectList = baseUrl+"/TustBox/index.php/Home/Subject/getsubjectList";
+
+    //首页服务器通知
+    public static final String getFirstNoticeFromServer = baseUrl+"/TustBox/index.php/Home/Message/getFirstMessage";
+    //服务器通知
+    public static final String getNoticeFromServer = baseUrl+"/TustBox/index.php/Home/Message/getMessage";
+
+    public static final String uploadSchedule = baseUrl+"/TustBox/index.php/Home/Schedule/uploadSchedule";
+    public static final String downloadSchedule = baseUrl+"/TustBox/index.php/Home/Schedule/downloadSchedule";
 }

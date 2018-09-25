@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 25
+    compileSdkVersion 27  //编译版本不得超过27，因为28强制使用https
     buildToolsVersion '27.0.0'
     defaultConfig {
         applicationId "com.surine.tustbox"
-        minSdkVersion 21
-        targetSdkVersion 25
-        versionCode 10
-        versionName "3.0.2 Pre01"
+        minSdkVersion 21     //最低Android5.0
+        targetSdkVersion 27  //最好跟编译版本保持一致
+        versionCode 16
+        versionName "4.0.2 60周年特别纪念"
         testInstrumentationRunner "android.support.widget.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         aaptOptions.cruncherEnabled = false

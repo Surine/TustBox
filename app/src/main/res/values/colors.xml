@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ffffff</color>
-    <color name="colorPrimary2">#1a7ae1</color>
+    <!--<color name="colorPrimary2">#1a7ae1</color>-->
+    <color name="colorPrimary2">#ff0008</color>
     <color name="multiple_image_select_primaryDark">#0d6bb9</color>
     <color name="colorPrimaryDark">#dcdbdb</color>
     <color name="colorAccent1">#FF4081</color>
     <color name="Tust_RED">#ff0008</color>
-    <color name="colorAccent">#1a7ae1</color>
+    <!--<color name="colorAccent">#1a7ae1</color>-->
+    <color name="colorAccent">#ff0008</color>
     <color name="Tust_Blue">#1a7ae1</color>
     <color name="Tust_White">#ffffff</color>
     <color name="Tust_Black">#000000</color>
     <color name="Tust_Grey">#4e4242</color>
     <color name="Tust_Grey2">#cdcdcd</color>
     <color name="Tust_Grey3">#ececec</color>
+    <color name="Tust_Grey4">#b6b5b5</color>
     <color name="Tust_BACK">#cfececec</color>
     <color name="Tust_Green">#f33b9c1e</color>
     <color name="Tust_Red">#ebdc2055</color>
@@ -43,4 +46,31 @@
     <color name="transparent_blue">#de0f88eb</color>
     <color name="school_head_shape">#deeab631</color>
     <color name="transparent_white">#50ffffff</color>
+
+    <!--task color-->
+    <color name="taskB1">#000000</color>
+    <color name="taskB2">#0cca58</color>
+    <color name="taskB3">#fc1f1f</color>
+    <color name="taskB4">#ff2298</color>
+    <color name="taskB5">#3583e2</color>
+    <color name="taskB6">#24d1c2</color>
+    <color name="taskB7">#f2b021</color>
+    <color name="taskB8">#b11bdf</color>
+    <color name="taskB9">#9bc219</color>
+    <color name="taskB10">#004dd2</color>
+
+    <!--酷安色系-->
+    <color name="coolapk_1">#109d59</color>
+    <color name="coolapk_2">#dc4439</color>
+    <color name="coolapk_3">#fa729a</color>
+    <color name="coolapk_4">#3f51b5</color>
+    <color name="coolapk_5">#029588</color>
+    <color name="coolapk_6">#ff9700</color>
+    <color name="coolapk_7">#673bb6</color>
+    <color name="coolapk_8">#2196f5</color>
+    <color name="coolapk_9">#795549</color>
+    <color name="coolapk_10">#222222</color>
+
+
+    <color name="outofdateColor">#98bebebe</color>
 </resources>

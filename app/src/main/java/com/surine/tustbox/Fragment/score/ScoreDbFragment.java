@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,8 @@ import com.github.ybq.android.spinkit.SpinKitView;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.surine.tustbox.Adapter.Recycleview.ScoreBaseAdapter;
 import com.surine.tustbox.Bean.ScoreInfo;
-import com.surine.tustbox.Eventbus.SimpleEvent;
-import com.surine.tustbox.NetWork.JavaNetCookieJar;
+import com.surine.tustbox.Bean.EventBusBean.SimpleEvent;
+import com.surine.tustbox.Bean.ScoreInfoHelper;
 import com.surine.tustbox.R;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,15 +26,10 @@ import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import okhttp3.OkHttpClient;
-
-import static com.surine.tustbox.Data.Constants.CONNECT_TIMEOUT;
-import static com.surine.tustbox.Fragment.PageFragment.ThirdPageFragment.DOWNTOREFRESH;
 
 /**
  * Created by surine on 2017/4/22.
@@ -50,14 +44,14 @@ public class ScoreDbFragment extends Fragment {
     Button loadingText;
     Unbinder unbinder;
     private RecyclerView mRecyclerView;
-    private List<ScoreInfo> mScore_infos = new ArrayList<>();
-    private List<ScoreInfo> mLastScore_infos = new ArrayList<>();
+    private List<ScoreInfoHelper> mScore_infos = new ArrayList<>();
+    private List<ScoreInfoHelper> mLastScore_infos = new ArrayList<>();
     private static final String ARG_ = "ScoreDbFragment";
     View v;
-    private List<ScoreInfo> scores = new ArrayList<>();
+    private List<ScoreInfoHelper> scores = new ArrayList<>();
     private ScoreBaseAdapter adapter;
     private DoubleBounce doubleBounce;
-    private List<ScoreInfo> mScoreFromDB;
+    private List<ScoreInfoHelper> mScoreFromDB;
 
     public static ScoreDbFragment getInstance(String title) {
         ScoreDbFragment fra = new ScoreDbFragment();
@@ -101,9 +95,9 @@ public class ScoreDbFragment extends Fragment {
 
     private void updateList() {
         scores.clear();
-        mScoreFromDB = DataSupport.where("type = ?", "ALL").find(ScoreInfo.class);
+        mScoreFromDB = DataSupport.findAll(ScoreInfoHelper.class);
         if(mScoreFromDB.size() > 0){
-            for(ScoreInfo score:mScoreFromDB){
+            for(ScoreInfoHelper score:mScoreFromDB){
                 scores.add(score);
             }
             adapter.notifyDataSetChanged();

@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<FrameLayout android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.surine.tustbox.UI.MainActivity"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
-    android:fitsSystemWindows="true"
-    android:background="@color/Tust_White"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-<FrameLayout
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.surine.tustbox.UI.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
      <android.support.design.widget.CoordinatorLayout
          android:layout_width="match_parent"
          android:fitsSystemWindows="true"
@@ -29,25 +21,15 @@
                  app:layout_behavior="@string/appbar_scrolling_view_behavior"
                  android:layout_width="match_parent"
                  android:fitsSystemWindows="true"
+                 android:layout_marginTop="10dp"
+                 android:layout_marginStart="20dp"
+                 android:layout_marginEnd="20dp"
                  android:layout_height="?actionBarSize"
                  app:layout_scrollFlags="scroll|enterAlways|snap"
                  android:background="?attr/colorPrimary"
                  android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                  app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-                 <RelativeLayout
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"
-                     android:fitsSystemWindows="true"
-                     android:background="@color/Tran"
-                     >
-                     <TextView
-                         android:layout_width="@dimen/toolbar_height"
-                         android:layout_height="@dimen/toolbar_height"
-                         android:textColor="@color/Tust_Black"
-                         android:gravity="center_vertical"
-                         android:textSize="18sp"
-                         android:id="@+id/title"
-                         />
+
                      <TextView
                          android:layout_width="@dimen/toolbar_height"
                          android:layout_height="@dimen/toolbar_height"
@@ -56,10 +38,11 @@
                          android:layout_alignParentEnd="true"
                          android:textColor="@color/Tust_Black"
                          android:text="消息"
+                         android:visibility="gone"
                          android:background="?android:attr/selectableItemBackgroundBorderless"
                          android:gravity="center"
                          />
-                 </RelativeLayout>
+
              </android.support.v7.widget.Toolbar>
 
          </android.support.design.widget.AppBarLayout>
@@ -77,20 +60,10 @@
              android:layout_height="wrap_content"
              android:layout_gravity="bottom|end"
              android:layout_margin="16dp"
+             android:transitionName="mainEdit"
+             app:backgroundTint="@color/colorPrimary2"
              app:elevation="1dp"
              app:layout_behavior="com.surine.tustbox.View.FabBehavior"
-             app:srcCompat="@drawable/ic_edit_black_24dp"/>
+             app:srcCompat="@drawable/ic_edit_white_24dp" />
      </android.support.design.widget.CoordinatorLayout>
-
-
-     </FrameLayout>
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/Tust_White"
-        android:fitsSystemWindows="true"
-        app:menu="@menu/activity_drawer_layout"/>
-</android.support.v4.widget.DrawerLayout>
+</FrameLayout>

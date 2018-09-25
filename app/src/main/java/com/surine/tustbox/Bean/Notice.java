@@ -1,41 +1,63 @@
 package com.surine.tustbox.Bean;
 
 /**
- * Created by Surine on 2018/4/12.
+ * Created by Surine on 2018/7/17.
+ * 服务器通知类
  */
 
 public class Notice {
-  private int id;
-  private String text;
-  private String date;
 
-    public int getId() {
+    private String id;
+    private String title;
+    private String content;
+    private String ctime;
+    private String type;
+
+    public Notice(String id, String title, String content, String ctime, String type) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.ctime = ctime;
+        this.type = type;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getTitle() {
+        return title;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getDate() {
-        return date;
+    public String getContent() {
+        return content;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public Notice(int id, String text, String data) {
-        this.id = id;
-        this.text = text;
-        this.date = data;
+    public String getCtime() {
+        return ctime;
+    }
+
+    public void setCtime(String ctime) {
+        this.ctime = ctime;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

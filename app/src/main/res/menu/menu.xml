@@ -2,8 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
+   <item android:id="@+id/account"
+       app:showAsAction="always"
+       android:title="个人详情"
+       android:icon="@drawable/ic_account_circle_black_24dp"
+       />
+
    <item android:id="@+id/week"
-         app:showAsAction="always"
-         android:title="@string/change_week_in_main_page"/>
+       app:showAsAction="always"
+       android:icon="@drawable/ic_change_week_24dp"
+       android:title="@string/change_week_in_main_page"/>
+
+   <item android:id="@+id/message"
+       app:showAsAction="always"
+       android:icon="@drawable/ic_toll_message_black_24dp"
+       android:title="@string/messageMenuTitle"/>
+
+
 
 </menu>

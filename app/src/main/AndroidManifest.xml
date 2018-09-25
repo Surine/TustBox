@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
 
+
     <application
         android:name=".Init.TustBoxApplication"
         android:allowBackup="true"
@@ -24,6 +25,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
+
+        <meta-data android:name="android.max_aspect" android:value="2.1"></meta-data>
+
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
@@ -32,30 +36,34 @@
             android:name=".UI.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".UI.MainActivity"
             android:label="首页"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".UI.LoginActivity"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".UI.ToolbarActivity"
+            android:name=".Mvp.login.LoginMvpActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".Mvp.splash.SplashMvpActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".UI.CourseInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UI.Box_info_Activty"
@@ -91,10 +99,11 @@
             </intent-filter>
         </activity>
 
-        <!-- 来自：http://www.cnblogs.com/skywang12345/p/3264991.html Thanks to author -->
+        <!-- 参考：http://www.cnblogs.com/skywang12345/p/3264991.html  -->
+        <!--课程表周视图小部件-->
         <receiver
-            android:name=".Widget.WidgetProvider"
-            android:label="小天课表">
+            android:name=".Widget.Main.WidgetProvider"
+            android:label="课程表（周视图）">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="com.widget.surine.WidgetProvider.MY_UPDATA_CHANGE" />
@@ -109,9 +118,31 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_info" />
         </receiver>
+        <service
+            android:name=".Widget.Main.WidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+
+        <!--任务视图小部件-->
+        <receiver
+            android:name=".Widget.Task.TaskWidgetProvider"
+            android:label="任务视图">
+            <intent-filter>
+                <action android:name="com.surine.tustbox.COLLECTION_VIEW_ACTION" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.widget.surine.WidgetProvider.MY_UPDATA_CHANGE_TASK" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_info_task" />
+        </receiver>
+
+
 
         <service
-            android:name=".Widget.WidgetService"
+            android:name=".Widget.Task.TaskWidgetService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
@@ -155,15 +186,20 @@
                 tools:replace="name,resource" />
         </provider>
 
-        <activity android:name=".UI.CardActivity"
-            android:label="Beta3.0"
+        <activity
+            android:name=".UI.CardActivity"
             >
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
         </activity>
+        <activity
+            android:name=".UI.AddTaskActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".UI.TaskInfoActivity"
+            android:screenOrientation="portrait"
+            ></activity>
+        <activity android:name=".UI.NoticeActivity"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>

@@ -3,23 +3,18 @@ package com.surine.tustbox.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.qiniu.android.utils.Json;
 import com.surine.tustbox.Adapter.Recycleview.MessageAdapter;
-import com.surine.tustbox.Adapter.Recycleview.ReplyAdapter;
-import com.surine.tustbox.Bean.Action;
 import com.surine.tustbox.Bean.Message;
-import com.surine.tustbox.Data.Constants;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.Init.TustBaseActivity;
@@ -33,7 +28,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,8 +37,8 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import static com.surine.tustbox.Data.Constants.*;
-import static com.surine.tustbox.Fragment.PageFragment.ThirdPageFragment.DOWNTOREFRESH;
-import static com.surine.tustbox.Fragment.PageFragment.ThirdPageFragment.UPTOREFRESH;
+import static com.surine.tustbox.Fragment.PageFragment.SchoolPageFragment.DOWNTOREFRESH;
+import static com.surine.tustbox.Fragment.PageFragment.SchoolPageFragment.UPTOREFRESH;
 
 public class MessageActivity extends TustBaseActivity {
 
@@ -68,11 +62,7 @@ public class MessageActivity extends TustBaseActivity {
         //设置toolbar
         setSupportActionBar(toolbar);
         setTitle("消息");
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
+        toolbar.setTitleTextAppearance(context,R.style.ToolbarTitle);
         //设置recycleview
         adapter = new MessageAdapter(R.layout.item_message, messages);
         adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
@@ -248,13 +238,18 @@ public class MessageActivity extends TustBaseActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.exit_menu, menu);
         return true;
+    }
+
+    //set the back button listener
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.exit) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

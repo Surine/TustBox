@@ -1,5 +1,6 @@
 package com.surine.tustbox.UI;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -17,7 +19,7 @@ import android.widget.Toast;
 import com.surine.tustbox.Adapter.ViewPager.SimpleFragmentPagerAdapter;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
-import com.surine.tustbox.Eventbus.Net_EventBus;
+import com.surine.tustbox.Bean.EventBusBean.Net_EventBus;
 import com.surine.tustbox.Fragment.network.Fragment_charge;
 import com.surine.tustbox.Fragment.network.Fragment_login;
 import com.surine.tustbox.Init.SystemUI;
@@ -51,21 +53,18 @@ public class NetWorkActivity extends TustBaseActivity {
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
     private int Position_page = 0;
-
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_network);
-
+        context = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_net);
         setSupportActionBar(toolbar);
         setTitle(R.string.school_network);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-        //设置toolbar颜色
-        SystemUI.color_toolbar(this,actionBar);
+
+        toolbar.setTitleTextAppearance(context,R.style.ToolbarTitle);
+
         if(!SharedPreferencesUtil.Read(this,"IS_LOGIN_NETWORK",false)) {
             //登陆
             ShowLoginDialog();
@@ -76,7 +75,7 @@ public class NetWorkActivity extends TustBaseActivity {
 
     private void ShowLoginDialog() {
         final View view = LayoutInflater.from(this).inflate(R.layout.dialog_view_login_work_view,null);
-        final EditText number = (EditText) view.findViewById(R.id.tust_number);
+        final EditText number = (EditText) view.findViewById(R.id.task_name_edit);
         final EditText pswd = (EditText) view.findViewById(R.id.network_passwd);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(view);
@@ -99,7 +98,7 @@ public class NetWorkActivity extends TustBaseActivity {
         builder.setNegativeButton("退出", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+              finish();
             }
         });
         builder.show();
@@ -222,21 +221,6 @@ public class NetWorkActivity extends TustBaseActivity {
         //5.设置viewpager适配器
         viewpager.setAdapter(pagerAdapter);
 
-        //6.设置缓存
-        /*
-        *  * 注意：设置缓存的原因
-        * 在加载Tab-A时会实例化Tab-B中fragment，依次调用：onAttach、
-        * onCreate、onCreateView、onActivityCreated、onStart和onResume。
-        * 同样切换到Tab-B时也会初始化Tab-C中的fragment。（Viewpager预加载）
-        * 但是fragment中的数据(如读取的服务器数据)没有相应清除，导致重复加载数据。
-        *
-        *
-        * 注意：ps:我们在使用viewpager时会定义一个适配器adapter，其中实例化了一个fragment列表，
-        * 所以在tab切换时fragment都是已经实例化好的，所以在切换标签页时是不会重新实例化fragment
-        * 对象的，因而在fragment中定义的成员变量是不会被重置的。所以为列表初始化数据需要注意这个问题。
-        *
-        * 参考网址：https://my.oschina.net/buobao/blog/644699
-*/
         viewpager.setOffscreenPageLimit(3);
         //7.关联viewpager
         tab.setupWithViewPager(viewpager);
@@ -270,13 +254,18 @@ public class NetWorkActivity extends TustBaseActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.exit_menu, menu);
         return true;
+    }
+
+    //set the back button listener
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.exit) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

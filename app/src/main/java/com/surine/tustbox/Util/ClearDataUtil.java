@@ -23,7 +23,7 @@ public class ClearDataUtil {
     public void clearAllDataOfApplication( String... customfilepath) {
         clearInternalCache();
         clearExternalCache();
-        clearDatabases();
+       // clearDatabases();
         clearSharedPreference();
         clearFiles();
         if (customfilepath == null) {

@@ -42,8 +42,8 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
-import static com.surine.tustbox.Fragment.PageFragment.ThirdPageFragment.DOWNTOREFRESH;
-import static com.surine.tustbox.Fragment.PageFragment.ThirdPageFragment.UPTOREFRESH;
+import static com.surine.tustbox.Fragment.PageFragment.SchoolPageFragment.DOWNTOREFRESH;
+import static com.surine.tustbox.Fragment.PageFragment.SchoolPageFragment.UPTOREFRESH;
 
 /**
  * Created by Surine on 2018/2/28.
@@ -285,7 +285,9 @@ public class MyActionFragment extends Fragment {
         }
         //通知适配器更新数据
         adapter.notifyDataSetChanged();
-        recycleview.smoothScrollToPosition(0);
+        if(recycleview != null){
+            recycleview.smoothScrollToPosition(0);
+        }
         //重新加载其他页
         pageNum = 1;
         //TODO:下拉加载后重新启动上拉加载

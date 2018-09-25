@@ -26,27 +26,21 @@
             app:titleEnabled="false">
 
 
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_collapseMode="parallax"
                 android:layout_marginTop="@dimen/toolbar_height"
-                >
-                <include layout="@layout/block_action_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    ></include>
-            </RelativeLayout>
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/toolbar_height"
-                app:layout_collapseMode="pin"
-                android:paddingTop="@dimen/toolbar_height_padding"
-                android:fitsSystemWindows="true"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_collapseMode="pin">
 
+                <include
+                    layout="@layout/block_action_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></include>
+            </RelativeLayout>
+
+            <include layout="@layout/toolbar" />
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -60,8 +54,9 @@
             android:background="@color/Tust_White"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/Tust_Black"
-            app:tabTextColor="@color/Tust_Grey" />
+            app:tabIndicatorHeight="0dp"
+            app:tabSelectedTextColor="@color/colorPrimary2"
+            app:tabTextColor="@color/Tust_Black" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
@@ -80,11 +75,12 @@
              android:layout_height="wrap_content"
              android:layout_marginEnd="16dp"
              app:elevation="1dp"
+             android:backgroundTint="@color/colorPrimary2"
              android:layout_marginBottom="16dp"
              android:layout_alignParentBottom="true"
              android:layout_alignParentEnd="true"
              app:layout_behavior="@string/appbar_scrolling_view_behavior"
-             app:srcCompat="@drawable/ic_edit_black_24dp" />
+             app:srcCompat="@drawable/ic_edit_white_24dp" />
      </RelativeLayout>
 
 

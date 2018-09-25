@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+         android:id="@+id/info"
+        android:title="详情"
+        android:orderInCategory="10"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_error_outline_black_24dp"
+        />
+    <item
+        android:id="@+id/exit"
+        android:title="退出"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_close_black_24dp"
+        app:showAsAction="always"
+        />
+</menu>

@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,7 @@ import com.surine.tustbox.Bean.Comment;
 import com.surine.tustbox.Bean.Reply;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
-import com.surine.tustbox.Eventbus.SimpleEvent;
+import com.surine.tustbox.Bean.EventBusBean.SimpleEvent;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
 import com.surine.tustbox.Util.GsonUtil;
@@ -54,8 +55,8 @@ import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.Response;
 
-import static com.surine.tustbox.Fragment.PageFragment.ThirdPageFragment.DOWNTOREFRESH;
-import static com.surine.tustbox.Fragment.PageFragment.ThirdPageFragment.UPTOREFRESH;
+import static com.surine.tustbox.Fragment.PageFragment.SchoolPageFragment.DOWNTOREFRESH;
+import static com.surine.tustbox.Fragment.PageFragment.SchoolPageFragment.UPTOREFRESH;
 
 /**
  * Created by Surine on 2018/2/24.
@@ -98,11 +99,9 @@ public class ReplyInCommentActivity extends TustBaseActivity {
         EventBus.getDefault().register(this);
         //设置toolbar
         setSupportActionBar(toolbar);
-        setTitle("评论详情");
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        setTitle("评论");
+        toolbar.setTitleTextAppearance(context,R.style.ToolbarTitle);
+
         cid = getIntent().getIntExtra(FormData.cid, 0);
         comment_position = getIntent().getIntExtra(FormData.POSITION, 0);
         initCommentInfo(cid);
@@ -398,13 +397,18 @@ public class ReplyInCommentActivity extends TustBaseActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.exit_menu, menu);
         return true;
+    }
+
+    //set the back button listener
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.exit) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

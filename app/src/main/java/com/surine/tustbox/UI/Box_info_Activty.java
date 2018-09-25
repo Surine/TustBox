@@ -65,7 +65,7 @@ public class Box_info_Activty extends TustBaseActivity {
        switch (box_item){
            case "成绩":
                Flag = 0;
-               //loading score fragment
+               //loading score fragment_task
                setTitle(getString(R.string.loading));
                replaceFragment(ScoreNewTermFragment.getInstance("School_Score"));
                break;
@@ -87,7 +87,7 @@ public class Box_info_Activty extends TustBaseActivity {
     }
 
 
-    //load the fragment
+    //load the fragment_task
     private void replaceFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction tran = fm.beginTransaction();

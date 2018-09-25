@@ -8,7 +8,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -18,14 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.util.Util;
 import com.surine.tustbox.Adapter.ViewPager.SimpleFragmentPagerAdapter;
-import com.surine.tustbox.Bean.Action;
 import com.surine.tustbox.Bean.User;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.Fragment.Me.Me_info_fragment;
 import com.surine.tustbox.Fragment.Me.MyActionFragment;
-import com.surine.tustbox.Fragment.common.CommenFragment;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
 import com.surine.tustbox.Util.GsonUtil;
@@ -84,17 +82,11 @@ public class UserInfoActivity extends TustBaseActivity {
         //set the toolbar
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("资料");
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        setTitle("个人");
+        mToolbar.setTitleTextAppearance(context,R.style.ToolbarTitle);
 
         uid = getIntent().getStringExtra(FormData.uid);
         initViewFromServerById(uid);
-
-      //  initViewFromServer();
-
     }
 
     //加载信息
@@ -125,8 +117,11 @@ public class UserInfoActivity extends TustBaseActivity {
                             @Override
                             public void run() {
                                 if(user.getFace() != null){
-                                    Glide.with(context).load(user.getFace()).into(mHeadFromServer);
-                                    Glide.with(context).load(user.getFace()).into(mArtBack);
+                                    try {
+                                        Glide.with(context).load(user.getFace()).into(mHeadFromServer);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
                                 }
 
                                 //加载昵称
@@ -172,7 +167,6 @@ public class UserInfoActivity extends TustBaseActivity {
         String sign = SharedPreferencesUtil.Read_safe(this, "sign", "");
         if (!head_url.equals("")) {
             Glide.with(this).load(head_url).into(mHeadFromServer);
-            Glide.with(this).load(head_url).into(mArtBack);
         }
         if (!nick_name.equals("")) {
             mNameFromServer.setText(nick_name);
@@ -185,7 +179,6 @@ public class UserInfoActivity extends TustBaseActivity {
     private void initViewPager(User user) {
         mViewpager = (ViewPager) findViewById(R.id.viewpager);
         mTabs = (TabLayout) findViewById(R.id.tabs);
-        //  fragments.add(new OslFragment());
         fragments.add(MyActionFragment.getInstance(uid));
         fragments.add(Me_info_fragment.getInstance(user));
         titles.add("动态");
@@ -206,14 +199,19 @@ public class UserInfoActivity extends TustBaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case R.id.exit:
                 finishAfterTransition();
                 break;
-            case R.id.action_edit:
+            case R.id.edit:
                 String tust_number = SharedPreferencesUtil.Read(UserInfoActivity.this, FormData.tust_number_server,"");
                 if(uid.equals(tust_number)){
-                    if(userInfo.getFace() == null){
+                    if(userInfo == null || userInfo.getFace() == null){
                         break;
+                    }
+                    try {
+                        Glide.clear(mHeadFromServer);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     startActivity(new Intent(UserInfoActivity.this,EditUserInfoActivity.class).putExtra(FormData.face_server,userInfo.getFace()));
                 }else{
@@ -221,7 +219,11 @@ public class UserInfoActivity extends TustBaseActivity {
                 }
                 finish();
                 break;
+            case R.id.setting:
+                startActivity(new Intent(UserInfoActivity.this,SettingActivity.class));
+                break;
         }
         return true;
     }
+
 }

@@ -31,7 +31,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="22dp"
             android:layout_toRightOf="@id/action_info_head"
-            android:text="网络错误或者动态已经删除！"
+            android:text="ERROR！"
             android:textColor="@color/Tust_Black"
             />
 
@@ -94,20 +94,14 @@
                 android:id="@+id/action_info_device"
                 android:textColor="@color/colorAccent" />
 
-            <ImageView
-                android:id="@+id/more"
-                android:layout_width="50dp"
-                android:layout_height="20dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/more" />
 
             <ImageView
                 android:id="@+id/comment"
                 android:layout_width="50dp"
                 android:layout_height="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_toLeftOf="@id/more"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="11dp"
+                android:layout_toStartOf="@+id/action_info_comment_num"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/comment" />
 
@@ -116,8 +110,9 @@
                 android:id="@+id/love"
                 android:layout_width="50dp"
                 android:layout_height="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_toLeftOf="@id/comment"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="13dp"
+                android:layout_toStartOf="@+id/action_info_love_num"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/love" />
 
@@ -134,8 +129,10 @@
                 android:id="@+id/action_info_comment_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_alignBottom="@+id/more"
                 android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
                 android:layout_toStartOf="@+id/more"
                 android:text="0" />
         </RelativeLayout>

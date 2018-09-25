@@ -2,7 +2,6 @@ package com.surine.tustbox.Fragment.course;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -10,13 +9,16 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.util.Log;
-import android.widget.EditText;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.surine.tustbox.Bean.CourseInfoHelper;
 import com.surine.tustbox.Bean.Course_Info;
 import com.surine.tustbox.Data.FormData;
-import com.surine.tustbox.Eventbus.SimpleEvent;
+import com.surine.tustbox.Bean.EventBusBean.SimpleEvent;
 import com.surine.tustbox.R;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
 
@@ -25,6 +27,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.litepal.crud.DataSupport;
 
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Surine on 2018/3/8.
@@ -50,7 +54,7 @@ public class EditCourseFragment extends PreferenceFragment implements Preference
     private Preference tust_number;
     private String tustNumber;
     private SharedPreferences prefs;
-    private Course_Info course_info = new Course_Info("","","","","","","","","","","","","","","","","",0,"","",0,0);
+    private CourseInfoHelper course_info = new CourseInfoHelper();
     private String courseNameString;
     private String courseBuildingString;
     private String courseClassString;
@@ -106,50 +110,50 @@ public class EditCourseFragment extends PreferenceFragment implements Preference
     }
 
     private void init(int id) {
-        course_info = DataSupport.find(Course_Info.class, id);
+        course_info = DataSupport.find(CourseInfoHelper.class, id);
         if(course_info == null){
             return;
         }
         //课程名
-        courseName.setSummary(course_info.getCourse_name()+"\n"+courseName.getSummary());
-        courseName.setText(course_info.getCourse_name());
-        courseNameString = course_info.getCourse_name();
+        courseName.setSummary(course_info.getCourseName()+"\n"+courseName.getSummary());
+        courseName.setText(course_info.getCourseName());
+        courseNameString = course_info.getCourseName();
 
-        courseBuilding.setSummary(course_info.getBuilding()+"\n"+courseBuilding.getSummary());
-        courseBuilding.setText(course_info.getBuilding());
-        courseBuildingString = course_info.getBuilding();
+        courseBuilding.setSummary(course_info.getTeachingBuildingName()+"\n"+courseBuilding.getSummary());
+        courseBuilding.setText(course_info.getTeachingBuildingName());
+        courseBuildingString = course_info.getTeachingBuildingName();
 
-        courseClass_.setSummary(course_info.getClass_()+"\n"+courseClass_.getSummary());
-        courseClassString = course_info.getClass_();
+        courseClass_.setSummary(course_info.getClassSessions()+"\n"+courseClass_.getSummary());
+        courseClassString = course_info.getClassSessions();
 
-        courseClassRoom.setSummary(course_info.getClassroom()+"\n"+courseClassRoom.getSummary());
-        courseClassRoom.setText(course_info.getClassroom());
-        courseClassRoomString = course_info.getClassroom();
+        courseClassRoom.setSummary(course_info.getClassroomName()+"\n"+courseClassRoom.getSummary());
+        courseClassRoom.setText(course_info.getClassroomName());
+        courseClassRoomString = course_info.getClassroomName();
 
-        courseScore.setSummary(course_info.getScore()+"\n"+courseScore.getSummary());
-        courseScore.setText(course_info.getScore());
-        courseScoreString = course_info.getScore();
+        courseScore.setSummary(course_info.getUnit()+"\n"+courseScore.getSummary());
+        courseScore.setText(course_info.getUnit());
+        courseScoreString = course_info.getUnit();
 
-        courseTeacher.setSummary(course_info.getTeacher()+"\n"+courseTeacher.getSummary());
-        courseTeacher.setText(course_info.getTeacher());
-        courseTeacherString = course_info.getTeacher();
+        courseTeacher.setSummary(course_info.getAttendClassTeacher()+"\n"+courseTeacher.getSummary());
+        courseTeacher.setText(course_info.getAttendClassTeacher());
+        courseTeacherString = course_info.getAttendClassTeacher();
 
-        courseClassSchool.setSummary(course_info.getSchool()+"\n"+courseClassSchool.getSummary());
-        courseClassSchoolString = course_info.getSchool();
+        courseClassSchool.setSummary(course_info.getCampusName()+"\n"+courseClassSchool.getSummary());
+        courseClassSchoolString = course_info.getCampusName();
 
-        courseWeek.setSummary(course_info.getWeek()+"\n"+courseWeek.getSummary());
-        courseWeek.setText(course_info.getWeek());
-        courseWeekString = course_info.getWeek();
+        courseWeek.setSummary(course_info.getWeekDescription()+"\n"+courseWeek.getSummary());
+        courseWeek.setText(course_info.getWeekDescription());
+        courseWeekString = course_info.getWeekDescription();
 
-        courseWeekNumber.setSummary(course_info.getWeek_number()+"\n"+courseWeekNumber.getSummary());
-        courseWeekNumberString = course_info.getWeek_number();
+        courseWeekNumber.setSummary(course_info.getClassDay()+"\n"+courseWeekNumber.getSummary());
+        courseWeekNumberString = course_info.getClassDay();
 
-        courseCourseNumber.setSummary(course_info.getClass_count()+"\n"+courseCourseNumber.getSummary());
-        courseCourseNumberString = course_info.getClass_count();
+        courseCourseNumber.setSummary(course_info.getContinuingSession()+"\n"+courseCourseNumber.getSummary());
+        courseCourseNumberString = course_info.getContinuingSession();
 
 
-        course_number.setSummary(course_info.getCourse_number());
-        course_color.setSummary(course_info.getColor());
+        course_number.setSummary(course_info.getCoureNumber());
+        course_color.setSummary(course_info.getJwColor());
 
     }
 
@@ -235,12 +239,12 @@ public class EditCourseFragment extends PreferenceFragment implements Preference
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if(key == courseName.getKey()){
             //课程名处理
-            courseNameString = prefs.getString("courseName",course_info.getCourse_name());
+            courseNameString = prefs.getString("courseName",course_info.getCourseName());
             courseName.setSummary(courseNameString);
 
         }else if(key == courseBuilding.getKey()){
             //教学楼处理
-            courseBuildingString = prefs.getString("courseBuilding",course_info.getBuilding());
+            courseBuildingString = prefs.getString("courseBuilding",course_info.getTeachingBuildingName());
             courseBuilding.setSummary(courseBuildingString);
         }else if(key == courseClass_.getKey()){
             //节次
@@ -250,25 +254,25 @@ public class EditCourseFragment extends PreferenceFragment implements Preference
 
         }else if(key == courseClassRoom.getKey()){
             //教室
-            courseClassRoomString = prefs.getString("courseClassRoom",course_info.getClassroom());
+            courseClassRoomString = prefs.getString("courseClassRoom",course_info.getClassroomName());
             courseClassRoom.setSummary(courseClassRoomString);
         }else if(key == courseScore.getKey()){
 
             //学分
-            courseScoreString = prefs.getString("courseScore",course_info.getScore());
+            courseScoreString = prefs.getString("courseScore",course_info.getUnit());
             courseScore.setSummary(courseScoreString);
         }else if(key == courseTeacher.getKey()){
             //教师
-            courseTeacherString = prefs.getString("courseTeacher",course_info.getTeacher());
+            courseTeacherString = prefs.getString("courseTeacher",course_info.getTeachingBuildingName());
             courseTeacher.setSummary(courseTeacherString);
         }else if(key == courseWeek.getKey()){
             //上课周
-            courseWeekString = prefs.getString("courseWeek",course_info.getWeek());
+            courseWeekString = prefs.getString("courseWeek",course_info.getWeekDescription());
             courseWeek.setSummary(courseWeekString);
 
         }else if(key == courseWeekNumber.getKey()){
             //周几
-            courseWeekNumberString = prefs.getString("courseWeekNumber",course_info.getWeek_number());
+            courseWeekNumberString = prefs.getString("courseWeekNumber",course_info.getClassDay());
             courseWeekNumber.setSummary(courseWeekNumberString);
         }else if(key == courseClassSchool.getKey()){
             //校区
@@ -293,11 +297,11 @@ public class EditCourseFragment extends PreferenceFragment implements Preference
     public boolean onPreferenceClick(Preference preference) {
         if(course_info != null){
             if(preference == courseName){
-                courseNameString = prefs.getString("courseName",course_info.getCourse_name());
+                courseNameString = prefs.getString("courseName",course_info.getCourseName());
                 courseName.setSummary(courseNameString);
             }else if(preference == courseBuilding){
                 //教学楼处理
-                courseBuildingString = prefs.getString("courseBuilding",course_info.getBuilding());
+                courseBuildingString = prefs.getString("courseBuilding",course_info.getTeachingBuildingName());
                 courseBuilding.setSummary(courseBuildingString);
             }else if(preference == courseClass_){
                 //节次
@@ -307,25 +311,25 @@ public class EditCourseFragment extends PreferenceFragment implements Preference
 
             }else if(preference == courseClassRoom){
                 //教室
-                courseClassRoomString = prefs.getString("courseClassRoom",course_info.getClassroom());
+                courseClassRoomString = prefs.getString("courseClassRoom",course_info.getClassroomName());
                 courseClassRoom.setSummary(courseClassRoomString);
             }else if(preference == courseScore){
 
                 //学分
-                courseScoreString = prefs.getString("courseScore",course_info.getScore());
+                courseScoreString = prefs.getString("courseScore",course_info.getUnit());
                 courseScore.setSummary(courseScoreString);
             }else if(preference == courseTeacher){
                 //教师
-                courseTeacherString = prefs.getString("courseTeacher",course_info.getTeacher());
+                courseTeacherString = prefs.getString("courseTeacher",course_info.getAttendClassTeacher());
                 courseTeacher.setSummary(courseTeacherString);
             }else if(preference == courseWeek){
                 //上课周
-                courseWeekString = prefs.getString("courseWeek",course_info.getWeek());
+                courseWeekString = prefs.getString("courseWeek",course_info.getWeekDescription());
                 courseWeek.setSummary(courseWeekString);
 
             }else if(preference == courseWeekNumber){
                 //周几
-                courseWeekNumberString = prefs.getString("courseWeekNumber",course_info.getWeek_number());
+                courseWeekNumberString = prefs.getString("courseWeekNumber",course_info.getClassDay());
                 courseWeekNumber.setSummary(courseWeekNumberString);
             }else if(preference == courseClassSchool){
                 //校区
@@ -359,7 +363,7 @@ public class EditCourseFragment extends PreferenceFragment implements Preference
 
         }else if(event.getId() == 10){
             //删除
-          delete();
+          showDeleteDialog();
         } else if(event.getId() == 11){
             //新建 （i = 2标识新建）
             Toast.makeText(getActivity(), save(2), Toast.LENGTH_SHORT).show();
@@ -367,26 +371,70 @@ public class EditCourseFragment extends PreferenceFragment implements Preference
     }
 
     private void delete() {
+        if(DataSupport.delete(CourseInfoHelper.class,id)>=1){
+            Toast.makeText(getActivity(), "删除成功！重启后生效", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getActivity(), "删除失败", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void showDeleteDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("危险操作");
-        builder.setMessage("请仔细检查是否需要删掉此课程，一旦删除只能通过重新登录来获取，同时自定义的课程将永久删除，请谨慎操作!");
-        builder.setNegativeButton("删除", new DialogInterface.OnClickListener() {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_a_text_notice,null);
+        builder.setView(view);
+
+        final AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+
+        Button ok = (Button) view.findViewById(R.id.ok);
+        Button cancel = (Button) view.findViewById(R.id.cancel);
+        TextView label = (TextView) view.findViewById(R.id.label);
+        TextView message = (TextView) view.findViewById(R.id.message);
+
+        label.setText("是否删除？");
+        message.setText("请仔细检查是否需要删掉此课程，一旦删除只能通过重新登录来获取，同时自定义的课程将永久删除，请谨慎操作!");
+
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if(DataSupport.delete(Course_Info.class,id)>=1){
-                    Toast.makeText(getActivity(), "删除成功！重启后生效", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getActivity(), "删除失败", Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(View v) {
+                dialog.dismiss();
             }
         });
-        builder.setPositiveButton("取消",null);
-        builder.show();
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            delete();
+            dialog.dismiss();
+            }
+        });
+
     }
 
     private String save(final int i) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("请仔细核对信息");
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_a_text_notice,null);
+        builder.setView(view);
+
+        final AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        Button ok = (Button) view.findViewById(R.id.ok);
+        Button cancel = (Button) view.findViewById(R.id.cancel);
+        TextView label = (TextView) view.findViewById(R.id.label);
+        TextView message = (TextView) view.findViewById(R.id.message);
+
+        label.setText("请核对");
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
         StringBuilder sbuilder = new StringBuilder();
 
         //课程
@@ -427,8 +475,24 @@ public class EditCourseFragment extends PreferenceFragment implements Preference
 
 
         //上课周
-        if(courseWeekString == null||courseWeekString.toString().equals("")){
-            return "上课周信息填写错误";
+        if(courseWeekString == null||
+                courseWeekString.toString().equals("")||
+                courseWeekString.contains("-")){
+                return "上课周请填0或1序列";
+        }
+
+        //判断是否有中文
+        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+        Matcher m = p.matcher(courseWeekString);
+        if (m.find()) {
+            return "上课周请填0或1序列";
+        }
+
+        //是否有非01数
+        p = Pattern.compile("[2-9]");
+        m = p.matcher(courseWeekString);
+        if (m.find()) {
+            return "上课周请填0或1序列";
         }
 
         //上课周
@@ -449,57 +513,58 @@ public class EditCourseFragment extends PreferenceFragment implements Preference
         sbuilder.append("学分:"+courseScoreString+"\n");
         sbuilder.append("节数:"+courseCourseNumberString+"\n");
 
-        sbuilder.append("请检查信息是否正确，并且不能跟其他课程冲突，如果冲突可能导致课表错乱。");
-        builder.setMessage(sbuilder.toString());
-        builder.setPositiveButton("保存", new DialogInterface.OnClickListener() {
+        message.setText(sbuilder+"请检查信息是否正确，并且不能跟其他课程冲突，如果冲突可能导致课表错乱。");
+
+        ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-               Course_Info course_info = new Course_Info();
-               course_info.setCourse_name(courseNameString);
-               course_info.setBuilding(courseBuildingString);
-               course_info.setClass_(courseClassString);
-               course_info.setClass_count(String.valueOf(courseCourseNumberString));
-               course_info.setClassroom(courseClassRoomString);
-               course_info.setSchool(String.valueOf(courseClassSchoolString));
-               course_info.setTeacher(courseTeacherString);
-               course_info.setWeek(courseWeekString);
-               course_info.setScore(courseScoreString);
-               course_info.setWeek_number(" "+courseWeekNumberString);
-               course_info.setUser(0);
-               course_info.setMethod("正常");
-               if(id == -1){
-                   course_info.setColor(colors[new Random().nextInt(15)]);
-               }
-               if(id == -1){
-                   course_info.setCourse_number("AD"+tustNumber+System.currentTimeMillis());
-               }
+            public void onClick(View v) {
+                CourseInfoHelper course_info = new CourseInfoHelper();
+                course_info.setCourseName(courseNameString);
+                course_info.setTeachingBuildingName(courseBuildingString);
+                course_info.setClassSessions(String.valueOf(Integer.parseInt(courseClassString) * 2 -1));
+                course_info.setContinuingSession(String.valueOf(courseCourseNumberString));
+                course_info.setClassroomName(courseClassRoomString);
+                course_info.setCampusName(String.valueOf(courseClassSchoolString));
+                course_info.setAttendClassTeacher(courseTeacherString);
+                //处理以下courseWeekString补全24位
+                if(courseWeekString.length() > 24){
+                    courseWeekString = courseWeekString.substring(0,23);
+                }else if(courseWeekString.length() < 24){
+                    StringBuilder builderWeek = new StringBuilder(courseWeekString);
+                    for (int j = 0; j < 24 - courseWeekString.length(); j++) {
+                        builderWeek.append("0");
+                    }
+                    courseWeekString = builderWeek.toString();
+                }
+                course_info.setWeekDescription(courseWeekString);
+                course_info.setUnit(courseScoreString);
+                course_info.setClassDay(courseWeekNumberString);
+                course_info.setStudyModeName("正常");
+                if(id == -1){
+                    course_info.setJwColor(colors[new Random().nextInt(15)]);
+                }
+                if(id == -1){
+                    course_info.setCoureNumber("AD"+tustNumber+System.currentTimeMillis());
+                }
 
-
-
-               if(i == 1){
-                   if(course_info.update(id)>= 0){
-                       Toast.makeText(getActivity(), "修改成功！重启后生效", Toast.LENGTH_SHORT).show();
-                   }else{
-                       Toast.makeText(getActivity(), "修改失败！", Toast.LENGTH_SHORT).show();
-                   }
-               }else if(i == 2){
-                   if(course_info.save()){
-                       Toast.makeText(getActivity(), "添加成功！重启后生效", Toast.LENGTH_SHORT).show();
-                   }else{
-                       Toast.makeText(getActivity(), "添加失败！", Toast.LENGTH_SHORT).show();
-                   }
-               }
-
-            }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
+                if(i == 1){
+                    if(course_info.update(id)>= 0){
+                        Toast.makeText(getActivity(), "修改成功！重启后生效", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getActivity(), "修改失败！", Toast.LENGTH_SHORT).show();
+                    }
+                }else if(i == 2){
+                    if(course_info.save()){
+                        Toast.makeText(getActivity(), "添加成功！重启后生效", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getActivity(), "添加失败！", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                dialog.dismiss();
             }
         });
         builder.setCancelable(false);
-        builder.show();
+        dialog.show();
 
         return "课程合法检查已通过";
     }

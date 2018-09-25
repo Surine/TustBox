@@ -1,20 +1,27 @@
 package com.surine.tustbox.UI;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.surine.tustbox.Bean.CourseInfoHelper;
 import com.surine.tustbox.Bean.Course_Info;
-import com.surine.tustbox.Bean.Student_info;
+import com.surine.tustbox.Bean.JwcUserInfo;
+import com.surine.tustbox.Data.Constants;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.Init.SystemUI;
@@ -23,33 +30,44 @@ import com.surine.tustbox.R;
 import com.surine.tustbox.Util.EncryptionUtil;
 import com.surine.tustbox.Util.HttpUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
+import com.surine.tustbox.Util.TustBoxUtil;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.litepal.crud.DataSupport;
 import org.litepal.tablemanager.Connector;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
 import okhttp3.FormBody;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class LoginActivity extends TustBaseActivity {
-    private static final String TAG = "LoginActivity";  //tag for log
-    private static final int CONNECT_TIMEOUT = 10;   //network connect timeout(10s)
-    private EditText tust_number;    //input tust number
-    private EditText pswd;      //input tust password
-    private CheckBox warning;
-    private Button login_btn;
-    String tust_number_string = null;
-    String pswd_string = null;
+    public static final String TAG = "LoginActivity";
     ProgressDialog pg;
     String my_student_info_str;
     String my_course_info_str;
@@ -79,98 +97,187 @@ public class LoginActivity extends TustBaseActivity {
             R.color.Tust_15,
             R.color.Tust_16,
     };
-
-    private OkHttpClient.Builder builder;
-    private OkHttpClient okHttpClient;
+    @BindView(R.id.btn_login)
+    Button btnLogin;
+    @BindView(R.id.textView22)
+    TextView textView22;
+    @BindView(R.id.dknowtustNumber)
+    TextView dknowtustNumber;
+    @BindView(R.id.userl)
+    TextView userl;
+    @BindView(R.id.login_number_edit)
+    EditText loginNumberEdit;
+    @BindView(R.id.login_pswd_edit)
+    EditText loginPswdEdit;
+    @BindView(R.id.loginWeb)
+    WebView webView;
+    @BindView(R.id.help_login)
+    Button helpLogin;
+    private ConcurrentHashMap<String, List<Cookie>> cookieStore = new ConcurrentHashMap<>();
     private int slec_color = 0;
-    String intent_string = "-1";
-    int user=0;
-    private Intent intent;
+    int user = 0;
+    private Context context;
+    private String tustNumber;  //科大帐号
+    private String passWord;  //科大密码
+    private int loginStatus = 0;  //记录登录状态0为未成功
+    private OkHttpClient mOkHttpClient;
+    private String backupStr = "";
+    private int isBack = 0; //0为解析教务处，1为解析备份
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_login);
-
+        ButterKnife.bind(this);
         //hidden the  stautusbar
         SystemUI.hide_statusbar(this);
-
         //set up the database
         Connector.getDatabase();
 
-        //initview
-        initView();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                .setTitle("登录提示").setMessage(getResources().getString(R.string.loginJwcFail_login_notice))
+                .setPositiveButton(R.string.ok,null);
+        builder.show();
 
-        //init the okhttp
-        okHttpClient = HttpUtil.initOkhttp(CONNECT_TIMEOUT);
-
-        //set the listener
-        set_listen();
+        //初始化
+        initOkhttp();
+        //initWebViewOkhttp();
     }
 
+    private void initWebViewOkhttp() {
+        mOkHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .cookieJar(new CookieJar() {
+                    private CookieManager mCookieManager = CookieManager.getInstance();
 
-
-    private void initView() {
-        tust_number = (EditText) findViewById(R.id.tust_number);
-        pswd = (EditText) findViewById(R.id.pswd);
-        login_btn = (Button) findViewById(R.id.btn_login);
-        login_btn.setText(R.string.please_read_me);
-        warning = (CheckBox) findViewById(R.id.warning);
-    }
-
-    private void set_listen() {
-        //the listener for login_btn
-        login_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //get input text
-                tust_number_string = tust_number.getText().toString();
-                pswd_string = pswd.getText().toString();
-
-                //check null
-                if (tust_number_string.equals("") || pswd_string.equals("")) {
-                    Snackbar.make(login_btn, R.string.null_number_and_pswd, Snackbar.LENGTH_SHORT).show();
-                } else {
-                    //login
-                    try {
-                        //set progress
-                        setDialog(getString(R.string.login), getString(R.string.login_info));
-                        login(tust_number_string, pswd_string);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-        //warning
-        warning.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(warning.isChecked()){
-                    intent = new Intent(LoginActivity.this,WebViewActivity.class);
-                    intent.putExtra("url",UrlData.notice_and_introduce);
-                    intent.putExtra("title",getString(R.string.user_know));
-                    login_btn.setEnabled(true);
-                    new Handler().postDelayed(new Runnable(){
-                        public void run() {
-                            startActivity(intent);
-                            login_btn.setBackgroundResource(R.drawable.login_shape);
-                            login_btn.setText(R.string.login);
+                    @Override
+                    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+                        String urlString = url.toString();
+                        for (Cookie cookie : cookies) {
+                            mCookieManager.setCookie(urlString, cookie.toString());
                         }
-                    }, 300);
+                    }
 
-                }else{
-                    login_btn.setText(R.string.please_read_me);
-                    login_btn.setEnabled(false);
-                    login_btn.setBackgroundResource(R.drawable.login_shape_cacel);
-                }
-            }
-        });
+                    @Override
+                    public List<Cookie> loadForRequest(HttpUrl url) {
+                        String urlString = url.toString();
+                        String cookiesString = mCookieManager.getCookie(urlString);
+                        if (cookiesString != null && !cookiesString.isEmpty()) {
+                            String[] cookieHeaders = cookiesString.split(";");
+                            List<Cookie> cookies = new ArrayList<>(cookieHeaders.length);
+
+                            for (String header : cookieHeaders) {
+                                cookies.add(Cookie.parse(url, header));
+                            }
+                            return cookies;
+                        }
+                        return Collections.emptyList();
+                    }
+                })
+                .build();
+    }
+
+    //加载简洁版本请求
+    private void initOkhttp() {
+        mOkHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .cookieJar(new CookieJar() {
+                    @Override
+                    public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+                        Log.d(TAG, url.toString());
+                        cookieStore.put(url.host(), cookies);
+                        Log.d(TAG, cookies.toString());
+                    }
+
+                    @Override
+                    public List<Cookie> loadForRequest(HttpUrl url) {
+                        List<Cookie> cookies = cookieStore.get(url.host());
+                        return cookies != null ? cookies : new ArrayList<Cookie>();
+                    }
+                })
+                .build();
     }
 
 
-    //set dialog
+    //监听事件
+    @OnClick({R.id.btn_login, R.id.dknowtustNumber, R.id.userl})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_login:
+                readyLoginJwcNew();  //登录教务处
+                break;
+            case R.id.dknowtustNumber:
+                startActivity(new Intent(context, WebViewActivity.class).putExtra(Constants.TITLE, "说明").putExtra(Constants.URL, UrlData.login_introduce));
+                break;
+            case R.id.userl:
+                startActivity(new Intent(context, SettingActivity.class).putExtra("set_", 5));
+                break;
+        }
+    }
+
+    private void showErrorDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_a_text_notice, null);
+        builder.setView(view);
+
+        final AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+
+        Button ok = (Button) view.findViewById(R.id.ok);
+        Button cancel = (Button) view.findViewById(R.id.cancel);
+        TextView label = (TextView) view.findViewById(R.id.label);
+        TextView message = (TextView) view.findViewById(R.id.message);
+
+        ok.setText("开始验证");
+        label.setText("提示");
+        message.setText(R.string.loginError);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jwcCheckWebView();
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+    //准备登录教务处
+    private void readyLoginJwcNew() {
+        //获取字符串
+        tustNumber = loginNumberEdit.getText().toString();
+        passWord = loginPswdEdit.getText().toString();
+        //判空
+        if (tustNumber.equals("") || passWord.equals("")) {
+            Toast.makeText(context,R.string.null_number_and_pswd,Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        //saveUserInfo(tustNumber,passWord);
+       // showErrorDialog();
+        //登录
+        try {
+            //显示对话框
+            setDialog(getString(R.string.login), getString(R.string.login_info));
+            //登录
+            loginJWCNew(tustNumber, passWord);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //显示对话框
     private void setDialog(String string, String s) {
         try {
             //create the dialog
@@ -183,348 +290,595 @@ public class LoginActivity extends TustBaseActivity {
             e.printStackTrace();
         }
     }
-    //login
-    private int login(final String tust_number_string, final String pswd_string) throws Exception {
-        //create the formbody
+
+
+    private int loginJWCNew(final String tustNumber, final String passWord) {
+        //准备登录
         FormBody formBody = new FormBody.Builder()
-                .add(FormData.login_id, tust_number_string)
-                .add(FormData.login_pswd, pswd_string)
+                .add(FormData.login_id_new, tustNumber)
+                .add(FormData.login_pswd_new, passWord)
+                .add(FormData.help_var_new, "error")
                 .build();
 
-        //the callback of the request
-        okHttpClient
-                .newCall(HttpUtil.HttpConnect(UrlData.login_post_url,formBody)).enqueue(new Callback() {
+        Request request = new Request.Builder()
+                .url(UrlData.login_post_url_new)
+                .post(formBody)
+                .build();
+        mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                //callback:failure
-                pg.dismiss();
-                pg.cancel();
-                status_login = 0;
-                Snackbar.make(login_btn, R.string.fail, Snackbar.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                //save the pswd and id
-                saveUserInfo(tust_number_string, pswd_string);
-                String str = response.body().string().toString();
-                Document doc = Jsoup.parse(str);
-                String back_title = doc.title();
-                if (back_title.equals(getString(R.string.manager_))) {
-                    //request success
-                    Snackbar.make(login_btn, R.string.success, Snackbar.LENGTH_SHORT).show();
-                    //if the request is successful we should start the new same request
-                    //it can solve the problem about the cookies mismatching
-                    //2017-09-02 17:44:06 change the time to 1
-                    if (times == 2) {
-                        //dismiss
-                        status_login = 1;
-                        Message mess = new Message();
-                        mess.what = 1;
-                        myHandler.sendMessage(mess);
-                    } else {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
                         pg.dismiss();
                         pg.cancel();
-                        try {
-                            login(tust_number_string, pswd_string);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        times = times + 1;
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                                .setTitle("错误").setMessage(getResources().getString(R.string.loginJwcFail_net_error))
+                                .setPositiveButton(R.string.ok,null).setCancelable(false)
+                                .setNegativeButton("使用课表云备份", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        getBackup();
+                                    }
+                                });
+                        builder.show();
+
+                        loginStatus = 0;
+                        Toast.makeText(context,R.string.fail,Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    //pswd is wrong
-                    Snackbar.make(login_btn, R.string.wrong, Snackbar.LENGTH_SHORT).show();
-                    status_login = 0;
-                }
-                //dismiss
-                pg.dismiss();
-                pg.cancel();
-            }
-        });
-        return status_login;
-    }
-
-    //save user information
-    private void saveUserInfo(String tust_number_string, String pswd_string) {
-        // encodeToString will return string value
-        String enToStr = EncryptionUtil.base64_en(pswd_string);
-
-        SharedPreferencesUtil.Save(LoginActivity.this,"tust_number", tust_number_string);
-        SharedPreferencesUtil.Save(LoginActivity.this,"pswd", enToStr);
-    }
-
-
-    private void GetStudentInfo() {
-        //the method is a way to get data
-        //and we should send an url and a flag to it,so it can use the method（savedata） to save
-        //the data.
-        get_Info(UrlData.get_stu_info_url, 1);
-    }
-
-    private void saveInfo(int save_tag) {
-        /*
-        * Tag = 1 :student information
-        * Tag = 2 :course information
-        *
-        * */
-        if (save_tag == 1) {
-                    //get the save_tag and use the Jsoup to analyze the html  (td)
-                    Document doc2 = Jsoup.parse(my_student_info_str);
-                    content = doc2.select("td");
-                    //save the name in another way
-                    SharedPreferencesUtil.Save(LoginActivity.this,"stu_name", this.content.get(20).text());
-                    SharedPreferencesUtil.Save(LoginActivity.this,"sex", this.content.get(32).text());
-                    SharedPreferencesUtil.Save(LoginActivity.this,"part", this.content.get(70).text());
-                    SaveStudentInfo(this.content.get(19).text(), this.content.get(20).text());
-                    SaveStudentInfo(this.content.get(17).text(), this.content.get(18).text());
-                    SaveStudentInfo(this.content.get(25).text(), this.content.get(26).text());
-                    SaveStudentInfo(this.content.get(31).text(), this.content.get(32).text());
-                    SaveStudentInfo(this.content.get(33).text(), this.content.get(34).text());
-                    SaveStudentInfo(this.content.get(37).text(), this.content.get(38).text());
-                    SaveStudentInfo(this.content.get(41).text(), this.content.get(42).text());
-                    SaveStudentInfo(this.content.get(45).text(), this.content.get(46).text());
-                    //save the birthday
-                    SharedPreferencesUtil.Save(LoginActivity.this,"BIRTHDAY",this.content.get(46).text());
-                    SaveStudentInfo(this.content.get(47).text(), this.content.get(48).text());
-                    SaveStudentInfo(this.content.get(49).text(), this.content.get(50).text());
-                    SaveStudentInfo(this.content.get(67).text(), this.content.get(68).text());
-                    SaveStudentInfo(this.content.get(69).text(), this.content.get(70).text());
-                    SaveStudentInfo(this.content.get(71).text(), this.content.get(72).text());
-                    SaveStudentInfo(this.content.get(77).text(), this.content.get(78).text());
-                    SaveStudentInfo(this.content.get(79).text(), this.content.get(80).text());
-                    SaveStudentInfo(this.content.get(83).text(), this.content.get(84).text());
-                    SaveStudentInfo(this.content.get(115).text(), this.content.get(119).text());
-
-            } else if (save_tag == 2) {
-                //get the tr tag
-                Document doc2 = Jsoup.parse(my_course_info_str);
-                content2 = doc2.select("tr");
-                for (int i = 22; i < content2.size(); i++) {
-                      user = 0;   //the first user
-               /*
-               *the data obtained are classifiled into two cases
-               * full line & half a line
-               * （if you want to get more information ,please visit the tust official website）
-               * if the string doesn't contains the "培养方案", and we can count it as second cases
-               * so we can use the SharedPreferences to load the data for it
-               * and the other case is normal loading,but we should save the data by SharedPreferences
-               * */
-                    if (!(content2.get(i).text().contains(getString(R.string.plan)))) {
-                        SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-                        content_Text = content2.get(i).select("td");
-                        //load courese object
-                        help_course = creat_course(
-                                pref.getString("0", "null"),
-                                pref.getString("1", "null"),
-                                pref.getString("2", "null"),
-                                pref.getString("3", "null"),
-                                pref.getString("4", "null"),
-                                pref.getString("5", "null"),
-                                pref.getString("6", "null"),
-                                pref.getString("7", "null"),
-                                pref.getString("9", "null"),
-                                pref.getString("10", "null"),
-
-                                content_Text.get(0).text(),
-                                content_Text.get(1).text(),
-                                content_Text.get(2).text(),
-                                content_Text.get(3).text(),
-                                content_Text.get(4).text(),
-                                content_Text.get(5).text(),
-                                content_Text.get(6).text(),
-                                pref.getInt("18_color", 0),
-                                user
-                        );
-
-                    } else {
-                        //color
-                        slec_color = colors[i % 15];
-                        if(slec_color == 0){
-                            slec_color = colors[0];
-                        }
-                        content_Text = content2.get(i).select("td");
-                        help_course = creat_course(
-                                content_Text.get(0).text(),
-                                content_Text.get(1).text(),
-                                content_Text.get(2).text(),
-                                content_Text.get(3).text(),
-                                content_Text.get(4).text(),
-                                content_Text.get(5).text(),
-                                content_Text.get(6).text(),
-                                content_Text.get(7).text(),
-                                content_Text.get(9).text(),
-                                content_Text.get(10).text(),
-                                content_Text.get(11).text(),
-                                content_Text.get(12).text(),
-                                content_Text.get(13).text(),
-                                content_Text.get(14).text(),
-                                content_Text.get(15).text(),
-                                content_Text.get(16).text(),
-                                content_Text.get(17).text(),
-                                slec_color,
-                                user
-                        );
-                        //save the data
-                        for (int share = 0; share <= 17; share++) {
-                            SharedPreferencesUtil.Save(LoginActivity.this,share + "", content_Text.get(share).text());
-                        }
-                        SharedPreferencesUtil.Save(LoginActivity.this,"18_color", slec_color);
-                    }
-                }
-        }
-        Snackbar.make(login_btn, R.string.save_success, Snackbar.LENGTH_SHORT).show();
-        //intent
-        Intent_Activity();
-    }
-
-    private void SaveStudentInfo(String text, String text1) {
-      Student_info stu_info = new Student_info(text,text1);
-        stu_info.save();
-    }
-
-
-    private Course_Info creat_course(String dev,
-                                     String course_number,
-                                     String course_name,
-                                     String class_number,
-                                     String score,
-                                     String tag,
-                                     String exm,
-                                     String teacher,
-                                     String method,
-                                     String status,
-                                     String week,
-                                     String week_number,
-                                     String class_,
-                                     String class_count,
-                                     String school,
-                                     String building,
-                                     String classroom,
-                                     int color,
-                                     int user
-    ) {
-        course_info = new Course_Info();
-        course_info.setDev(dev);
-        course_info.setCourse_number(course_number);
-        course_info.setCourse_name(course_name);
-        course_info.setClass_number(class_number);
-        course_info.setScore(score);
-        course_info.setTag(tag);
-        course_info.setExm(exm);
-        course_info.setTeacher(teacher);
-        course_info.setMethod(method);
-        course_info.setStatus(status);
-        course_info.setWeek(week);
-        course_info.setWeek_number(week_number);
-        course_info.setClass_(class_);
-        course_info.setClass_count(class_count);
-        course_info.setSchool(school);
-        course_info.setBuilding(building);
-        course_info.setClassroom(classroom);
-        course_info.setColor(color);
-        course_info.setUser(user);
-        course_info.save();
-        return course_info;
-    }
-
-    private void GetCourseInfo() {
-        //get info method
-        get_Info(UrlData.get_Course_info_url, 2);
-    }
-
-    private void get_Info(String get_info_url, final int i) {
-        //get
-        Request request = new Request.Builder().
-                url(get_info_url).build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Snackbar.make(login_btn, R.string.fail, Snackbar.LENGTH_SHORT).show();
+                });
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if (i == 1) {
-                    //jsoup
-                    my_student_info_str = response.body().string().toString();
-                    doc = Jsoup.parse(my_student_info_str);
-                } else if (i == 2) {
-                    my_course_info_str = response.body().string().toString();
-                    doc = Jsoup.parse(my_course_info_str);
-                }
-
-                //according to the title of the html to determine whether the success of loading
-                String back_title = doc.title();
-                if (back_title.equals(getString(R.string.error_information))) {
-                    Snackbar.make(login_btn, R.string.get_error, Snackbar.LENGTH_SHORT).show();
-                } else {
-                    Snackbar.make(login_btn, R.string.get_success, Snackbar.LENGTH_SHORT).show();
-                    //save
-                    try {
-                        saveInfo(i);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                String str = response.body().string().toString();
+                Log.d(TAG, str);
+                //登录成功储存帐号密码
+                saveUserInfo(tustNumber, passWord);
+                //JSOUP解析
+                final Document doc = Jsoup.parse(str);
+                Log.d(TAG, doc.title());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (doc.title().equals(getString(R.string.manager_))) {
+                            Snackbar.make(btnLogin, R.string.success, Snackbar.LENGTH_SHORT).show();
+                            pg.setMessage(getString(R.string.readyGetCourse));
+                            getCourseJWC();
+                        } else {
+                            pg.dismiss();
+                            pg.cancel();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                                    .setTitle("错误").setMessage(getResources().getString(R.string.loginJwcFail_pass_error))
+                                    .setPositiveButton(R.string.ok,null);
+                            builder.show();
+                            Toast.makeText(context,R.string.wrong,Toast.LENGTH_SHORT).show();
+                            loginStatus = 0;
+                        }
                     }
-                }
-                pg.dismiss();
+                });
             }
         });
-
+        return 0;
     }
 
-    //start intent
-    private void Intent_Activity() {
-        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+    //获取云备份TODO：
+    private void getBackup() {
+        try {
+            pg.setMessage("正在下载云备份，请保持网络畅通");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String url = UrlData.downloadSchedule+"?uid="+tustNumber+"&pass="+passWord;
+        HttpUtil.get(url).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        pg.dismiss();
+                        pg.cancel();
+                        Toast.makeText(context, R.string.network_no_connect, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String res = response.body().string();
+                Log.d(TAG,res);
+                try {
+                    JSONObject jsonObject = new JSONObject(res);
+                    if(jsonObject.getInt(FormData.JCODE) == 2000){
+                        final String data = jsonObject.getString(FormData.JDATA);
+                        final String courseStr = new JSONObject(data).getString(FormData.VALUE);
+                        Log.d(TAG,EncryptionUtil.base64_de(courseStr));
+                        isBack = 1; //标志解析备份
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Pattern r = Pattern.compile("&quot;");
+                                Matcher m = r.matcher(EncryptionUtil.base64_de(courseStr));
+                                parseCourse(m.replaceAll("\""));
+                               // parseCourse(EncryptionUtil.base64_de(courseStr));
+                            }
+                        });
+                    }else{
+                        throw new JSONException("JCODE ！= 2000");
+                    }
+                } catch (JSONException e) {
+                    //取消
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            pg.dismiss();
+                            pg.cancel();
+                            Toast.makeText(context, "下载课表失败", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void getCourseJWC() {
+        Request request = new Request.Builder()
+                .url(UrlData.getCourseInfoNew)
+                .build();
+        mOkHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                                .setTitle("错误").setMessage(getResources().getString(R.string.loginJwcFail_net_error))
+                                .setPositiveButton(R.string.ok,null);
+                        builder.show();
+                        loginStatus = 0;
+                        Toast.makeText(context,R.string.fail,Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String str = response.body().string().toString();
+                Log.d(TAG, str);
+                if(str.contains("登录")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                            .setTitle("错误").setMessage(getResources().getString(R.string.loginJwcFail_cookie_error))
+                            .setPositiveButton(R.string.ok,null);
+                    builder.show();
+                    return;
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //拿到课表，json解析
+                        pg.setMessage(getString(R.string.parseCourse));
+                        backupStr = str;
+                        parseCourse(str);
+                    }
+                });
+            }
+        });
+    }
+
+    //解析课表
+    private void parseCourse(String str) {
+        try {
+            pg.setMessage("正在解析课程表……");
+            JSONObject jsonObject = new JSONObject(str);
+            String dataList = jsonObject.getString("dateList");
+            Log.d(TAG, dataList);
+            /*json字符串最外层是方括号时：*/
+            JSONArray jsonArray = new JSONArray(dataList);
+            JSONObject j2 = new JSONObject(jsonArray.get(0).toString());
+            String selectCourseList = j2.getString("selectCourseList");
+
+            //准备添加数据
+            String courseName;  //课程名
+            String attendClassTeacher;  //教师
+            String studyModeName;//课程状态（正常or重修）
+            int jwColor;  //颜色
+            String programPlanName; //计划方案
+            String unit; //学分
+            JSONArray tapListArray = null;
+            String weekDescription = null; //哪几周上课
+            String classDay = null; //周几上
+            String classSessions = null; //第几节
+            String continuingSession = null; //小课还是大课（2或者4）
+            String coureNumber = null; //课序号
+            String teachingBuildingName = null; //教学楼
+            String campusName = null; //校园
+            String classroomName = null; //教室
+
+            JSONArray selectCourseListArray = new JSONArray(selectCourseList);
+            for (int i = 0; i < selectCourseListArray.length(); i++) {
+                Log.d(TAG, "数据"+selectCourseListArray.get(i).toString());
+                //首先取得这一节课的全部信息
+                String courseInfoJson = selectCourseListArray.get(i).toString();
+                JSONObject courseInfoJsonObject = new JSONObject(courseInfoJson);
+
+                //然后获取重要字段,课程名，老师，课程状态
+                courseName = courseInfoJsonObject.getString("courseName");
+                attendClassTeacher = courseInfoJsonObject.getString("attendClassTeacher");
+                studyModeName = courseInfoJsonObject.getString("studyModeName");
+                unit = courseInfoJsonObject.getString("unit");
+                programPlanName = courseInfoJsonObject.getString("programPlanName");
+
+                //选择颜色
+                slec_color = colors[i % 15];
+                if (slec_color == 0) {
+                   slec_color = colors[0];
+                }
+                jwColor = slec_color;
+
+
+                //判断是否两节课
+                //取得上课时间地点
+                String tapList = courseInfoJsonObject.getString("timeAndPlaceList");
+
+                //Log.d(TAG,"时间表"+tapList);
+
+                if(tapList.equals("null")){
+                   continue;
+                }
+
+                tapListArray = new JSONArray(tapList);
+
+                //缓存
+                saveCache(courseName,
+                        attendClassTeacher,
+                        studyModeName,
+                        unit,
+                        programPlanName,
+                        jwColor);
+
+                if(tapListArray.length() > 1){
+                    //如果这门课的上课时间地点有两个，那么先储存第一个
+                    for (int j = 0; j < tapListArray.length(); j++) {
+                        String tapArrayValue2 = tapListArray.get(j).toString();
+                        JSONObject tapJsonObject2 = new JSONObject(tapArrayValue2);
+                        //注意下面这块，获取使用0000111表示的格式
+                        weekDescription = tapJsonObject2.getString("classWeek");
+                        classDay = tapJsonObject2.getString("classDay");
+                        classSessions = tapJsonObject2.getString("classSessions");
+                        continuingSession = tapJsonObject2.getString("continuingSession");
+                        coureNumber = tapJsonObject2.getString("coureNumber");
+                        teachingBuildingName = tapJsonObject2.getString("teachingBuildingName");
+                        campusName = tapJsonObject2.getString("campusName");
+                        classroomName = tapJsonObject2.getString("classroomName");
+
+                        courseName = SharedPreferencesUtil.Read(context,"courseName","");
+                        attendClassTeacher = SharedPreferencesUtil.Read(context,"attendClassTeacher","");
+                        studyModeName = SharedPreferencesUtil.Read(context,"studyModeName","");
+                        unit = SharedPreferencesUtil.Read(context,"unit","");
+                        programPlanName = SharedPreferencesUtil.Read(context,"programPlanName","");
+                        jwColor = SharedPreferencesUtil.Read(context,"jwColor",0);
+                        //存储
+                        saveCourse(weekDescription,
+                                classDay,
+                                classSessions,
+                                continuingSession,
+                                coureNumber,
+                                teachingBuildingName,
+                                campusName,
+                                classroomName,
+                                courseName,
+                                attendClassTeacher,
+                                studyModeName,
+                                unit,
+                                programPlanName,
+                                jwColor);
+                    }
+                }else{
+                    String tapArrayValue = tapListArray.get(0).toString();
+                    JSONObject tapJsonObject = new JSONObject(tapArrayValue);
+                    //注意下面这块，获取使用0000111表示的格式
+                    weekDescription = tapJsonObject.getString("classWeek");
+                    classDay = tapJsonObject.getString("classDay");
+                    classSessions = tapJsonObject.getString("classSessions");
+                    continuingSession = tapJsonObject.getString("continuingSession");
+                    coureNumber = tapJsonObject.getString("coureNumber");
+                    teachingBuildingName = tapJsonObject.getString("teachingBuildingName");
+                    campusName = tapJsonObject.getString("campusName");
+                    classroomName = tapJsonObject.getString("classroomName");
+                    //存储
+                    saveCourse(weekDescription,
+                            classDay,
+                            classSessions,
+                            continuingSession,
+                            coureNumber,
+                            teachingBuildingName,
+                            campusName,
+                            classroomName,
+                            courseName,
+                            attendClassTeacher,
+                            studyModeName,
+                            unit,
+                            programPlanName,
+                            jwColor);
+                }
+
+            }
+
+            //如果从服务器解析备份，解析完直接进入主页，否则加载教务处个人信息
+            if(isBack == 1){
+                intentMain();
+            }else{
+                pg.setMessage("开始获取个人信息……");
+                getUserInfo();
+            }
+
+        } catch (JSONException e) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                    .setTitle("错误").setMessage(getResources().getString(R.string.loginJwcFail_json_error))
+                    .setPositiveButton(R.string.ok,null).setNegativeButton("反馈", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                          //TODO 发送服务器反馈
+                            pg.dismiss();
+                            pg.cancel();
+                          Toast.makeText(context,"反馈成功",Toast.LENGTH_SHORT).show();
+                        }
+                    }).setCancelable(false)
+                    .setNeutralButton("使用课表云备份", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            getBackup();
+                        }
+                    });
+            builder.show();
+            e.printStackTrace();
+            return;
+        }
+    }
+
+    private void saveCache(String courseName, String attendClassTeacher, String studyModeName, String unit, String programPlanName, int jwColor) {
+        SharedPreferencesUtil.Save(context,"courseName",courseName);
+        SharedPreferencesUtil.Save(context,"attendClassTeacher",attendClassTeacher);
+        SharedPreferencesUtil.Save(context,"studyModeName",studyModeName);
+        SharedPreferencesUtil.Save(context,"unit",unit);
+        SharedPreferencesUtil.Save(context,"programPlanName",programPlanName);
+        SharedPreferencesUtil.Save(context,"jwColor",jwColor);
+    }
+
+    private void saveCourse(String weekDescription, String classDay,
+                            String classSessions, String continuingSession,
+                            String coureNumber, String teachingBuildingName,
+                            String campusName, String classroomName,
+                            String courseName, String attendClassTeacher,
+                            String studyModeName, String unit,
+                            String programPlanName, int jwColor) {
+        CourseInfoHelper courseInfoHelper = new CourseInfoHelper();
+        courseInfoHelper.setStudyModeName(studyModeName);
+        courseInfoHelper.setWeekDescription(weekDescription);
+        courseInfoHelper.setClassDay(classDay);
+        courseInfoHelper.setClassSessions(classSessions);
+        courseInfoHelper.setContinuingSession(continuingSession);
+        courseInfoHelper.setCoureNumber(coureNumber);
+        courseInfoHelper.setTeachingBuildingName(teachingBuildingName);
+        courseInfoHelper.setCampusName(campusName);
+        courseInfoHelper.setClassroomName(classroomName);
+        courseInfoHelper.setCourseName(courseName);
+        courseInfoHelper.setAttendClassTeacher(attendClassTeacher);
+        courseInfoHelper.setUnit(unit);
+        courseInfoHelper.setProgramPlanName(programPlanName);
+        courseInfoHelper.setJwColor(jwColor);
+        if(courseInfoHelper.save()){
+            Log.d(TAG,"存储成功");
+        }
+    }
+
+    //获取个人信息
+    private void getUserInfo() {
+        Request request = new Request.Builder()
+                .url(UrlData.user_info_url)
+                .build();
+        mOkHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                            .setTitle("错误").setMessage(getResources().getString(R.string.loginJwcFail_net_error))
+                            .setPositiveButton(R.string.ok,null);
+                    builder.show();
+                    loginStatus = 0;
+                    Toast.makeText(context,R.string.fail,Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String str = response.body().string().toString();
+                Log.d(TAG, "个人信息字符"+str);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(str.contains("登录")||str.contains("500错误")){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                                    .setTitle("错误").setMessage(getResources().getString(R.string.loginJwcFail_user_error))
+                                    .setPositiveButton(R.string.ok,null);
+                            builder.show();
+                            loginStatus = 0;
+                            new Timer().schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    intentMain();
+                                }
+                            },2000);
+                        }
+                        try {
+                            pg.setMessage("开始解析个人信息……");
+                            parseUserInfo(str);
+                        } catch (Exception e) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                                    .setTitle("错误").setMessage(getResources().getString(R.string.loginJwcFail_user_parse_error))
+                                    .setPositiveButton(R.string.ok,null);
+                            builder.show();
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    //解析个人数据
+    private void parseUserInfo(String str) throws Exception{
+        Document doc = Jsoup.parse(str);
+        Elements elements = doc.getElementsByClass("self profile-user-info profile-user-info-striped");
+        for (Element element: elements) {
+            Elements tab = element.getElementsByClass("profile-info-row");
+            for (Element tabInfo : tab) {
+                Elements infoName = tabInfo.getElementsByClass("profile-info-name");
+                Elements infoValue = tabInfo.getElementsByClass("profile-info-value");
+                for (int i = 0; i < infoName.size(); i++) {
+                    if(!infoValue.get(i).text().equals("")){
+                        JwcUserInfo jwcUserInfo = new JwcUserInfo();
+                        jwcUserInfo.setJwcName(infoName.get(i).text());
+                        jwcUserInfo.setJwcValue(infoValue.get(i).text());
+                        jwcUserInfo.save();
+                        Log.d(TAG,"已存"+jwcUserInfo.toString());
+                    }
+                }
+            }
+        }
+
+        loginStatus = 1;
+        Snackbar.make(userl, R.string.save_success, Snackbar.LENGTH_SHORT).show();
+        //取消
+        pg.dismiss();
+        pg.cancel();
+
+        cloudBackup();
+    }
+
+    private void cloudBackup() {
+         /*课表云备份 2018年8月29日23点34分*/
+        pg = new ProgressDialog(context);
+        pg.setTitle("提示");
+        pg.setMessage("正在课表云备份，请保持网络畅通");
+        pg.setCancelable(false);
+        pg.show();
+
+//        try {
+//            backupStr = EncryptionUtil.base64_en(backupStr);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        //组装表单
+        FormBody formBody = new FormBody.Builder()
+                .add(FormData.uid, tustNumber)
+                .add(FormData.pass_server, passWord)
+                .add(FormData.VALUE,backupStr)
+                .build();
+        //发起POST请求
+        HttpUtil.post(UrlData.uploadSchedule,formBody).enqueue(new Callback() {
+            @Override
+            public void onFailure(final Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //取消
+                        pg.dismiss();
+                        pg.cancel();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                                .setTitle("错误").setMessage(getResources().getString(R.string.loginJwcFail_backup_error))
+                                .setPositiveButton("重试", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        cloudBackup();
+                                    }
+                                }).setNegativeButton("取消云备份", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                       intentMain();
+                                    }
+                                }).setCancelable(false);
+                        builder.show();
+                       }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String res = response.body().string();
+                Log.d(TAG,res);
+                try {
+                    JSONObject jsonObject = new JSONObject(res);
+                    if(jsonObject.getInt(FormData.JCODE) == 2000){
+                        //取消
+                        pg.dismiss();
+                        pg.cancel();
+
+                    }else{
+                        throw new JSONException("JCODE ！= 2000");
+                    }
+                } catch (JSONException e) {
+                    //取消
+                    pg.dismiss();
+                    pg.cancel();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "云备份失败", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    e.printStackTrace();
+                }
+                //成功
+               intentMain();
+            }
+        });
+    }
+
+    private void intentMain() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
 
-    private Handler myHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    //show another dialog
-                    setDialog(getString(R.string.get), getString(R.string.get_info));
-                    //get
-                    GetStudentInfo();
-                    //get
-                    GetCourseInfo();
-                    break;
-            }
-        }
-    };
+    //储存信息
+    private void saveUserInfo(String tust_number_string, String pswd_string) {
+        // 对密码编码
+        String enToStr = EncryptionUtil.base64_en(pswd_string);
+        SharedPreferencesUtil.Save(LoginActivity.this, FormData.tust_number_server, tust_number_string);
+        SharedPreferencesUtil.Save(LoginActivity.this, FormData.pswd, enToStr);
+    }
 
-
-
-    private void GetHead() {
-
-        okHttpClient.newCall(HttpUtil.HttpConnect(UrlData.get_head,null)).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Snackbar.make(login_btn, R.string.wrong, Snackbar.LENGTH_SHORT).show();
+    private void jwcCheckWebView() {
+        webView.getSettings().setUseWideViewPort(true);
+        webView.loadUrl(UrlData.id_tust_url);
+        webView.requestFocus(View.FOCUS_DOWN);
+        webView.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading(WebView webview, String url) {
+                webview.loadUrl(url);
+                return true;
             }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                //把请求成功的response转为字节流
-                InputStream inputStream = response.body().byteStream();
-                //在这里用到了文件输出流
-                FileOutputStream fileOutputStream = new FileOutputStream(new File(String.valueOf(getFilesDir()+"/head.jpg")));
-                //定义一个字节数组
-                byte[] buffer = new byte[2048];
-                int len = 0;
-                while ((len = inputStream.read(buffer)) != -1) {
-                    //写出到文件
-                    fileOutputStream.write(buffer, 0, len);
-                }
-                //关闭输出流
-                fileOutputStream.flush();
+            public void onPageFinished(WebView view, String url) {
+                CookieManager cookieManager = CookieManager.getInstance();
+                String cookieStr = cookieManager.getCookie(url);
+                String[] array = cookieStr.split(";");
+                super.onPageFinished(view, url);
             }
         });
     }
 
+    //辅助登录教务处
+    @OnClick(R.id.help_login)
+    public void onViewClicked() {
+        setDialog("获取","您是否已经进行了统一认证登录，如果没有请先进行认证！");
+        getCourseJWC();
+    }
 }
-

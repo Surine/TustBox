@@ -2,14 +2,14 @@ package com.surine.tustbox.UI;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.surine.tustbox.Fragment.setting.AboutFragment;
 import com.surine.tustbox.Fragment.setting.NoticFragment;
@@ -18,6 +18,9 @@ import com.surine.tustbox.Fragment.setting.Set_BackgroundFragment;
 import com.surine.tustbox.Fragment.setting.SettingFragment;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by surine on 2017/4/8.
@@ -33,41 +36,32 @@ public class SettingActivity extends TustBaseActivity {
     AboutFragment about = new AboutFragment();
     NoticFragment notic = new NoticFragment();
     OslFragment osl = new OslFragment();
+    @BindView(R.id.setting_toolbar)
+    Toolbar settingToolbar;
+    private Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_layout);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.setting_toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        setSupportActionBar(toolbar);
-        //设置toolbar颜色
-      //  SystemUI.color_toolbar(this,getSupportActionBar());
-
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar !=null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        ButterKnife.bind(this);
+        setSupportActionBar(settingToolbar);
+        context = this;
         setTitle(getString(R.string.setting));
+        settingToolbar.setTitleTextAppearance(context, R.style.ToolbarTitle);
 
-        //preventing repeated loading (fragment)
         if (savedInstanceState == null) {
-           Intent intent = getIntent();
-            if(intent.getIntExtra("set_",0)==1) {
+            Intent intent = getIntent();
+            if (intent.getIntExtra("set_", 0) == 1) {
                 replaceFragment(set_background);
-            }else if(intent.getIntExtra("set_",0)==2){
+            } else if (intent.getIntExtra("set_", 0) == 2) {
                 replaceFragment(about);
-            }else if(intent.getIntExtra("set_",0)==4){
+            } else if (intent.getIntExtra("set_", 0) == 4) {
                 replaceFragment(osl);
-            }else if(intent.getIntExtra("set_",0)==5) {
-              //notic
+            } else if (intent.getIntExtra("set_", 0) == 5) {
+                //notic
                 replaceFragment(notic);
-            }else{
+            } else {
                 replaceFragment(prefFragment);
             }
         }
@@ -90,10 +84,16 @@ public class SettingActivity extends TustBaseActivity {
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.exit_menu, menu);
+        return true;
+    }
+
     //set the back button listener
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == R.id.exit) {
             finish();
         }
         return super.onOptionsItemSelected(item);

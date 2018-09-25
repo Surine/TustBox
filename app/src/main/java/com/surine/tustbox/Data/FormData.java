@@ -20,6 +20,9 @@ public class FormData {
  //请求登陆教务处的账号和密码（启动APP登陆页）
    public static final String login_id = "IDToken1";
    public static final String login_pswd = "IDToken2";
+   public static final String login_id_new = "j_username";
+   public static final String login_pswd_new = "j_password";
+   public static final String help_var_new = "j_captcha1";
 
     //请求登录校园网固定参数
     public static final String R1 = "0";
@@ -59,6 +62,7 @@ public class FormData {
 
 
 
+
     //科大云盘固定参数
     public static final String link_name = "link_name";
     public static final String link_device = "link_device";
@@ -72,4 +76,9 @@ public class FormData {
     public static final String URL = "url";
     public static final String PICCROP = "pic_crop";
 
+    //服务器当前周key
+    public static final String WEEK = "week";
+
+    //课表云备份
+    public static final String VALUE = "value";
 }

@@ -8,7 +8,7 @@
     android:background="@color/Tust_White"
     tools:context="com.surine.tustbox.UI.MainActivity">
 
-
+    <include layout="@layout/toolbar" />
     <WebView
         android:id="@+id/webview"
         android:paddingStart="10dp"
@@ -18,16 +18,7 @@
         android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/info_toolbar">
+        android:layout_below="@+id/toolbar">
     </WebView>
-    <android.support.v7.widget.Toolbar
-       android:id="@+id/info_toolbar"
-       android:layout_width="match_parent"
-       android:layout_height="@dimen/toolbar_height"
-       android:paddingTop="@dimen/toolbar_height_padding"
-       android:background="@color/colorPrimary"
-       android:fitsSystemWindows="true"
-       android:elevation="2dp"
-       android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-       app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
 </RelativeLayout>

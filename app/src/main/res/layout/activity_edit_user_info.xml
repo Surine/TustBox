@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/Tust_BACK"
+    android:background="@color/Tust_White"
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context="com.surine.tustbox.UI.EditUserInfoActivity">
@@ -122,4 +122,15 @@
             android:layout_marginStart="20dp"
             />
     </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:id="@+id/exit"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/school_shape2"
+        android:text="退出登录"
+        android:textColor="@color/Tust_White" />
 </LinearLayout>

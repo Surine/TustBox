@@ -1,5 +1,6 @@
 package com.surine.tustbox.UI;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,11 +11,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ import com.cooltechworks.views.ScratchTextView;
 import com.surine.tustbox.Adapter.ViewPager.SimpleFragmentPagerAdapter;
 import com.surine.tustbox.Bean.ScoreInfo;
 
+import com.surine.tustbox.Bean.ScoreInfoHelper;
 import com.surine.tustbox.Fragment.score.ScoreNewTermFragment;
 import com.surine.tustbox.Fragment.score.ScoreDbFragment;
 import com.surine.tustbox.Init.TustBaseActivity;
@@ -58,17 +62,18 @@ public class ScoreActiviy extends TustBaseActivity {
     private List<ScoreInfo> mLastScore_infos = new ArrayList<>();
     private String my_score_report = "成绩列表：";
     public static final String DIALOGFORSCORE = "DIALOGFORSCORE";
+    private Context context;
+    private List<ScoreInfoHelper> mScoreFromDB = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
+        context = this;
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         setTitle(getString(R.string.score));
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        toolbar.setTitleTextAppearance(context,R.style.ToolbarTitle);
 
         if(!SharedPreferencesUtil.Read(this,DIALOGFORSCORE,false)){
             showNotic();
@@ -79,8 +84,20 @@ public class ScoreActiviy extends TustBaseActivity {
     }
 
     private void showNotic() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_a_text_notice,null);
+        builder.setView(view);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+
+        Button ok = (Button) view.findViewById(R.id.ok);
+        Button cancel = (Button) view.findViewById(R.id.cancel);
+        TextView label = (TextView) view.findViewById(R.id.label);
+        TextView message = (TextView) view.findViewById(R.id.message);
+
+        label.setText("成绩使用说明");
         StringBuilder sb = new StringBuilder();
         sb.append("1.成绩获取必须链接校园网，没有校园网的时候，您可以通过本地数据查看您的成绩");
         sb.append("\n");
@@ -88,21 +105,24 @@ public class ScoreActiviy extends TustBaseActivity {
         sb.append("\n");
         sb.append("3.由于成绩是通过教务处系统来获取的，而教务处成绩系统很有可能在某个时间段关闭，所以抓不到成绩的时候，可以通过本地备份查看");
         sb.append("\n");
-        builder.setTitle("成绩使用说明");
-        builder.setMessage(sb.toString());
-        builder.setPositiveButton("不再提醒", new DialogInterface.OnClickListener() {
+        message.setText(sb.toString());
+       // message.setText("好尴尬，成绩现在不能用哦。\n教务处改版了而且处于不稳定状态，成绩功能暂时不能使用，恢复日期请关注首页公告！");
+        ok.setText("不再提醒");
+        cancel.setText("确定");
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                SharedPreferencesUtil.Save(ScoreActiviy.this,DIALOGFORSCORE,true);
+            public void onClick(View v) {
+                dialog.dismiss();
             }
         });
-        builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
 
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferencesUtil.Save(ScoreActiviy.this,DIALOGFORSCORE,true);
+                dialog.dismiss();
             }
         });
-        builder.show();
     }
 
     private void initViewPager() {
@@ -116,7 +136,6 @@ public class ScoreActiviy extends TustBaseActivity {
                 (getSupportFragmentManager(), fragments, titles);
         viewpager.setAdapter(pagerAdapter);
         viewpager.setOffscreenPageLimit(3);
-        //7.关联viewpager
         tabs.setupWithViewPager(viewpager);
 
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -126,18 +145,6 @@ public class ScoreActiviy extends TustBaseActivity {
             }
             @Override
             public void onPageSelected(int position) {
-                if(position==0)
-                {
-
-                }
-                else if (position==1)
-                {
-
-                }
-                else if(position==2)
-                {
-
-                }
             }
             @Override
             public void onPageScrollStateChanged(int state) {
@@ -148,9 +155,6 @@ public class ScoreActiviy extends TustBaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-        }
         switch (item.getItemId()){
             case android.R.id.home:
                 finish();
@@ -163,46 +167,26 @@ public class ScoreActiviy extends TustBaseActivity {
                 //分享
                 shareMyGrade();
                 break;
-            case R.id.file:
-                showFileDialog();
-                break;
-            case R.id.learn_info:
-                showLearnInfoDialog();
+            case R.id.exit:
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void showLearnInfoDialog() {
-        SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.learn_info);
-        builder.setMessage(pref.getString("learn_info",getString(R.string.no_more_info)));
-        builder.setPositiveButton(R.string.ok,null);
-        builder.show();
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.score_menu, menu);
+        return true;
     }
 
-    private void showFileDialog() {
-        View view = LayoutInflater.from(ScoreActiviy.this).inflate(R.layout.dialog_view_gpa_calculate_file,null);
-        WebView webView = (WebView) view.findViewById(R.id.gpa_file_Webview);
-        //WebView :load url at assets
-        webView.loadUrl("file:///android_asset/Html/about_me.html");
-        AlertDialog.Builder builder = new AlertDialog.Builder(ScoreActiviy.this);
-        builder.setView(view);
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-        builder.show();
-    }
 
     private void shareMyGrade() {
-        List<ScoreInfo> mscore_infos = DataSupport.findAll(ScoreInfo.class);
+        List<ScoreInfoHelper> mscore_infos = DataSupport.findAll(ScoreInfoHelper.class);
         for(int i = 0;i<mscore_infos.size();i++) {
-            my_score_report =my_score_report + mscore_infos.get(i).getName()
-                    +":"+mscore_infos.get(i).getScore()+"\n";
+            my_score_report =my_score_report + mscore_infos.get(i).getCourseName()
+                    +":"+mscore_infos.get(i).getCj()+"\n";
         }
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
@@ -218,10 +202,16 @@ public class ScoreActiviy extends TustBaseActivity {
         View view = LayoutInflater.from(ScoreActiviy.this).inflate(R.layout.dialog_view_gpa_view,null);
         scratchTextView = (ScratchTextView) view.findViewById(R.id.gpa_guaguaka);
         sur = (TextView) view.findViewById(R.id.surprise);
-        SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-        editor.putString("gpa", String.valueOf(getGPA()));
-        editor.apply();
-        scratchTextView.setText(getString(R.string.this_term_gpa)+ getGPA());
+
+        double gpa = getGPANew();
+        String gpaString = "未计算";
+        if(gpa == -1){
+            gpaString = "计算错误，某些成绩信息有误";
+        }else{
+            gpaString = String.valueOf(gpa);
+        }
+
+        scratchTextView.setText(getString(R.string.this_term_gpa)+ gpaString);
         scratchTextView.setRevealListener(new ScratchTextView.IRevealListener() {
             @Override
             public void onRevealed(ScratchTextView tv) {
@@ -239,48 +229,87 @@ public class ScoreActiviy extends TustBaseActivity {
         builder.show();
     }
 
-    private double getGPA() {
+
+    private double getGPANew(){
+        ScoreInfoHelper scoreInfoHelper = DataSupport.findLast(ScoreInfoHelper.class);
+        if(scoreInfoHelper == null){
+            return 0;
+        }
+        mScoreFromDB = DataSupport.where("termInfo = ?",scoreInfoHelper.getTermInfo()).find(ScoreInfoHelper.class);
+
+        double scoreSum = 0;
+        double gradePointSum = 0;
         try {
-            mscore_infos = DataSupport.findAll(ScoreInfo.class);
-            for(ScoreInfo score:mscore_infos){
-                if(score.getType().equals("THIS")){
-                    mLastScore_infos.add(score);
+            for(ScoreInfoHelper score:mScoreFromDB){
+                //Log.d("测试",score.toString());
+                //获取绩点和学分绩字符串
+                String creditString = score.getCredit();
+                String gradePointScoreString = score.getGradePointScore();
+                if(creditString == null){
+                   throw new NumberFormatException();
                 }
-            }
-            for(int i = 0;i<mLastScore_infos.size();i++){
-                if(mLastScore_infos.get(i).getScore().contains(getString(R.string.f1))){
-                    score += 4.5*Double.parseDouble(mLastScore_infos.get(i).getCredit());
-                    credit_add+=Double.parseDouble(mLastScore_infos.get(i).getCredit());
-                }else if(mLastScore_infos.get(i).getScore().contains(getString(R.string.f2))){
-                    score += 3.5*Double.parseDouble(mLastScore_infos.get(i).getCredit());
-                    credit_add+=Double.parseDouble(mLastScore_infos.get(i).getCredit());
-                }else if(mLastScore_infos.get(i).getScore().contains(getString(R.string.f3))){
-                    score += 2.5*Double.parseDouble(mLastScore_infos.get(i).getCredit());
-                    credit_add+=Double.parseDouble(mLastScore_infos.get(i).getCredit());
-                }else if(mLastScore_infos.get(i).getScore().equals(getString(R.string.f4))){
-                    score += 1.5*Double.parseDouble(mLastScore_infos.get(i).getCredit());
-                    credit_add+=Double.parseDouble(mLastScore_infos.get(i).getCredit());
-                }else if(mLastScore_infos.get(i).getScore().equals(getString(R.string.f5))){
-                    score += 0*Double.parseDouble(mLastScore_infos.get(i).getCredit());
-                    credit_add+=Double.parseDouble(mLastScore_infos.get(i).getCredit());
-                }else{
-                    score += (Double.parseDouble(mLastScore_infos.get(i).getScore())-50)/10
-                            *Double.parseDouble(mLastScore_infos.get(i).getCredit());
-                    credit_add+=Double.parseDouble(mLastScore_infos.get(i).getCredit());
+                if(gradePointScoreString.equals("null")){
+                    //手动计算学分绩
+                    gradePointScoreString = String.valueOf((Double.parseDouble(score.getCj()) - 50) / 10);
                 }
+                //强转
+                double credit = Double.parseDouble(creditString);
+                double gradePointScore = Double.parseDouble(gradePointScoreString);
+                //计算
+                gradePointSum = gradePointSum + (credit * gradePointScore);
+                scoreSum = scoreSum + credit;
             }
         } catch (NumberFormatException e) {
+            scoreSum = -1;  //计算异常
             e.printStackTrace();
-            Toast.makeText(ScoreActiviy.this,"出了一些不可描述的错误",Toast.LENGTH_SHORT).show();
         }
-        return score/credit_add;
+        //返回绩点
+        try {
+            return (gradePointSum / scoreSum) < 0 ? -1 : (gradePointSum / scoreSum);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.score_menu,menu);
-        return true;
-    }
+
+//    private double getGPA() {
+//        try {
+//            mscore_infos = DataSupport.findAll(ScoreInfo.class);
+//            for(ScoreInfo score:mscore_infos){
+//                if(score.getType().equals("THIS")){
+//                    mLastScore_infos.add(score);
+//                }
+//            }
+//            for(int i = 0;i<mLastScore_infos.size();i++){
+//                if(mLastScore_infos.get(i).getScore().contains(getString(R.string.f1))){
+//                    score += 4.5*Double.parseDouble(mLastScore_infos.get(i).getCredit());
+//                    credit_add+=Double.parseDouble(mLastScore_infos.get(i).getCredit());
+//                }else if(mLastScore_infos.get(i).getScore().contains(getString(R.string.f2))){
+//                    score += 3.5*Double.parseDouble(mLastScore_infos.get(i).getCredit());
+//                    credit_add+=Double.parseDouble(mLastScore_infos.get(i).getCredit());
+//                }else if(mLastScore_infos.get(i).getScore().contains(getString(R.string.f3))){
+//                    score += 2.5*Double.parseDouble(mLastScore_infos.get(i).getCredit());
+//                    credit_add+=Double.parseDouble(mLastScore_infos.get(i).getCredit());
+//                }else if(mLastScore_infos.get(i).getScore().equals(getString(R.string.f4))){
+//                    score += 1.5*Double.parseDouble(mLastScore_infos.get(i).getCredit());
+//                    credit_add+=Double.parseDouble(mLastScore_infos.get(i).getCredit());
+//                }else if(mLastScore_infos.get(i).getScore().equals(getString(R.string.f5))){
+//                    score += 0*Double.parseDouble(mLastScore_infos.get(i).getCredit());
+//                    credit_add+=Double.parseDouble(mLastScore_infos.get(i).getCredit());
+//                }else{
+//                    score += (Double.parseDouble(mLastScore_infos.get(i).getScore())-50)/10
+//                            *Double.parseDouble(mLastScore_infos.get(i).getCredit());
+//                    credit_add+=Double.parseDouble(mLastScore_infos.get(i).getCredit());
+//                }
+//            }
+//        } catch (NumberFormatException e) {
+//            e.printStackTrace();
+//            Toast.makeText(ScoreActiviy.this,"出了一些不可描述的错误",Toast.LENGTH_SHORT).show();
+//        }
+//        return score/credit_add;
+//    }
+
 
 
 }

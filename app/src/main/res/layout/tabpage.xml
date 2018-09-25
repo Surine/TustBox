@@ -2,14 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="@color/Tust_White"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/Tust_Black"
+        android:layout_height="45dp"
+        app:tabIndicatorHeight="0dp"
+        app:tabSelectedTextColor="@color/colorAccent"
         android:background="@color/colorPrimary"
         />
 

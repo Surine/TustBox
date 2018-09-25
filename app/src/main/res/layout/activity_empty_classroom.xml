@@ -1,48 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<RelativeLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/Tust_White"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar" />
-    <ScrollView android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/Tust_BACK"
-        >
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:background="@color/Tust_White"
-                android:layout_height="120dp">
-                <ImageView
-                    android:id="@+id/timg"
-                    android:layout_marginEnd="@dimen/empty_classroom_text_padding"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:src="@drawable/timg" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toLeftOf="@id/timg"
-                    android:contentDescription="@string/common_google_play_services_unsupported_text"
-                    android:gravity="center"
-                    android:id="@+id/empty_class_room_title"
-                    android:text="@string/empty_classroom_title"
-                    android:textAllCaps="true"
-                    android:textColor="@color/Tust_1"
-                    android:textSize="18sp" />
-
-
-            </RelativeLayout>
-
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:id="@+id/list"
+            android:layout_below="@id/toolbar"
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,7 +32,7 @@
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/empty_classroom_text_padding"
                     android:textColor="@color/Tust_Black"
-                    android:text="选择校区" />
+                    android:text="点此选择校区" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -79,7 +51,7 @@
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/empty_classroom_text_padding"
                     android:textColor="@color/Tust_Black"
-                    android:text="选择周" />
+                    android:text="点此选择周" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,7 +70,7 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:paddingStart="@dimen/empty_classroom_text_padding"
                     android:textColor="@color/Tust_Black"
-                    android:text="选择星期" />
+                    android:text="点此选择星期" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -117,37 +89,44 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:paddingStart="@dimen/empty_classroom_text_padding"
                     android:textColor="@color/Tust_Black"
-                    android:text="选择节次" />
+                    android:text="点此选择节次" />
             </LinearLayout>
 
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="20dp"
-                android:text="智能预测填写" />
 
-            <Button
-                android:id="@+id/button12"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="查询" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingEnd="@dimen/empty_classroom_text_padding_10dp"
-                android:paddingStart="@dimen/empty_classroom_text_padding_10dp"
-                android:text="@string/empty_classroom_notice"
-                android:textAlignment="viewStart" />
         </LinearLayout>
-     
-    </ScrollView>
 
-</LinearLayout>
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/button12"
+        android:layout_alignStart="@+id/toolbar"
+        android:layout_gravity="end"
+        android:layout_marginStart="8dp"
+        android:text="智能预测填写" />
+        <Button
+            android:id="@+id/button12"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_below="@id/list"
+            android:layout_marginEnd="20dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/school_shape2"
+            android:text="查询"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/Tust_White" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="12dp"
+        android:textSize="10sp"
+        android:text="Tip:不会使用请点击右上角详情按钮" />
+
+</RelativeLayout>
+
+

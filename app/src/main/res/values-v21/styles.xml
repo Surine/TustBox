@@ -15,22 +15,21 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="ToolbarTitle">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/Tust_Black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
-    <!--构建两套主题，日间和夜间-->
-    <!--<style name="BaseAPPLight" parent="AppTheme">-->
-      <!--<item name="android:background">@android:color/transparent</item>-->
-      <!--<item name="android:windowIsTranslucent">true</item>-->
-      <!--<item name="android:windowBackground">@android:color/transparent</item>-->
-      <!--<item name="android:textColor">@android:color/black</item>-->
-    <!--</style>-->
+    <style name="ToolbarTitleWhite">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/Tust_White</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
-    <!--<style name="BaseAPPDark" parent="AppTheme">-->
-        <!--<item name="colorPrimary">@color/colorPrimaryNight</item>-->
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDarkNight</item>-->
-        <!--<item name="colorAccent">@color/colorAccentNight</item>-->
-        <!--<item name="android:background"></item>-->
-        <!--&lt;!&ndash;<item name="android:windowIsTranslucent">true</item>&ndash;&gt;-->
-        <!--&lt;!&ndash;<item name="android:windowBackground">@android:color/transparent</item>&ndash;&gt;-->
-        <!--<item name="android:textColor">@android:color/white</item>-->
-    <!--</style>-->
+    <style name="tabTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/colorPrimary2</item>
+    </style>
+
 </resources>

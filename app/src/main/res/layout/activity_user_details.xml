@@ -55,7 +55,8 @@ tools:context="com.surine.tustbox.UI.TodayCardActivity">
                 android:layout_width="match_parent"
                 android:layout_height="85dp"
                 android:layout_alignParentBottom="true"
-                android:background="@color/Tust_White">
+                android:background="@color/Tust_White"
+                android:id="@+id/relativeLayout2">
 
 
                 <TextView
@@ -89,13 +90,13 @@ tools:context="com.surine.tustbox.UI.TodayCardActivity">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/head_from_server"
                 android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_above="@+id/relativeLayout2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="11dp"
                 android:elevation="1dp"
                 android:transitionName="head"
-                android:layout_height="70dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="17dp"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"/>
+                app:layout_scrollFlags="scroll|exitUntilCollapsed" />
 
         </RelativeLayout>
         <android.support.v7.widget.Toolbar
@@ -103,6 +104,9 @@ tools:context="com.surine.tustbox.UI.TodayCardActivity">
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_collapseMode="pin"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     </android.support.design.widget.CollapsingToolbarLayout>
@@ -113,17 +117,17 @@ tools:context="com.surine.tustbox.UI.TodayCardActivity">
         android:layout_alignParentStart="true"
         android:layout_below="@+id/toolbar"
         android:background="@color/Tust_White"
+        app:tabIndicatorHeight="0dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:tabGravity="center"
-        app:tabSelectedTextColor="@color/Tust_Black"
-        app:tabTextColor="@color/Tust_Grey"/>
+        app:tabSelectedTextColor="@color/colorPrimary2"
+        app:tabTextColor="@color/Tust_Black"/>
 </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
+        android:background="@color/Tust_White"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 

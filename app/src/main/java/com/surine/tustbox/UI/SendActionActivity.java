@@ -1,11 +1,12 @@
 package com.surine.tustbox.UI;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -42,11 +44,13 @@ import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.surine.tustbox.Adapter.Recycleview.ImageChooseAdapter;
+import com.surine.tustbox.Bean.Subject;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
-import com.surine.tustbox.Eventbus.SimpleEvent;
+import com.surine.tustbox.Bean.EventBusBean.SimpleEvent;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
+import com.surine.tustbox.Util.GsonUtil;
 import com.surine.tustbox.Util.HttpUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
 
@@ -57,6 +61,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -114,7 +119,7 @@ public class SendActionActivity extends TustBaseActivity implements TakePhoto.Ta
     private StringBuilder ids;
     private String Content;  //文本内容
     private Context context;
-    private String topic = null;
+    private String topic = "";
 
 
     @Override
@@ -128,15 +133,10 @@ public class SendActionActivity extends TustBaseActivity implements TakePhoto.Ta
         //设置toolbar颜色
         // SystemUI.color_toolbar(this,getSupportActionBar());
         setTitle(getString(R.string.send_status));
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        mToolbar.setTitleTextAppearance(context,R.style.ToolbarTitle);
+
         topic = getIntent().getStringExtra(FormData.messages_topic);
-        //TODO:默认话题
-        if (topic == null) {
-            topic = "#校园";
-        }
+
         topicShow.setText(topic);
         mEdit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -181,13 +181,18 @@ public class SendActionActivity extends TustBaseActivity implements TakePhoto.Ta
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish_save();
-                break;
-        }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.exit_menu, menu);
         return true;
+    }
+
+    //set the back button listener
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.exit) {
+            finish_save();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -207,9 +212,19 @@ public class SendActionActivity extends TustBaseActivity implements TakePhoto.Ta
         //延时结束
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                finish();
+                finishWithAnimation();
             }
         }, 300);
+    }
+
+
+
+    private void finishWithAnimation() {
+        Intent intent = new Intent(context, MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.task_enter_anim,
+                R.anim.task_exit_anim);
+        finish();
     }
 
     @OnClick({R.id.toolbar_send, R.id.takePicture, R.id.send_button})
@@ -233,8 +248,6 @@ public class SendActionActivity extends TustBaseActivity implements TakePhoto.Ta
                 } else {
                     picNumToQiniu = 0;
                     //准备发送
-                    //获取七牛上传token
-                    Toast.makeText(this, R.string.SendActionActivityUploading, Toast.LENGTH_SHORT).show();
                     startGetToken();
                 }
                 break;
@@ -272,7 +285,6 @@ public class SendActionActivity extends TustBaseActivity implements TakePhoto.Ta
                                         //TODO：图片压缩
                                         //TODO：多线程发送
                                         //七牛上传服务
-                                        Toast.makeText(SendActionActivity.this, "正在发送第" + (qiniupics + 1) + "张图片……", Toast.LENGTH_SHORT).show();
                                         uploadManager.put(new File(data.get(qiniupics)), buildFileUrl(context, data.get(qiniupics)), tokenFromServer,
                                                 new UpCompletionHandler() {
                                                     @Override
@@ -332,14 +344,23 @@ public class SendActionActivity extends TustBaseActivity implements TakePhoto.Ta
                 return;
             }
             ids.append("");
+            if(topic == null || topic.equals("")){
+                showTopic();
+            }else if(topic != null && !topic.equals("")){
+                startSend();
+            }
         }
 
+    }
+
+    public void startSend(){
 
         String Token = SharedPreferencesUtil.Read_safe(SendActionActivity.this, "TOKEN", "");
         String Tust_number = SharedPreferencesUtil.Read(SendActionActivity.this, "tust_number", "000000");
 
         String ip = HttpUtil.getIPAddress(SendActionActivity.this);
         String device = Build.BRAND + "-" + Build.MODEL;
+
 
         FormBody formbody = new FormBody.Builder()
                 .add(FormData.token, Token)
@@ -390,6 +411,63 @@ public class SendActionActivity extends TustBaseActivity implements TakePhoto.Ta
                         }
                     }
                 });
+            }
+        });
+    }
+
+    //显示话题
+    private void showTopic() {
+        HttpUtil.get(UrlData.getSubjectList).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String x = response.body().string();
+                Log.d("SSS",x);
+                try {
+                    JSONObject jsonObject = new JSONObject(x);
+                    if(jsonObject.getInt(FormData.JCODE) == 2000){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                            //获取主题数据
+                            String s = null;
+                            try {
+                                s = new JSONObject(x).getString(FormData.JDATA);
+                            } catch (JSONException e) {
+                                return;
+                            }
+                            List<Subject> subjects = GsonUtil.parseJsonWithGsonToList(s, Subject.class);
+                            final String[] items = new String[subjects.size()];
+                            for (int i = 0;i < subjects.size();i++) {
+                                items[i] = subjects.get(i).getSubject_name();
+                            }
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("请选择话题");
+                            builder.setItems(items, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    topic = items[which];
+                                    topicShow.setText(topic);
+                                }
+                            }).show();
+                            }
+                        });
+
+                    }else{
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(context, R.string.server_error, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

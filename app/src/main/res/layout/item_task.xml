@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+  <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="50dp"
+      android:layout_marginStart="10dp"
+      android:paddingBottom="5dp"
+      android:layout_height="match_parent">
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="2"
+          android:text="26"
+          android:id="@+id/day"
+          android:paddingTop="5dp"
+          android:gravity="center"
+          android:textColor="@color/colorPrimary2"
+          android:textSize="30sp"
+          />
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:text="七月"
+          android:id="@+id/month"
+          android:gravity="center"
+          android:layout_weight="1"/>
+  </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="15dp"
+        android:id="@+id/task_card"
+        app:cardElevation="1dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="5dp">
+
+        <RelativeLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:id="@+id/backRelative"
+            android:transitionName="backRelative"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/task_color"
+                android:background="@color/Tust_RED"
+                />
+            <TextView
+                android:id="@+id/task_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/Tust_White"
+                android:layout_marginStart="20dp"
+                android:text="名称" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/task_name"
+                android:layout_below="@+id/task_name"
+                android:text="时间"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/Tust_White"
+                android:textSize="10sp"
+                android:id="@+id/task_time" />
+
+            <TextView
+                android:id="@+id/task_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/task_time"
+                android:layout_alignTop="@+id/task_time"
+                android:text="地点"
+                android:layout_marginStart="5dp"
+                android:layout_toRightOf="@id/task_time"
+                android:textColor="@color/Tust_White"
+                android:textSize="10sp" />
+            <ImageView
+                android:id="@+id/task_icon"
+                android:layout_marginEnd="10dp"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+            />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

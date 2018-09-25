@@ -14,12 +14,10 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.surine.tustbox.Adapter.Recycleview.LoveAdapter;
-import com.surine.tustbox.Bean.Comment;
 import com.surine.tustbox.Bean.Love;
-import com.surine.tustbox.Bean.User;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
-import com.surine.tustbox.Eventbus.SimpleEvent;
+import com.surine.tustbox.Bean.EventBusBean.SimpleEvent;
 import com.surine.tustbox.R;
 import com.surine.tustbox.UI.UserInfoActivity;
 import com.surine.tustbox.Util.GsonUtil;
@@ -34,7 +32,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,8 +41,8 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static com.surine.tustbox.Fragment.PageFragment.ThirdPageFragment.DOWNTOREFRESH;
-import static com.surine.tustbox.Fragment.PageFragment.ThirdPageFragment.UPTOREFRESH;
+import static com.surine.tustbox.Fragment.PageFragment.SchoolPageFragment.DOWNTOREFRESH;
+import static com.surine.tustbox.Fragment.PageFragment.SchoolPageFragment.UPTOREFRESH;
 
 /**
  * Created by Surine on 2018/2/23.
