@@ -1,9 +1,15 @@
 package com.surine.tustbox.Util;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.StrictMode;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by surine on 2017/4/22.
@@ -60,4 +66,60 @@ public class IOUtil {
     }
 
 
+    public static void openFile(String filePath, String fileType, Context context) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        // 判断版本大于等于7.0
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+        }
+        Uri data = Uri.fromFile(new File(filePath));
+        intent.setDataAndType(data, getMap(fileType));
+        //Toast.makeText(context, "uri:" + data.toString(), Toast.LENGTH_SHORT).show();
+        context.startActivity(intent);
+    }
+
+    private static String getMap(String key) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("rar", "application/x-rar-compressed");
+        map.put("jpg", "image/jpeg");
+        map.put("zip", "application/zip");
+        map.put("pdf", "application/pdf");
+        map.put("doc", "application/msword");
+        map.put("docx", "application/msword");
+        map.put("wps", "application/msword");
+        map.put("xls", "application/vnd.ms-excel");
+        map.put("et", "application/vnd.ms-excel");
+        map.put("xlsx", "application/vnd.ms-excel");
+        map.put("ppt", "application/vnd.ms-powerpoint");
+        map.put("html", "text/html");
+        map.put("htm", "text/html");
+        map.put("txt", "text/html");
+        map.put("mp3", "audio/mpeg");
+        map.put("mp4", "video/mp4");
+        map.put("mp4","video/rmvb");
+        map.put("3gp", "video/3gpp");
+        map.put("wav", "audio/x-wav");
+        map.put("avi", "video/x-msvideo");
+        map.put("flv", "flv-application/octet-stream");
+        map.put("", "*/*");
+
+        return map.get(key.toLowerCase());
+    }
+
+
+    /**判断是否是Video
+    * @param fileName 文件名
+    * */
+    public static boolean isVideo(String fileName) {
+        fileName = fileName.toLowerCase();
+        if(fileName.endsWith(".mp4")
+                || fileName.endsWith(".avi")
+                || fileName.endsWith(".mov")
+                || fileName.endsWith("mpeg")
+                || fileName.endsWith(".mkv")){
+            return true;
+        }
+        return false;
+    }
 }

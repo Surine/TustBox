@@ -87,7 +87,7 @@ public class Set_BackgroundFragment extends TakePhotoFragment {
             public void onClick(View view) {
                 String cachePath2 =  getActivity().getCacheDir().getPath();
                 IOUtil.delAllFile(cachePath2,getActivity());
-                SharedPreferencesUtil.Save(getActivity(), "TOOLBAR_C", R.color.colorPrimary);
+                SharedPreferencesUtil.save(getActivity(), "TOOLBAR_C", R.color.colorPrimary);
                 restartMethod();
             }
         });

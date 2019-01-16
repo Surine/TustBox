@@ -84,7 +84,7 @@ public class LoveFragment extends Fragment {
         adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         recycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycleview.setAdapter(adapter);
-        View noView = getActivity().getLayoutInflater().inflate(R.layout.view_empty_action, (ViewGroup) recycleview.getParent(), false);
+        View noView = getActivity().getLayoutInflater().inflate(R.layout.view_empty_2, (ViewGroup) recycleview.getParent(), false);
         adapter.setEmptyView(noView);
         //初始化加载最新数据
         initServerData(DOWNTOREFRESH,1);

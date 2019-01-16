@@ -2,14 +2,11 @@ package com.surine.tustbox.Mvp.splash;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.widget.Toast;
 
 import com.surine.tustbox.Bean.JwcUserInfo;
 import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.Mvp.base.BaseCallBack;
-import com.surine.tustbox.R;
-import com.surine.tustbox.UI.SplashActivity;
 import com.surine.tustbox.Util.HttpUtil;
 import com.surine.tustbox.Util.LogUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
@@ -162,7 +159,7 @@ public class SplashImpl implements SplashModel {
                 }
                 //如果返回的值不是0，那么代表从服务器获取到当前周的值了，储存之后并跳转
                 if(week_from_server != 0){
-                    SharedPreferencesUtil.Save(context, CHOOSE_WEEK, week_from_server);
+                    SharedPreferencesUtil.save(context, CHOOSE_WEEK, week_from_server);
                 }
                 baseCallBack.onSuccess("");
             }

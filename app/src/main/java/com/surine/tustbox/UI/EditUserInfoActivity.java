@@ -65,6 +65,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static com.surine.tustbox.Data.FormData.face_server;
 import static com.surine.tustbox.Util.UploadQiniuService.buildFileHeadUrl;
 
 public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.TakeResultListener, InvokeListener {
@@ -112,7 +113,10 @@ public class EditUserInfoActivity extends TustBaseActivity implements TakePhoto.
         setContentView(R.layout.activity_edit_user_info);
         ButterKnife.bind(this);
         context = this;
-        Glide.with(this).load(getIntent().getStringExtra(FormData.face_server)).placeholder(R.drawable.school_shape).into(editHead);
+        String face = SharedPreferencesUtil.Read_safe(context,face_server,null);
+        if(face != null){
+            Glide.with(this).load(face).placeholder(R.drawable.school_shape).into(editHead);
+        }
         //设置toolbar
         setSupportActionBar(toolbar);
         setTitle("修改");

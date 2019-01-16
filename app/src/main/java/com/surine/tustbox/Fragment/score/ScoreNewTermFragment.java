@@ -314,6 +314,9 @@ public class ScoreNewTermFragment extends Fragment {
 
 
                } catch (JSONException e) {
+                   if(loadingText == null){
+                       return;
+                   }
                    loadingText.setClickable(true);
                    loadingText.setText("解析失败！点我重试");
                     e.printStackTrace();

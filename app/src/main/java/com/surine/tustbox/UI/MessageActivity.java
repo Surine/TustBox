@@ -103,6 +103,7 @@ public class MessageActivity extends TustBaseActivity {
             }
         });
         initServerData(DOWNTOREFRESH,1);
+        adapter.setEmptyView(R.layout.view_empty_2,recycleview);
     }
 
     private void Read() {
@@ -134,13 +135,6 @@ public class MessageActivity extends TustBaseActivity {
                             }
                         });
 
-                    }else{
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(context, R.string.server_error, Toast.LENGTH_SHORT).show();
-                            }
-                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

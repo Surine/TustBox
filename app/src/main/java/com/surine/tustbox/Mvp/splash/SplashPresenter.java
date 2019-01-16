@@ -78,6 +78,7 @@ public class SplashPresenter extends BasePresenter<SplashView> {
                    }else if(msg.equals(ERROR_PSWD)){
                        //帐号密码错误
                        getView().showToast(r.getString(R.string.failtologinpswderror));
+                       getView().intentMain();
                    }
                }
             }

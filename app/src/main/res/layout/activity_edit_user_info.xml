@@ -130,7 +130,7 @@
         android:layout_marginStart="20dp"
         android:id="@+id/exit"
         android:layout_marginTop="30dp"
-        android:background="@drawable/school_shape2"
+        android:background="@drawable/btn_login_corner_blue"
         android:text="退出登录"
         android:textColor="@color/Tust_White" />
 </LinearLayout>

@@ -25,6 +25,8 @@ import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.R;
 import com.surine.tustbox.UI.EmptyClassRoomActivity;
 import com.surine.tustbox.UI.NetWorkActivity;
+import com.surine.tustbox.UI.PanActivity;
+import com.surine.tustbox.UI.PanLoginActivity;
 import com.surine.tustbox.UI.ScoreActiviy;
 
 import java.util.ArrayList;
@@ -148,9 +150,11 @@ public class FunctionPageFragment extends Fragment {
         Box net = new Box(R.drawable.ic_action_network, "网络", null, R.color.colorPrimary);
         //空教室
         Box emptyClassRoom = new Box(R.drawable.ic_action_empty_classroom, "空教室", null, R.color.Tust_more_color_1);
+        Box pan = new Box(R.drawable.ic_action_empty_classroom, "云盘", null, R.color.Tust_more_color_1);
         mboxs.add(score);
         mboxs.add(net);
         mboxs.add(emptyClassRoom);
+        mboxs.add(pan);
     }
 
 
@@ -176,6 +180,10 @@ public class FunctionPageFragment extends Fragment {
                     case 2:
                         //空教室页面
                         intent.setClass(getActivity(), EmptyClassRoomActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 3:
+                        intent.setClass(getActivity(), PanLoginActivity.class);
                         startActivity(intent);
                         break;
                 }

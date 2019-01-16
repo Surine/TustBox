@@ -27,7 +27,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
     private Preference About;
     private Preference clear_cache;
     private SwitchPreference picCrop;
-
+    private SwitchPreference widget_image_button;
     private Preference qq;
     private Preference bug;
     private Preference alipay;
@@ -46,6 +46,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         About.setOnPreferenceClickListener(this);
         clear_cache.setOnPreferenceClickListener(this);
         picCrop.setOnPreferenceClickListener(this);
+        widget_image_button.setOnPreferenceClickListener(this);
         qq.setOnPreferenceClickListener(this);
         bug.setOnPreferenceClickListener(this);
         alipay.setOnPreferenceClickListener(this);
@@ -60,6 +61,7 @@ public class SettingFragment extends PreferenceFragment implements Preference.On
         Setting_back = findPreference("setting_back");
         Setting_back = findPreference("setting_back");
         picCrop = (SwitchPreference) findPreference("pic_crop");
+        widget_image_button = (SwitchPreference) findPreference("widget_image_button");
         qq = findPreference("qq");
         bug = findPreference("bug");
         alipay = findPreference("alipay");

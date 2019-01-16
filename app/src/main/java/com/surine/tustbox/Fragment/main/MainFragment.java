@@ -25,6 +25,7 @@ import com.surine.tustbox.Fragment.PageFragment.TaskPageFragment;
 import com.surine.tustbox.Fragment.PageFragment.SchoolPageFragment;
 import com.surine.tustbox.R;
 import com.surine.tustbox.UI.AddTaskActivity;
+import com.surine.tustbox.UI.DownloadPageActivity;
 import com.surine.tustbox.UI.SchZoneActivity;
 import com.surine.tustbox.UI.SendActionActivity;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
@@ -146,7 +147,7 @@ public class MainFragment extends Fragment {
                         fab.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
+                                 startDownloadPage();
                             }
                         });
                         break;
@@ -167,6 +168,10 @@ public class MainFragment extends Fragment {
             public void onPageScrollStateChanged(int state) {
             }
         });
+    }
+
+    private void startDownloadPage() {
+
     }
 
     private void startSendAction() {

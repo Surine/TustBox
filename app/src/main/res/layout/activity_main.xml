@@ -63,7 +63,6 @@
              android:transitionName="mainEdit"
              app:backgroundTint="@color/colorPrimary2"
              app:elevation="1dp"
-             app:layout_behavior="com.surine.tustbox.View.FabBehavior"
              app:srcCompat="@drawable/ic_edit_white_24dp" />
      </android.support.design.widget.CoordinatorLayout>
 </FrameLayout>

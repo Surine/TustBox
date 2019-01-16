@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import com.surine.tustbox.Data.UrlData;
 import com.surine.tustbox.Bean.EventBusBean.Net_EventBus;
 import com.surine.tustbox.Fragment.network.Fragment_charge;
 import com.surine.tustbox.Fragment.network.Fragment_login;
-import com.surine.tustbox.Init.SystemUI;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
 import com.surine.tustbox.Util.CheckWifi_then_login_util;
@@ -88,8 +86,8 @@ public class NetWorkActivity extends TustBaseActivity {
                     ShowLoginDialog();
                 }else{
                     //储存已经登陆的数据
-                    SharedPreferencesUtil.Save(NetWorkActivity.this,"TUST_PSWD_NETWORK", EncryptionUtil.base64_en(pswd.getText().toString()));
-                    SharedPreferencesUtil.Save(NetWorkActivity.this,"TUST_NUMBER_NETWORK",number.getText().toString());
+                    SharedPreferencesUtil.save(NetWorkActivity.this,"TUST_PSWD_NETWORK", EncryptionUtil.base64_en(pswd.getText().toString()));
+                    SharedPreferencesUtil.save(NetWorkActivity.this,"TUST_NUMBER_NETWORK",number.getText().toString());
 
                     Log_net();
                 }
@@ -129,7 +127,7 @@ public class NetWorkActivity extends TustBaseActivity {
                         if(s.contains(FormData.Drcom_pc_Login_success)){
                             //成功
                             Toast.makeText(NetWorkActivity.this,R.string.login_success,Toast.LENGTH_SHORT).show();
-                            SharedPreferencesUtil.Save(NetWorkActivity.this,"IS_LOGIN_NETWORK",true);
+                            SharedPreferencesUtil.save(NetWorkActivity.this,"IS_LOGIN_NETWORK",true);
                             setTitle(R.string.school_network);
                             LoadInfo();
                         }else{

@@ -421,17 +421,6 @@ public class SchoolPageFragment extends Fragment {
                                 adapter.notifyItemChanged(postion);
                             }
                         });
-                    }else{
-                        if(getActivity() == null){
-                            return;
-                        }
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //其他错误
-                                Toast.makeText(getActivity(), R.string.server_error, Toast.LENGTH_SHORT).show();
-                            }
-                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -462,7 +451,6 @@ public class SchoolPageFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getActivity(), R.string.network_no_connect, Toast.LENGTH_SHORT).show();
                         srl.setRefreshing(false);
                     }
                 });

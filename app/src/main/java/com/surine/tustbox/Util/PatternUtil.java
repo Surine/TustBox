@@ -26,4 +26,17 @@ public class PatternUtil {
         return list;
     }
 
+    /**
+     * @param text n个文本
+     * @return true 文本正常，false文本为空或W者""
+     * */
+    public static final boolean Wow(String... text){
+        for (int i = 0; i < text.length; i++) {
+            if(text[i] == null || text[i].isEmpty()){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

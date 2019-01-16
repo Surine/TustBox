@@ -61,9 +61,9 @@ public class Fragment_login extends Fragment {
        clear.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               SharedPreferencesUtil.Save(getActivity(),"IS_LOGIN_NETWORK",false);
-               SharedPreferencesUtil.Save(getActivity(),"TUST_PSWD_NETWORK", "");
-               SharedPreferencesUtil.Save(getActivity(),"TUST_NUMBER_NETWORK","");
+               SharedPreferencesUtil.save(getActivity(),"IS_LOGIN_NETWORK",false);
+               SharedPreferencesUtil.save(getActivity(),"TUST_PSWD_NETWORK", "");
+               SharedPreferencesUtil.save(getActivity(),"TUST_NUMBER_NETWORK","");
                Toast.makeText(getActivity(),R.string.clear_success,Toast.LENGTH_SHORT).show();
                getActivity().finish();
            }

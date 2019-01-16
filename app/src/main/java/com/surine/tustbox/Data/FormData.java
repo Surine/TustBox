@@ -8,16 +8,17 @@ package com.surine.tustbox.Data;
 public class FormData {
 
 
- public static final String JCODE = "jcode";
- public static final String JDATA = "jdata";
- public static final String POSITION = "POSITION";
- public static final String TOKEN = "TOKEN";
- public static final String USER_TYPE = "user_type";
- public static final String pswd = "pswd";
- public static final String CREATE = "CREATE";
+   public static final String JCODE = "jcode";
+   public static final String JDATA = "jdata";
+   public static final String POSITION = "POSITION";
+   public static final String TOKEN = "TOKEN";
+   public static final String USER_TYPE = "user_type";
+   public static final String pswd = "pswd";
+   public static final String CREATE = "CREATE";
+   public static final String USERID = "USERID";
 
 
- //请求登陆教务处的账号和密码（启动APP登陆页）
+   //请求登陆教务处的账号和密码（启动APP登陆页）
    public static final String login_id = "IDToken1";
    public static final String login_pswd = "IDToken2";
    public static final String login_id_new = "j_username";
@@ -81,4 +82,25 @@ public class FormData {
 
     //课表云备份
     public static final String VALUE = "value";
+
+
+    //语言字段
+    public static final String LOCALE_DATA = "zh_CN";
+    //设置Cookie
+    public static final String SET_COOKIE = "Set-Cookie";
+    //UA及默认UA
+    public static final String UA = "User-Agent";
+    public static final String NORMAL_UA = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.79 Safari/537.36";
+    //CT及默认CT
+    public static final String CT = "Content-Type";
+    public static final String NORMAL_CT = "application/x-www-form-urlencoded";
+
+
+    //video intent flag
+    public static final String VIDEO_URL = "VIDEO_URL";
+    public static final String VIDEO_NAME = "VIDEO_NAME";
+
+
+    //认证时间
+    public static final String AUTHTIME = "AUTH_TIME";
 }

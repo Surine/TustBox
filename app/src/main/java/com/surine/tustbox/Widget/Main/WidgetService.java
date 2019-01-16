@@ -4,7 +4,15 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.media.Image;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import android.widget.Toast;
@@ -65,7 +73,13 @@ public class WidgetService extends RemoteViewsService {
             // 设置 第position位的“视图”的数据
             CourseInfoHelper course_info = mLastList.get(position);
             if (course_info != null) {
-                rv.setImageViewResource(R.id.itemImage, (course_info.getJwColor()));
+
+//                GradientDrawable drawable = new GradientDrawable();
+//                drawable.setColor(course_info.getJwColor());
+//                drawable.setCornerRadius(10);
+
+                rv.setImageViewResource(R.id.itemImage,course_info.getJwColor());
+               // rv.setImageViewBitmap(R.id.itemImage,bm);
                 rv.setTextViewText(R.id.itemText, course_info.getCourseName());
                 rv.setTextViewText(R.id.widget_loca_text, "@"+course_info.getTeachingBuildingName()+course_info.getClassroomName());
             }else{

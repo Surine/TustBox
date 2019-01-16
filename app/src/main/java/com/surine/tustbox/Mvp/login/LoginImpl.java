@@ -80,10 +80,7 @@ public class LoginImpl implements LoginModel{
                 final Document doc = Jsoup.parse(str);
                 if (doc.title().equals(r.getString(R.string.manager_))){
 
-                    // 对密码编码并保存帐号密码
-                    String enToStr = EncryptionUtil.base64_en(pswd);
-                    SharedPreferencesUtil.Save(context, FormData.tust_number_server, tustNumber);
-                    SharedPreferencesUtil.Save(context, FormData.pswd, enToStr);
+                    saveUserInfo(tustNumber,pswd);
 
                     baseCallBack.onSuccess(str);
                 }else{
@@ -93,6 +90,13 @@ public class LoginImpl implements LoginModel{
             }
         });
 
+    }
+
+    private void saveUserInfo(String tustNumber, String pswd) {
+        // 对密码编码并保存帐号密码
+        String enToStr = EncryptionUtil.base64_en(pswd);
+        SharedPreferencesUtil.save(context, FormData.tust_number_server, tustNumber);
+        SharedPreferencesUtil.save(context, FormData.pswd, enToStr);
     }
 
     @Override
@@ -108,7 +112,7 @@ public class LoginImpl implements LoginModel{
                 String str = response.body().string();
 
                 //临时存储课表
-                SharedPreferencesUtil.Save(context, Constants.COURSE_DATA,str);
+                SharedPreferencesUtil.save(context, Constants.COURSE_DATA,str);
                 tag = 0; //普通教务标志
 
                 baseCallBack.onSuccess(str);
@@ -373,7 +377,7 @@ public class LoginImpl implements LoginModel{
     }
 
     @Override
-    public void getBackUp(String tustNumber,String passWord,final BaseCallBack<String> baseCallBack) {
+    public void getBackUp(final String tustNumber, final String passWord, final BaseCallBack<String> baseCallBack) {
 
         if(tustNumber.isEmpty() || passWord.isEmpty()){
             baseCallBack.onFail(r.getString(R.string.mvp_empty_field));
@@ -400,10 +404,11 @@ public class LoginImpl implements LoginModel{
                     if(jsonObject.getInt(FormData.JCODE) == 2000){
                         final String data = jsonObject.getString(FormData.JDATA);
                         final String courseStr = new JSONObject(data).getString(FormData.VALUE);
-                        SharedPreferencesUtil.Save(context,Constants.COURSE_DATA,courseStr);
+                        SharedPreferencesUtil.save(context,Constants.COURSE_DATA,courseStr);
                         Pattern r = Pattern.compile("&quot;");
                         Matcher m = r.matcher(EncryptionUtil.base64_de(courseStr));
                         tag = 1; //云备份标志
+                        saveUserInfo(tustNumber,passWord);
                         baseCallBack.onSuccess(m.replaceAll("\""));
                     }else{
                         throw new JSONException("JCODE ！= 2000");
@@ -418,12 +423,12 @@ public class LoginImpl implements LoginModel{
 
     //临时缓存
     private void saveCache(String courseName, String attendClassTeacher, String studyModeName, String unit, String programPlanName, int jwColor) {
-        SharedPreferencesUtil.Save(context,"courseName",courseName);
-        SharedPreferencesUtil.Save(context,"attendClassTeacher",attendClassTeacher);
-        SharedPreferencesUtil.Save(context,"studyModeName",studyModeName);
-        SharedPreferencesUtil.Save(context,"unit",unit);
-        SharedPreferencesUtil.Save(context,"programPlanName",programPlanName);
-        SharedPreferencesUtil.Save(context,"jwColor",jwColor);
+        SharedPreferencesUtil.save(context,"courseName",courseName);
+        SharedPreferencesUtil.save(context,"attendClassTeacher",attendClassTeacher);
+        SharedPreferencesUtil.save(context,"studyModeName",studyModeName);
+        SharedPreferencesUtil.save(context,"unit",unit);
+        SharedPreferencesUtil.save(context,"programPlanName",programPlanName);
+        SharedPreferencesUtil.save(context,"jwColor",jwColor);
     }
 
 

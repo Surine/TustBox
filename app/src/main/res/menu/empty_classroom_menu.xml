@@ -6,7 +6,7 @@
         android:title="详情"
         android:orderInCategory="10"
         app:showAsAction="always"
-        android:icon="@drawable/ic_error_outline_black_24dp"
+        android:icon="@drawable/ic_warning_black_24dp"
         />
     <item
         android:id="@+id/exit"

@@ -290,17 +290,6 @@ public class SchedulePageFragment extends Fragment {
                         @Override
                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                             super.onResourceReady(resource, glideAnimation);
-                            Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
-                                public void onGenerated(Palette p) {
-                                    Palette.Swatch vibrant = p.getVibrantSwatch();
-                                    if (vibrant != null) {
-                                        SharedPreferencesUtil.Save(getActivity(), "TOOLBAR_C", vibrant.getRgb());
-                                        EventBus.getDefault().post(new SimpleEvent(6, vibrant.getRgb() + ""));
-                                    } else {
-                                        SharedPreferencesUtil.Save(getActivity(), "TOOLBAR_C", R.color.colorPrimary);
-                                    }
-                                }
-                            });
                         }
                     });
         }

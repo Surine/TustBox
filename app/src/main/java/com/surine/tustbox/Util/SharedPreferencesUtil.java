@@ -12,17 +12,18 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class SharedPreferencesUtil {
     //储存部分重载
-    public static void Save(Context context,String key, String value){
+    public static void save(Context context, String key, String value){
         SharedPreferences.Editor editor = context.getSharedPreferences("data",MODE_PRIVATE).edit();
         editor.putString(key,value);
         editor.apply();
     }
-    public static void Save(Context context,String key, int value){
+    public static void save(Context context, String key, int value){
         SharedPreferences.Editor editor = context.getSharedPreferences("data",MODE_PRIVATE).edit();
         editor.putInt(key,value);
         editor.apply();
     }
-    public static void Save(Context context,String key, boolean value){
+
+    public static void save(Context context, String key, boolean value){
         SharedPreferences.Editor editor = context.getSharedPreferences("data",MODE_PRIVATE).edit();
         editor.putBoolean(key,value);
         editor.apply();

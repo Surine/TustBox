@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 27  //编译版本不得超过27，因为28强制使用https
-    buildToolsVersion '27.0.0'
+    compileSdkVersion 26  //编译版本要小于等于27，因为28强制使用https
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.surine.tustbox"
         minSdkVersion 21     //最低Android5.0
-        targetSdkVersion 27  //最好跟编译版本保持一致
-        versionCode 16
-        versionName "4.0.2 60周年特别纪念"
+        targetSdkVersion 26  //最好跟编译版本保持一致
+        versionCode 19   //2019年1月6日 修改
+        versionName "5.0.0 Beta1.0" //2019年1月6日修改
         testInstrumentationRunner "android.support.widget.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         aaptOptions.cruncherEnabled = false
@@ -24,37 +24,50 @@ android {
     }
 }
 
+//noinspection GradleCompatible
+
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    //noinspection GradleCompatible
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:design:25.2.0'
-    compile 'com.android.support:support-vector-drawable:25.2.0'
+    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support:support-vector-drawable:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
+    compile 'com.squareup.okhttp3:okhttp:3.10.0'
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'org.litepal.android:core:1.3.2'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:cardview-v7:25.2.0'
+    compile 'com.android.support:cardview-v7:26.1.0'
     compile 'com.google.android.gms:play-services-ads:10.2.0'
     compile 'com.github.cooltechworks:ScratchView:v1.1'
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
     compile 'com.google.code.gson:gson:2.8.1'
-    compile 'com.android.support:palette-v7:26.0.0-alpha1'
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.28'
-    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'com.android.support:palette-v7:27.1.1-alpha1'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    compile 'com.jakewharton:butterknife:8.8.1'
     testCompile 'junit:junit:4.12'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.lzy.widget:ninegridview:0.2.0'
     compile 'q.rorbin:badgeview:1.1.3'
     // compile 'com.tencent.bugly:crashreport:2.6.6'
     compile 'com.tencent.bugly:crashreport_upgrade:1.3.4'
     compile 'com.qiniu:qiniu-android-sdk:7.3.10'
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
+    implementation 'com.android.support:mediarouter-v7:26.0.1'
+    compile 'com.arialyy.aria:aria-core:3.5.2'
+    annotationProcessor 'com.arialyy.aria:aria-compiler:3.5.2'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
 
-    implementation 'com.android.support:mediarouter-v7:27.0.1'
+    implementation 'com.shuyu:gsyVideoPlayer-java:6.0.2'
+  
+
+    //根据你的需求ijk模式的so
+    implementation 'com.shuyu:gsyVideoPlayer-armv5:6.0.2'
+    implementation 'com.shuyu:gsyVideoPlayer-armv7a:6.0.2'
+    implementation 'com.shuyu:gsyVideoPlayer-arm64:6.0.2'
+    implementation 'com.shuyu:gsyVideoPlayer-x64:6.0.2'
+    implementation 'com.shuyu:gsyVideoPlayer-x86:6.0.2'
 }
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->

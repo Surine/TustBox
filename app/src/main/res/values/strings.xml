@@ -156,7 +156,7 @@
     <string name="CourseInfoFragment_load_error">未知错误！</string>
     <string name="CourseInfoFragmentsetScoreToTheCourse">为本课程评个分吧！</string>
     <string name="CourseInfoFragmentThanksToYouToSetScore">感谢您的评分！</string>
-    <string name="server_error">服务器开小差了！</string>
+
     <string name="CourseInfoFragmentSetScoreSuccess">评分成功！</string>
     <string name="CourseInfoFragmentHelpMe">求求你给我点分吧！</string>
     <string name="SendActionActivityQiniuTokenError">云存储TOKEN错误，请发送反馈给开发者</string>
@@ -247,6 +247,17 @@
     <string name="get_backUping">获取云备份中，请保持网络畅通！</string>
     <string name="null_course_or_401">云端课表不存在，或者身份认证失败！</string>
     <string name="mvp_get_cloud">获取云备份</string>
+    <string name="widget_tag">桌面小部件</string>
+    <string name="widget_back_title">桌面小部件背景</string>
+    <string name="widget_back_info">如果您不喜欢桌面小部件背景，请打开此按钮(完成后请点击小部件刷新按钮刷新小部件)</string>
+    <string name="pan_login_info">
+        云盘Token有效期默认40分钟，登录后处于非活跃状态40分钟后需要重新登录，
+        但不会影响视频播放，文件下载。\n
+    </string>
+    <string name="tustPanString">科大云盘</string>
+    <string name="tip_of_pan_search">请在目录内搜索 电影 电视剧 文件……</string>
+    <string name="panDownload">云盘下载</string>
+    <string name="search_error">查询失败，请点击进入相应目录后重试！</string>
 
 </resources>
 

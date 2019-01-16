@@ -133,7 +133,5 @@ public class Action_List_Adapter extends BaseQuickAdapter<Action, BaseViewHolder
             nineGridView.setVisibility(View.GONE);
         }
 
-
-
     }
 }

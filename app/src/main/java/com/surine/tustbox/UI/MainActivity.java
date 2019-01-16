@@ -17,10 +17,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.surine.tustbox.Data.Constants;
@@ -30,7 +28,6 @@ import com.surine.tustbox.Bean.EventBusBean.SimpleEvent;
 import com.surine.tustbox.Fragment.main.MainFragment;
 import com.surine.tustbox.Init.TustBaseActivity;
 import com.surine.tustbox.R;
-import com.surine.tustbox.Util.ClearDataUtil;
 import com.surine.tustbox.Util.HttpUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
 import com.surine.tustbox.Util.TimeUtil;
@@ -96,7 +93,7 @@ public class MainActivity extends TustBaseActivity {
         FragmentTransaction tran = getSupportFragmentManager().beginTransaction();
         tran.add(R.id.content, MainFragment.getInstance("1")).commit();
         //首次登录
-        SharedPreferencesUtil.Save(this, "is_login", true);
+        SharedPreferencesUtil.save(this, "is_login", true);
         //更新桌面小部件
         updateWidget();
         getUnReadNum();
@@ -272,7 +269,7 @@ public class MainActivity extends TustBaseActivity {
                 yourChoice = which;
                 if (yourChoice != -1) {
                     //储存，通知更新UI
-                    SharedPreferencesUtil.Save(MainActivity.this, Constants.CHOOSE_WEEK, yourChoice + 1);
+                    SharedPreferencesUtil.save(MainActivity.this, Constants.CHOOSE_WEEK, yourChoice + 1);
                     Toast.makeText(MainActivity.this, getString(R.string.choose_) + str[yourChoice], Toast.LENGTH_SHORT).show();
                     setTitle((SharedPreferencesUtil.Read(MainActivity.this, Constants.CHOOSE_WEEK, 1)) + "周");
                     updateWidget();
@@ -300,7 +297,7 @@ public class MainActivity extends TustBaseActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
             if (yourChoice != -1) {
                 //储存，通知更新UI
-                SharedPreferencesUtil.Save(MainActivity.this, Constants.CHOOSE_WEEK, yourChoice + 1);
+                SharedPreferencesUtil.save(MainActivity.this, Constants.CHOOSE_WEEK, yourChoice + 1);
                 Toast.makeText(MainActivity.this, getString(R.string.choose_) + str[yourChoice], Toast.LENGTH_SHORT).show();
                 setTitle((SharedPreferencesUtil.Read(MainActivity.this, "choice_week", 0)) + "周");
                 //title.setText("第" + (SharedPreferencesUtil.Read(MainActivity.this, "choice_week", 0)) + "周");

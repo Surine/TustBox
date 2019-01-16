@@ -30,7 +30,6 @@ import com.surine.tustbox.R;
 import com.surine.tustbox.Util.EncryptionUtil;
 import com.surine.tustbox.Util.HttpUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
-import com.surine.tustbox.Util.TustBoxUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +38,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.litepal.crud.DataSupport;
 import org.litepal.tablemanager.Connector;
 
 import java.io.IOException;
@@ -133,7 +131,7 @@ public class LoginActivity extends TustBaseActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         //hidden the  stautusbar
-        SystemUI.hide_statusbar(this);
+        SystemUI.hideStatusbar(this);
         //set up the database
         Connector.getDatabase();
 
@@ -638,12 +636,12 @@ public class LoginActivity extends TustBaseActivity {
     }
 
     private void saveCache(String courseName, String attendClassTeacher, String studyModeName, String unit, String programPlanName, int jwColor) {
-        SharedPreferencesUtil.Save(context,"courseName",courseName);
-        SharedPreferencesUtil.Save(context,"attendClassTeacher",attendClassTeacher);
-        SharedPreferencesUtil.Save(context,"studyModeName",studyModeName);
-        SharedPreferencesUtil.Save(context,"unit",unit);
-        SharedPreferencesUtil.Save(context,"programPlanName",programPlanName);
-        SharedPreferencesUtil.Save(context,"jwColor",jwColor);
+        SharedPreferencesUtil.save(context,"courseName",courseName);
+        SharedPreferencesUtil.save(context,"attendClassTeacher",attendClassTeacher);
+        SharedPreferencesUtil.save(context,"studyModeName",studyModeName);
+        SharedPreferencesUtil.save(context,"unit",unit);
+        SharedPreferencesUtil.save(context,"programPlanName",programPlanName);
+        SharedPreferencesUtil.save(context,"jwColor",jwColor);
     }
 
     private void saveCourse(String weekDescription, String classDay,
@@ -852,8 +850,8 @@ public class LoginActivity extends TustBaseActivity {
     private void saveUserInfo(String tust_number_string, String pswd_string) {
         // 对密码编码
         String enToStr = EncryptionUtil.base64_en(pswd_string);
-        SharedPreferencesUtil.Save(LoginActivity.this, FormData.tust_number_server, tust_number_string);
-        SharedPreferencesUtil.Save(LoginActivity.this, FormData.pswd, enToStr);
+        SharedPreferencesUtil.save(LoginActivity.this, FormData.tust_number_server, tust_number_string);
+        SharedPreferencesUtil.save(LoginActivity.this, FormData.pswd, enToStr);
     }
 
     private void jwcCheckWebView() {

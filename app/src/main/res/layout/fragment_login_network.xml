@@ -112,7 +112,7 @@
                 android:layout_height="match_parent"
                 android:text="清空账号信息"
                 android:id="@+id/clear_net"
-                android:background="@drawable/login_shape"
+                android:background="@drawable/button_blue"
                 android:layout_margin="10dp"
                 android:textColor="@color/Tust_White"
                 />

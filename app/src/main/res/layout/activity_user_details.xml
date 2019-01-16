@@ -63,7 +63,6 @@ tools:context="com.surine.tustbox.UI.TodayCardActivity">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/name_from_server"
-                    android:text="@string/app_name"
                     android:textSize="17sp"
                     android:textColor="@color/Tust_Black"
                     android:layout_marginTop="18dp"
@@ -72,7 +71,6 @@ tools:context="com.surine.tustbox.UI.TodayCardActivity">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="我不曾忘却，那曾经温暖的岁月"
                     android:textColor="@color/Tust_Grey"
                     android:gravity="center"
                     android:textSize="12sp"

@@ -34,7 +34,8 @@
         android:layout_below="@id/course_info_name"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:id="@+id/linearLayout">
 
         <TextView
             android:id="@+id/info1"
@@ -58,19 +59,18 @@
             android:text="NULL"
             android:textColor="@color/Tust_White" />
 
-        <TextView
-            android:id="@+id/info3"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:layout_height="match_parent"
-            android:layout_alignBaseline="@+id/textView21"
-            android:layout_alignBottom="@+id/textView21"
-            android:layout_toEndOf="@+id/textView21"
-            android:text="NULL"
-            android:textColor="@color/Tust_White" />
+
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/info3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/linearLayout"
+        android:layout_below="@+id/linearLayout"
+        android:gravity="center_vertical"
+        android:text="NULL"
+        android:textColor="@color/Tust_White" />
 
 
 </RelativeLayout>

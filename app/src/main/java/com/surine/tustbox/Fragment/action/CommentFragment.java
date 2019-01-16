@@ -98,7 +98,7 @@ public class CommentFragment extends Fragment {
         adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         recycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycleview.setAdapter(adapter);
-        View noView = getActivity().getLayoutInflater().inflate(R.layout.view_empty_action, (ViewGroup) recycleview.getParent(), false);
+        View noView = getActivity().getLayoutInflater().inflate(R.layout.view_empty_2, (ViewGroup) recycleview.getParent(), false);
         adapter.setEmptyView(noView);
         adapter.setPreLoadNumber(2);
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -259,7 +259,6 @@ public class CommentFragment extends Fragment {
                         String s1 = jsonObject.getString(FormData.JDATA);
                         commentsFromServer.clear();
                         commentsFromServer = GsonUtil.parseJsonWithGsonToList(s1, Comment.class);
-                        Log.d("TAG","本次加载从服务器返回"+commentsFromServer.size()+"条数据");
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

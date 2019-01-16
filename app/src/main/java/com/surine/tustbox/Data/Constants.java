@@ -101,6 +101,7 @@ public class Constants {
     //task位置
     public static final String TASK_POSITION = "task_postion";
     public static final String COURSE_DATA = "course_data";
+    public static final String WIDGET_BACKGROUND_BUTTON = "widget_image_button";
 
     //task默认标签
     public static String[] tagNameForTask = new String[]{
@@ -117,4 +118,9 @@ public class Constants {
     public static final String LOGIN_SAVE = "登录成功，准备下一步";
     public static final String USER_EXIST = "用户已存在或者数据库操作失败";
     public static final String INFO_ERROR = "个人信息不完整，请重新登录教务处！";
+
+
+    public static final int PAN_LOGIN_SUCCESS = 10000;
+    public static final int PAN_LOGIN_GROUP_ROOT = 10001;
+
 }

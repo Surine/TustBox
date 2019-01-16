@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.lzy.ninegrid.NineGridView;
 import com.surine.tustbox.Util.GlideImageLoader;
+import com.surine.tustbox.Util.ToastUtil;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.bugly.crashreport.CrashReport.UserStrategy;
@@ -28,6 +29,9 @@ public class TustBoxApplication extends Application {
         //init the litepal
         LitePalApplication.initialize(getApplicationContext());
         NineGridView.setImageLoader(new GlideImageLoader());
+
+        //土司大作战
+        ToastUtil.getInstance(getApplicationContext());
 
         Context context = getApplicationContext();
         // 获取当前包名

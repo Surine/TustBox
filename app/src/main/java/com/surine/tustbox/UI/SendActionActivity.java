@@ -456,14 +456,6 @@ public class SendActionActivity extends TustBaseActivity implements TakePhoto.Ta
                             }).show();
                             }
                         });
-
-                    }else{
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(context, R.string.server_error, Toast.LENGTH_SHORT).show();
-                            }
-                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

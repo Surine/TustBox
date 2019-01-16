@@ -29,6 +29,7 @@ import com.surine.tustbox.R;
 import com.surine.tustbox.Util.GsonUtil;
 import com.surine.tustbox.Util.HttpUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
+import com.surine.tustbox.Util.TustBoxUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -106,7 +107,6 @@ public class UserInfoActivity extends TustBaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String x = response.body().string();
-                Log.d("TAF", x);
                 JSONObject jsonObject = null;
 
                 try {
@@ -141,13 +141,6 @@ public class UserInfoActivity extends TustBaseActivity {
                                 }
                                 userInfo = user;
                                 initViewPager(user);
-                            }
-                        });
-                    }else{
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(context, R.string.server_error, Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -196,6 +189,16 @@ public class UserInfoActivity extends TustBaseActivity {
         return true;
     }
 
+    public boolean onPrepareOptionsMenu(Menu menu){
+        TustBoxUtil tustBoxUtil = new TustBoxUtil(context);
+        String tustNumber = tustBoxUtil.getUid();
+        if(!tustNumber.equals(uid)){
+            //禁止修改别人的信息
+            menu.findItem(R.id.edit).setVisible(false);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -203,21 +206,7 @@ public class UserInfoActivity extends TustBaseActivity {
                 finishAfterTransition();
                 break;
             case R.id.edit:
-                String tust_number = SharedPreferencesUtil.Read(UserInfoActivity.this, FormData.tust_number_server,"");
-                if(uid.equals(tust_number)){
-                    if(userInfo == null || userInfo.getFace() == null){
-                        break;
-                    }
-                    try {
-                        Glide.clear(mHeadFromServer);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    startActivity(new Intent(UserInfoActivity.this,EditUserInfoActivity.class).putExtra(FormData.face_server,userInfo.getFace()));
-                }else{
-                    Toast.makeText(this, R.string.UserInfoActivityDontEdit, Toast.LENGTH_SHORT).show();
-                }
-                finish();
+                startActivity(new Intent(UserInfoActivity.this,EditUserInfoActivity.class));
                 break;
             case R.id.setting:
                 startActivity(new Intent(UserInfoActivity.this,SettingActivity.class));

@@ -95,13 +95,6 @@ public class NoticeActivity extends TustBaseActivity {
                                 loadData();
                             }
                         });
-                    }else{
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Snackbar.make(recycleview,R.string.server_error,Snackbar.LENGTH_SHORT).show();
-                            }
-                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

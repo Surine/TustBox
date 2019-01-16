@@ -3,13 +3,17 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               android:background="@drawable/widget_shape_big"
-              android:id="@+id/touch_view"
-    >
-
+              android:id="@+id/touch_view">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/widget_image"
+        android:scaleType="centerCrop"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:id="@+id/rev_btn"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -23,7 +27,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:gravity="right|center_vertical"
-            android:text="刷新显示"
+            android:text="刷新"
             android:textColor="#000"
             android:textSize="10sp"/>
 
@@ -41,8 +45,8 @@
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginStart="30dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="15dp"
         android:id="@+id/lin_week"
         android:layout_below="@id/rev_btn"
         >
@@ -119,9 +123,9 @@
 
     </LinearLayout>
     <LinearLayout
-        android:layout_width="30dp"
+        android:layout_width="20dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="45dp"
         android:orientation="vertical"
         >
         <TextView
@@ -175,10 +179,11 @@
         android:scrollbars="none"
         android:layout_below="@id/lin_week"
         android:verticalSpacing="2dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="20dp"
         android:horizontalSpacing="2dp"
         android:columnWidth="82dip"
         android:gravity="center"
+        android:layout_marginTop="3dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"/>
 

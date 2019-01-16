@@ -64,7 +64,7 @@ public class SplashActivity extends TustBaseActivity {
 
         //初始化
         ButterKnife.bind(this);
-        SystemUI.hide_statusbar(this);
+        SystemUI.hideStatusbar(this);
         tustNumberFromXml = SharedPreferencesUtil.Read(this,FormData.tust_number_server,empty);
         tokenFromXml = SharedPreferencesUtil.Read_safe(this,FormData.TOKEN,empty);
         pswdFromXml = SharedPreferencesUtil.Read(this,FormData.pswd,empty);
@@ -298,7 +298,7 @@ public class SplashActivity extends TustBaseActivity {
                 }
                 //如果返回的值不是0，那么代表从服务器获取到当前周的值了，储存之后并跳转
                 if(week_from_server != 0){
-                    SharedPreferencesUtil.Save(SplashActivity.this, CHOOSE_WEEK, week_from_server);
+                    SharedPreferencesUtil.save(SplashActivity.this, CHOOSE_WEEK, week_from_server);
                 }
                 Intent();
             }

@@ -27,7 +27,7 @@ public class SplashMvpActivity extends BaseMvpActivity implements SplashView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        SystemUI.hide_statusbar(this);
+        SystemUI.hideStatusbar(this);
         context = this;
         mPresenter = new SplashPresenter(this);
         //绑定view

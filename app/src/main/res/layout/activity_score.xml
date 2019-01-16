@@ -7,6 +7,6 @@
     >
     <include layout="@layout/toolbar"
         />
-    <include layout="@layout/tabpage"
+    <include layout="@layout/view_tab_page"
         />
 </LinearLayout>

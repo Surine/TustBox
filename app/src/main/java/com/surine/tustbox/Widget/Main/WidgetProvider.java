@@ -7,12 +7,25 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.RemoteViews;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.surine.tustbox.Data.Constants;
+import com.surine.tustbox.Data.FormData;
 import com.surine.tustbox.R;
+import com.surine.tustbox.Util.LogUtil;
+import com.surine.tustbox.Util.SharedPreferencesUtil;
+
+import java.io.FileNotFoundException;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -40,8 +53,15 @@ public class WidgetProvider extends AppWidgetProvider {
         remoteView.setRemoteAdapter(R.id.gridview, serviceIntent);
         remoteView.setOnClickPendingIntent(R.id.bt_refresh, getPendingIntent(context));
         SharedPreferences pref = context.getSharedPreferences("data",MODE_PRIVATE);
-        int choose_week =  pref.getInt("choice_week",0);
+        int choose_week =  pref.getInt(Constants.CHOOSE_WEEK,0);
         remoteView.setTextViewText(R.id.widget_week, "第"+choose_week+"周");
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context) ;
+        if(!prefs.getBoolean(Constants.WIDGET_BACKGROUND_BUTTON,false)){
+            loadIMage(context,remoteView);
+        }else{
+            remoteView.setImageViewUri(R.id.widget_image,null);
+        }
 
         //更新
         AppWidgetManager am = AppWidgetManager.getInstance(context);
@@ -49,6 +69,13 @@ public class WidgetProvider extends AppWidgetProvider {
         am.updateAppWidget(appWidgetIds, remoteView);
         am.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.gridview);
 
+    }
+
+    private void loadIMage(Context context, RemoteViews remoteView) {
+        String imagePath = SharedPreferencesUtil.Read(context, "my_picture_path", null);
+        if (imagePath != null) {
+            remoteView.setImageViewUri(R.id.widget_image,Uri.parse(imagePath));
+        }
     }
 
     private PendingIntent getPendingIntent(Context context) {

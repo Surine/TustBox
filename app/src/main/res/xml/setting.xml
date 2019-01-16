@@ -24,7 +24,15 @@
             android:summary="@string/pic_crop_info"
             />
     </PreferenceCategory>
-
+    <PreferenceCategory
+        android:title="@string/widget_tag"
+        >
+        <SwitchPreference
+            android:key="widget_image_button"
+            android:title="@string/widget_back_title"
+            android:summary="@string/widget_back_info"
+            />
+    </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/about_app"

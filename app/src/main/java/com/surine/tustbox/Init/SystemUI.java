@@ -46,7 +46,7 @@ public class SystemUI {
 
 
     //隐藏状态栏
-    public static void  hide_statusbar(Activity activity){
+    public static void hideStatusbar(Activity activity){
         //full screen
         activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);

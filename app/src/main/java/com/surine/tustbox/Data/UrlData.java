@@ -140,10 +140,6 @@ public class UrlData {
     public static final String empty_class_room_intro = baseUrl+"/Me/?p=121";
     public static final String login_introduce = baseUrl+"/Me/?p=137";
 
-    //云盘登录
-    public static final String pan_login = "http://pan.tust.edu.cn/v1/auth/sign_in?link_name=web&link_device=web&";
-    public static final String pan = "http://pan.tust.edu.cn";
-
     //help小站
     public static final String help = "http://help.tust.edu.cn/";
     //获取主题列表
@@ -156,4 +152,22 @@ public class UrlData {
 
     public static final String uploadSchedule = baseUrl+"/TustBox/index.php/Home/Schedule/uploadSchedule";
     public static final String downloadSchedule = baseUrl+"/TustBox/index.php/Home/Schedule/downloadSchedule";
+
+
+
+    //科大云盘
+    public static final String pan = "http://pan.tust.edu.cn";
+    //验证码请求接口
+    public static final String picUrl = pan + "/captcha?";
+    //登录云盘请求接口
+    public static final String loginUrl = pan + "/signIn?";
+    //群组链接
+    public static final String groupUrl =  pan + "/v1/users/";
+    //NON ROOT DIR
+    public static final String nonRootDir = pan + "/v1/fileops/list_folder?";
+    //下载连接
+    public static final String downloadUrl = pan + "/v1/roots/";
+    //搜索
+    public static final String searchUrl = pan + "/v1/search/files";
+
 }

@@ -1,117 +1,269 @@
 package com.surine.tustbox.UI;
 
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.surine.tustbox.Bean.EventBusBean.TustPanBus;
 import com.surine.tustbox.Data.FormData;
+import com.surine.tustbox.Data.FunctionTag;
 import com.surine.tustbox.Data.UrlData;
+import com.surine.tustbox.Fragment.Pan.NonRootDirFragment;
+import com.surine.tustbox.Fragment.Pan.RootDirFragment;
+import com.surine.tustbox.Init.TustBaseActivity;
+import com.surine.tustbox.Interface.AddFunctionListenter;
 import com.surine.tustbox.R;
-import com.surine.tustbox.Util.EncryptionUtil;
+import com.surine.tustbox.Service.DownloadService;
 import com.surine.tustbox.Util.HttpUtil;
+import com.surine.tustbox.Util.LogUtil;
 import com.surine.tustbox.Util.SharedPreferencesUtil;
+import com.surine.tustbox.Util.ToastUtil;
+import com.surine.tustbox.View.LittleProgramToolbar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.Response;
 
-public class PanActivity extends AppCompatActivity {
+import static com.surine.tustbox.Data.FormData.LOCALE_DATA;
+import static com.surine.tustbox.Data.UrlData.nonRootDir;
+
+public class PanActivity extends TustBaseActivity {
+
+    @BindView(R.id.toolbar_pan)
+    LittleProgramToolbar toolbarPan;
+    @BindView(R.id.search)
+    EditText search;
+
+    private String myGroupUrl;
+    private String groupInfo;
+    private String userId;
+    private String token;
+    private String rootIdForSearch;  //为查询准备的rootId
+    private String pathForSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pan);
+        ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
 
-        String ps = SharedPreferencesUtil.Read_safe(PanActivity.this,"PSWD_PAN", "1111111");
-        String tm = SharedPreferencesUtil.Read(PanActivity.this,"NUMBER_PAN","11111111");
-        if(ps.equals("1111111")||tm.equals("11111111")){
-            //设置登录对话框
-            ShowLoginDialog();
-        }else{
-            //登录云盘
-            LogPan(ps, tm);
-        }
+        //加载首页,标题，添加额外功能，隐藏校园网连接提示，增加功能监听器
+        toolbarPan.setTitle(getString(R.string.tustPanString))
+                .setAddFunctionVisible(true)
+                .setNoteGone(true)
+                .setOnClickAddFunctionListener(new AddFunctionListenter() {
+                    @Override
+                    public void onClick() {
+                        Intent intent = new Intent(PanActivity.this, DownloadPageActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.main_enter_anim,
+                                R.anim.main_exit_anim);
+                    }
+                });
 
-    }
+        userId = SharedPreferencesUtil.Read(this, FormData.USERID, null);
+        token = SharedPreferencesUtil.Read(this, FormData.TOKEN, null);
+        //获取根目录加载url
+        myGroupUrl = getRootUrl();
+        //加载根目录
+        loadGroupFolderGet(myGroupUrl);
 
-
-    private void ShowLoginDialog() {
-        final View view = LayoutInflater.from(this).inflate(R.layout.dialog_view_login_work_view,null);
-        final EditText number = (EditText) view.findViewById(R.id.task_name_edit);
-        final EditText pswd = (EditText) view.findViewById(R.id.network_passwd);
-        pswd.setHint("云盘密码");
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(view);
-        builder.setCancelable(false);
-        builder.setPositiveButton("登录", new DialogInterface.OnClickListener() {
+        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(number.getText().toString().equals("")||pswd.getText().toString().equals("")){
-                    Toast.makeText(PanActivity.this, R.string.null_input, Toast.LENGTH_SHORT).show();
-                    ShowLoginDialog();
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(rootIdForSearch == null || rootIdForSearch.isEmpty() || pathForSearch == null || pathForSearch.isEmpty()){
+                    ToastUtil.show(getString(R.string.search_error));
                 }else{
-                    //储存已经登陆的数据
-                    SharedPreferencesUtil.Save_safe(PanActivity.this,"PSWD_PAN", pswd.getText().toString());
-                    SharedPreferencesUtil.Save(PanActivity.this,"NUMBER_PAN",number.getText().toString());
-
-                    LogPan(pswd.getText().toString(),number.getText().toString());
+                    String input = search.getText().toString();
+                    if(input == null || input.isEmpty()){
+                        return true;
+                    }
+                    String searchUrl = UrlData.searchUrl + "?query="+
+                            input+"&token="+token+"&root_id="+rootIdForSearch+
+                            "&path="+pathForSearch+"&locale=zh_CN&_="+System.currentTimeMillis();
+                    search(searchUrl);
                 }
+            search.setText("");
+            return true;
             }
         });
-        builder.setNegativeButton("退出", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder.show();
 
     }
 
-    private void LogPan(String ps, String tn) {
-        //请求参数
-        FormBody formBody = new FormBody.Builder()
-                .add(FormData.link_device, "web")
-                .add(FormData.link_name, "web")
-                .add(FormData.username, tn)
-                .add(FormData.password, ps)
-                .add(FormData.locale, ps)
-                .build();
-        //构造url
-        String pan_login_url = UrlData.pan_login+"username="+tn +"&password="+ EncryptionUtil.url_en(ps);
-        Log.d("TEST",pan_login_url);
-        HttpUtil.post(UrlData.pan_login,formBody).enqueue(new Callback() {
+    private void search(String searchUrl) {
+        HttpUtil.get(searchUrl).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(PanActivity.this, R.string.get_data_use_fail,Toast.LENGTH_SHORT).show();
+                        ToastUtil.netError();
                     }
                 });
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                final String s = response.body().string();
-                Log.d("TEST",s);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                  //获取数据失败
-                     Toast.makeText(PanActivity.this,"数据获取成功",Toast.LENGTH_SHORT).show();
-                    }
-                });
+                final String r = response.body().string();
+                try {
+                    final String fileInfo = new JSONObject(r).getString("entries");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            FragmentTransaction tran = getSupportFragmentManager().beginTransaction();
+                            tran.addToBackStack("");
+                            tran.add(R.id.content, NonRootDirFragment.getInstance(fileInfo)).commit();
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            int count = fragmentManager.getBackStackEntryCount();
+            if (count > 1) {
+                fragmentManager.popBackStackImmediate();
+            } else {
+                finish();
+            }
+        }
+        return true;
+    }
+
+    private String getRootUrl() {
+        return UrlData.groupUrl + userId + "/groups?token=" + token + "&is_activated=true&is_blocked=false&locale=zh_CN";
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    private void loadGroupFolderGet(String url) {
+        HttpUtil.get(url).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String r = response.body().string();
+                try {
+                    groupInfo = new JSONObject(r).getString("entries");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //加载云盘根
+                            FragmentTransaction tran = getSupportFragmentManager().beginTransaction();
+                            tran.addToBackStack("");
+                            tran.add(R.id.content, RootDirFragment.getInstance(groupInfo)).commit();
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+    //消息接收器
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getMessage(TustPanBus event) {
+        if (event.getCode() == FunctionTag.PAN_CODE) {
+            //第一个参数是文件下载url，第二个是文件名
+            rootIdForSearch = event.getRoot_id();
+            pathForSearch = event.getDir_name();
+            loadNonRoot(rootIdForSearch, pathForSearch);
+        } else if (event.getCode() == FunctionTag.PAN_DOWNLOAD) {
+            readyToDownload(event.getRoot_id(), event.getDir_name());
+        }
+    }
+
+    private void readyToDownload(String url, String fileName) {
+        Intent intent = new Intent(PanActivity.this, DownloadService.class);
+        intent.putExtra("DOWN_URL", url);
+        intent.putExtra("DOWN_NAME", fileName);
+        startService(intent);
+    }
+
+    private void loadNonRoot(String rootId, String dirName) {
+        String url = getNonRootUrl(rootId, dirName);
+        loadGroupFolderPost(url, rootId, dirName);  //加载数据
+    }
+
+    //获取非根目录url
+    private String getNonRootUrl(String rootId, String message) {
+        return nonRootDir + "root_id=" + rootId + "&path=" + message + "&token=" + token + "&locale=zh_CN";
+    }
+
+
+    private void loadGroupFolderPost(String url, String rootId, String dirName) {
+
+        LogUtil.d(url);
+        LogUtil.d(rootId);
+        LogUtil.d(dirName);
+
+        FormBody formBody = new FormBody.Builder()
+                .add("root_id", rootId)
+                .add("path", dirName)
+                .add("token", token)
+                .add("locale", LOCALE_DATA)
+                .build();
+
+        HttpUtil.post(url, formBody).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String r = response.body().string();
+                LogUtil.d("r" + r);
+                groupInfo = r;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentTransaction tran = getSupportFragmentManager().beginTransaction();
+                        tran.addToBackStack("");
+                        tran.add(R.id.content, NonRootDirFragment.getInstance(groupInfo)).commit();
+                    }
+                });
+
+            }
+        });
+    }
+
 }
