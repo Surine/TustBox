@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.surine.tustbox.Adapter.Recycleview.CommentAdapter;
+import com.surine.tustbox.Helper.Interface.UpdateUIListenter;
+import com.surine.tustbox.Helper.Utils.RunOnUiThread;
 import com.surine.tustbox.Pojo.Comment;
 import com.surine.tustbox.App.Data.FormData;
 import com.surine.tustbox.App.Data.UrlData;
@@ -259,9 +261,9 @@ public class CommentFragment extends Fragment {
                         String s1 = jsonObject.getString(FormData.JDATA);
                         commentsFromServer.clear();
                         commentsFromServer = JsonUtil.parseJsonWithGsonToList(s1, Comment.class);
-                        getActivity().runOnUiThread(new Runnable() {
+                        RunOnUiThread.updateUi(getActivity(), new UpdateUIListenter() {
                             @Override
-                            public void run() {
+                            public void update() {
                                 if(b){
                                     updataMoreData();
                                 }else{

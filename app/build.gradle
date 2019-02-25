@@ -6,8 +6,8 @@ android {
         applicationId "com.surine.tustbox"
         minSdkVersion 21     //最低Android5.0
         targetSdkVersion 26  //最好跟编译版本保持一致
-        versionCode 19   //2019年1月6日 修改
-        versionName "5.0.0 Beta220" //2019年1月6日修改
+        versionCode 20   //2019年2月25日 修改
+        versionName "5.0.0 Beta225" //2019年2月25日修改
         testInstrumentationRunner "android.support.widget.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         aaptOptions.cruncherEnabled = false
