@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/taskInfoBack"
     android:layout_height="match_parent"
-    tools:context="com.surine.tustbox.UI.TaskInfoActivity">
+    tools:context="com.surine.tustbox.UI.Activity.TaskInfoActivity">
     <ImageView
         android:id="@+id/taskInfoImage"
         android:layout_width="match_parent"

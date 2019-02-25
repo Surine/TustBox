@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.surine.tustbox.Init.SystemUI;
+import com.surine.tustbox.App.Init.SystemUI;
 import com.surine.tustbox.Mvp.base.BaseMvpActivity;
 import com.surine.tustbox.Mvp.login.LoginMvpActivity;
 import com.surine.tustbox.R;
-import com.surine.tustbox.UI.MainActivity;
-import com.surine.tustbox.Util.LogUtil;
+import com.surine.tustbox.UI.Activity.MainActivity;
+import com.surine.tustbox.Helper.Utils.LogUtil;
 
 import butterknife.ButterKnife;
 
@@ -27,7 +27,7 @@ public class SplashMvpActivity extends BaseMvpActivity implements SplashView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        SystemUI.hide_statusbar(this);
+        SystemUI.hideStatusbar(this);
         context = this;
         mPresenter = new SplashPresenter(this);
         //绑定view

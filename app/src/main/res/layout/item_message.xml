@@ -2,9 +2,11 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="70dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="3dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="8dp"
     android:paddingBottom="10dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
     android:background="?android:attr/selectableItemBackground"
     android:id="@+id/message_layout"
     >
@@ -67,7 +69,8 @@
      android:layout_alignEnd="@+id/item_message_time"
      android:layout_below="@+id/item_message_name"
      android:text="【未读】"
+     android:background="@color/Tust_Red"
      android:layout_marginTop="5dp"
-     android:textColor="@color/Tust_Red"
+     android:textColor="@color/white"
      android:textStyle="bold" />
 </RelativeLayout>

@@ -2,14 +2,17 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Tust_White"
-    >
-     <include
-         android:id="@+id/message_from_server"
-         layout="@layout/block_message_from_server"/>
+    android:background="@color/Tust_White">
+
+     <com.surine.tustbox.UI.View.VgTopbar
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:id="@+id/vgTopbar"
+         ></com.surine.tustbox.UI.View.VgTopbar>
+
      <android.support.v7.widget.RecyclerView
          android:id="@+id/taskList"
-         android:layout_below="@id/message_from_server"
+         android:layout_below="@id/vgTopbar"
          android:layout_width="match_parent"
          android:layout_height="match_parent"
          android:layout_marginTop="10dp"

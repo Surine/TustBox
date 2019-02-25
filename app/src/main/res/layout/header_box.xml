@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:paddingBottom="20dp"
+        >
+        <LinearLayout
+            android:id="@+id/box1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp">
+            <ImageView
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@drawable/edit_v5"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="入学指南" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/box2"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp">
+            <ImageView
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@drawable/star_v5"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="成绩" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/box3"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp">
+            <ImageView
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@drawable/video_v5"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="云盘" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/box4"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginEnd="10dp"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp">
+            <ImageView
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@drawable/time_v5"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="消息盒子" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

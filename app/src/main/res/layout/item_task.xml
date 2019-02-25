@@ -17,7 +17,7 @@
           android:id="@+id/day"
           android:paddingTop="5dp"
           android:gravity="center"
-          android:textColor="@color/colorPrimary2"
+          android:textColor="@color/colorPrimaryB"
           android:textSize="30sp"
           />
       <TextView

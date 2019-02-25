@@ -26,12 +26,12 @@
 
     <Button
         android:id="@+id/go"
-        android:layout_width="80dp"
-        android:layout_height="35dp"
+        android:layout_width="68dp"
+        android:layout_height="30dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="21dp"
-        android:background="@drawable/school_shape2"
+        android:background="@drawable/btn_login_corner_blue"
         android:text="进入"
         android:textColor="@color/Tust_White" />
 </RelativeLayout>

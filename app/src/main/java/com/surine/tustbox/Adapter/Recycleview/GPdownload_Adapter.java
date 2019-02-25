@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.surine.tustbox.Bean.GpInfo;
+import com.surine.tustbox.Pojo.GpInfo;
 import com.surine.tustbox.R;
 
 import java.util.ArrayList;

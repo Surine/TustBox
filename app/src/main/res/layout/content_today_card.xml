@@ -7,7 +7,7 @@
     android:background="@color/Tust_White"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.surine.tustbox.UI.TodayCardActivity"
+    tools:context="com.surine.tustbox.UI.Activity.TodayCardActivity"
     android:paddingBottom="10dp"
     android:scrollbars="none"
     tools:showIn="@layout/activity_today_card">

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:paddingTop="25dp"
+    android:background="@color/background"
+    android:layout_height="80dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="/"
+        android:gravity="center"
+        android:textColor="@color/textColor"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:id="@+id/tustBoxName" />
+
+    <ImageView
+        android:id="@+id/rightIcon"
+        android:layout_width="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/tustBoxName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="17dp"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
+
+    <ImageView
+        android:id="@+id/lefeIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        app:srcCompat="@drawable/ic_person_black_24dp" />
+</RelativeLayout>

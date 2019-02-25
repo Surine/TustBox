@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/Tust_White"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+   <com.surine.tustbox.UI.View.LittleProgramToolbar
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/topbar"
+       ></com.surine.tustbox.UI.View.LittleProgramToolbar>
+    <RelativeLayout
+        android:layout_below="@id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/Tust_White"
+        >
+        <EditText
+            android:id="@+id/pan_number"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sp_40"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="@dimen/sp_16"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="29dp"
+            android:background="@drawable/et_input_grey"
+            android:hint="科大云盘帐号"
+            android:paddingStart="@dimen/sp_30" />
+
+        <EditText
+            android:id="@+id/pan_pswd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sp_40"
+            android:inputType="textPassword"
+            android:layout_alignStart="@+id/pan_number"
+            android:layout_below="@+id/pan_number"
+            android:layout_marginEnd="@dimen/sp_16"
+            android:layout_marginTop="11dp"
+            android:background="@drawable/et_input_grey"
+            android:hint="科大云盘密码"
+            android:paddingStart="@dimen/sp_30" />
+
+        <EditText
+            android:id="@+id/pan_vcode"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="@dimen/sp_140"
+            android:layout_height="@dimen/sp_40"
+            android:layout_alignStart="@+id/pan_pswd"
+            android:layout_below="@+id/pan_pswd"
+            android:layout_marginTop="@dimen/sp_12"
+            android:ems="10"
+            android:paddingStart="@dimen/sp_30"
+            android:background="@drawable/et_input_grey"
+            android:inputType="textPersonName"
+            android:hint="验证码" />
+
+        <ImageView
+            android:id="@+id/pan_vcode_image"
+            android:layout_width="@dimen/sp_100"
+            android:layout_height="@dimen/sp_40"
+            android:layout_alignEnd="@+id/pan_pswd"
+            android:layout_alignTop="@+id/pan_vcode"
+            app:srcCompat="@color/Tust_Grey2" />
+
+        <Button
+            android:id="@+id/pan_login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sp_40"
+            android:layout_below="@+id/pan_vcode"
+            android:layout_marginEnd="@dimen/sp_16"
+            android:layout_marginStart="@dimen/sp_16"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_login_corner_blue"
+            android:text="@string/login"
+            android:textColor="@color/Tust_White" />
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pan_login_btn"
+            android:layout_marginEnd="@dimen/sp_16"
+            android:layout_marginTop="21dp"
+            android:fontFamily="casual"
+            android:layout_marginStart="@dimen/sp_16"
+            android:text="@string/pan_login_info" />
+
+    </RelativeLayout>
+</RelativeLayout>

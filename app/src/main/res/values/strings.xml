@@ -92,7 +92,7 @@
     <string name="surine_is_me">新世纪的Android爱好者，xiaxiaxia~</string>
     <string name="qq_number">点我复制QQ群：635622188</string>
     <string name="qq_is_copy">QQ已经复制到剪贴板</string>
-    <string name="welcome">初次见面，请多关照：</string>
+    <string name="welcome">点击下载小天盒子（暂只支持Android版）</string>
     <string name="more_share">我是一只盒子。</string>
     <string name="type">你要使用什么方式联系盒子呢？</string>
     <string name="what_do_you_want_to_say">想说点什么？</string>
@@ -111,7 +111,7 @@
     <string name="safe">安全</string>
     <string name="pswd">信息编码</string>
     <string name="pswd_summary">Base64</string>
-    <string name="nothing">什么都木有啊！！</string>
+    <string name="nothing">未选择图片~</string>
     <string name="about_gp">关于GP</string>
     <string name="info_gp">该平台是公司根据校园正版化（GP）项目在我国高校中的具体使用需求自行研发的软件管理平台系统,
                 同时也是我国第一套针对校园正版化软件如何正确有效安全使用的解决方案。\n
@@ -136,7 +136,7 @@
     <string name="school">校园</string>
     <string name="title_activity_today_card">TodayCardActivity</string>
     <string name="action_settings">Settings</string>
-    <string name="copyright">Copyright 2017-2018 surine.cn\nAll rights reserved</string>
+    <string name="copyright">Copyright 2017-2019 surine.cn\nAll rights reserved</string>
     <string name="score_helper">成绩助手</string>
     <string name="bus_helper">校车时刻表</string>
     <string name="network_error">网络（非校园网）未连接</string>
@@ -156,7 +156,7 @@
     <string name="CourseInfoFragment_load_error">未知错误！</string>
     <string name="CourseInfoFragmentsetScoreToTheCourse">为本课程评个分吧！</string>
     <string name="CourseInfoFragmentThanksToYouToSetScore">感谢您的评分！</string>
-    <string name="server_error">服务器开小差了！</string>
+
     <string name="CourseInfoFragmentSetScoreSuccess">评分成功！</string>
     <string name="CourseInfoFragmentHelpMe">求求你给我点分吧！</string>
     <string name="SendActionActivityQiniuTokenError">云存储TOKEN错误，请发送反馈给开发者</string>
@@ -237,7 +237,7 @@
     <string name="api_error_msg">尴尬了，网络异常了。</string>
     <string name="mvp_notice">提示</string>
     <string name="mvp_login_jwc">正在登录教务处(请使用校园网)，请稍后……</string>
-    <string name="mvp_empty_field">帐号或者密码为空！</string>
+    <string name="mvp_empty_field">部分参数为空！</string>
     <string name="parse_error">课表解析失败，请稍后再试吧！</string>
     <string name="cookie_error">Cookies已失效，请重新登录一次！</string>
     <string name="parse_info">正在解析个人信息……</string>
@@ -247,6 +247,17 @@
     <string name="get_backUping">获取云备份中，请保持网络畅通！</string>
     <string name="null_course_or_401">云端课表不存在，或者身份认证失败！</string>
     <string name="mvp_get_cloud">获取云备份</string>
+    <string name="widget_tag">桌面小部件</string>
+    <string name="widget_back_title">桌面小部件背景</string>
+    <string name="widget_back_info">如果您不喜欢桌面小部件背景，请打开此按钮(完成后请点击小部件刷新按钮刷新小部件)</string>
+    <string name="pan_login_info">
+        云盘Token有效期默认40分钟，登录后处于非活跃状态40分钟后需要重新登录，
+        但不会影响视频播放，文件下载。\n
+    </string>
+    <string name="tustPanString">科大云盘</string>
+    <string name="tip_of_pan_search">请在目录内搜索 电影 电视剧 文件……</string>
+    <string name="panDownload">云盘下载</string>
+    <string name="search_error">查询失败，请点击进入相应目录后重试！</string>
 
 </resources>
 

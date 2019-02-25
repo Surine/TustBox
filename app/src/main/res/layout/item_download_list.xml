@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="20dp"
+    android:background="@color/Tust_White"
+    android:layout_marginBottom="3dp"
+    >
+
+    <TextView
+        android:id="@+id/serverName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="24dp"
+
+        android:text="灵魂摆渡3-10.mp4"
+        android:maxLength="25"
+        android:textColor="@color/Tust_Black"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/serverFileSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/serverName"
+        android:layout_below="@+id/serverName"
+        android:text="文件大小：332M" />
+
+    <TextView
+        android:id="@+id/downloadSpeed"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_above="@+id/downloadProgressBar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="23dp"
+        android:text="16M/s"
+        android:textColor="@color/Tust_Black" />
+
+    <ProgressBar
+        android:id="@+id/downloadProgressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/downloadSpeed"
+        android:layout_alignStart="@+id/serverFileSize"
+        android:layout_below="@+id/serverFileSize"
+        android:layout_marginTop="13dp" />
+
+    <Button
+        android:id="@+id/downController"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_30"
+        android:layout_alignEnd="@+id/downloadSpeed"
+        android:layout_below="@+id/downloadProgressBar"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/button_blue"
+        android:text="暂停"
+        android:textColor="@color/Tust_White" />
+
+    <Button
+        android:id="@+id/openFile"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_30"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:layout_alignTop="@+id/downController"
+        android:layout_toStartOf="@+id/downController"
+        android:text="打开" />
+
+    <Button
+        android:id="@+id/deleteDownloadTask"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_30"
+        android:layout_alignBottom="@+id/downController"
+        android:background="@drawable/button_red"
+        android:text="删除"
+        android:layout_marginStart="24dp"
+        android:textColor="@color/Tust_White" />
+</RelativeLayout>

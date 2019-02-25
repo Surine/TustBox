@@ -2,13 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
-              android:background="@color/color2"
+              android:background="@color/background"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-
+    <com.surine.tustbox.UI.View.VgTopbar
+        android:id="@+id/xml_msg_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl"
+        android:layout_below="@id/xml_msg_topbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true">

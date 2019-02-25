@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Tust_White"
-    tools:context="com.surine.tustbox.UI.SendActionActivity">
+    tools:context="com.surine.tustbox.UI.Activity.SendActionActivity">
    <include layout="@layout/toolbar"
        android:id="@+id/toolbar_send"
        />
@@ -71,7 +71,7 @@
                      android:layout_height="match_parent"
                      android:src="@drawable/ic_action_pic"
                      android:id="@+id/takePicture"
-                     android:padding="2dp"
+                     android:padding="1dp"
                      android:layout_marginLeft="5dp"
                      android:background="?android:attr/selectableItemBackground"
                      android:layout_marginRight="5dp"

@@ -72,6 +72,7 @@
         android:layout_alignStart="@+id/action_info_message"
         android:layout_below="@+id/action_info_message"
         app:ngv_mode="fill"
+        android:layout_marginEnd="30dp"
         app:ngv_singleImageRatio="0.56" />
 
     <RelativeLayout

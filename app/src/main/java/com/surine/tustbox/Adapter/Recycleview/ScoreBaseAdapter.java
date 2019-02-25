@@ -1,15 +1,11 @@
 package com.surine.tustbox.Adapter.Recycleview;
 
 import android.support.annotation.Nullable;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.surine.tustbox.Bean.ScoreInfo;
-import com.surine.tustbox.Bean.ScoreInfoHelper;
+import com.surine.tustbox.Pojo.ScoreInfoHelper;
 import com.surine.tustbox.R;
-import com.surine.tustbox.Util.PatternUtil;
 
 import java.util.List;
 

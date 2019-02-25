@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="80dp"
+    android:background="@color/background"
+    android:paddingBottom="20dp"
+    >
+    <TextView
+        android:gravity="center"
+        android:id="@+id/btmText"
+        android:textSize="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="[哥哥说，做APP要有底线！]"
+        />
+
+</RelativeLayout>

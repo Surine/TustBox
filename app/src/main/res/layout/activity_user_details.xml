@@ -6,12 +6,14 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:fitsSystemWindows="true"
-tools:context="com.surine.tustbox.UI.TodayCardActivity">
+android:background="@color/white"
+tools:context="com.surine.tustbox.UI.Activity.TodayCardActivity">
 
 <android.support.design.widget.AppBarLayout
     android:id="@+id/app_bar"
     android:layout_width="match_parent"
     android:layout_height="300dp"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
@@ -20,6 +22,7 @@ tools:context="com.surine.tustbox.UI.TodayCardActivity">
         android:layout_width="match_parent"
         android:layout_height="260dp"
         android:fitsSystemWindows="true"
+        android:background="@color/white"
         app:contentScrim="?attr/colorPrimary"
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
         app:titleEnabled="false">
@@ -63,7 +66,6 @@ tools:context="com.surine.tustbox.UI.TodayCardActivity">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/name_from_server"
-                    android:text="@string/app_name"
                     android:textSize="17sp"
                     android:textColor="@color/Tust_Black"
                     android:layout_marginTop="18dp"
@@ -72,7 +74,6 @@ tools:context="com.surine.tustbox.UI.TodayCardActivity">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="我不曾忘却，那曾经温暖的岁月"
                     android:textColor="@color/Tust_Grey"
                     android:gravity="center"
                     android:textSize="12sp"
@@ -105,6 +106,7 @@ tools:context="com.surine.tustbox.UI.TodayCardActivity">
             android:layout_height="?attr/actionBarSize"
             app:layout_collapseMode="pin"
             android:layout_marginTop="10dp"
+            android:background="@color/trans_white"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
@@ -119,7 +121,7 @@ tools:context="com.surine.tustbox.UI.TodayCardActivity">
         android:background="@color/Tust_White"
         app:tabIndicatorHeight="0dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:tabSelectedTextColor="@color/colorPrimary2"
+        app:tabSelectedTextColor="@color/colorPrimaryB"
         app:tabTextColor="@color/Tust_Black"/>
 </android.support.design.widget.AppBarLayout>
 

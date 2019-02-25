@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
+    android:background="@color/Tust_White"
+    android:layout_marginTop="32dp"
+    >
+    <RelativeLayout
+        android:layout_width="@dimen/dp_36"
+        android:layout_height="@dimen/dp_36"
+        android:background="@drawable/little_program_functionbar_background"
+        android:layout_toStartOf="@+id/view"
+        android:gravity="center"
+        android:id="@+id/add_function"
+        android:layout_marginEnd="@dimen/dp_10"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_file_download_black_24dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="95dp"
+        android:layout_height="@dimen/dp_36"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/sp_16"
+        android:background="@drawable/little_program_functionbar_background"
+        android:id="@+id/view" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/exit"
+            android:layout_marginStart="16dp"
+            android:id="@+id/toolbar_info"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_warning_black_24dp" />
+
+        <ImageView
+            android:id="@+id/exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:srcCompat="@drawable/ic_close_black_24dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/sp_16"
+        android:gravity="center"
+        android:text="盒子功能"
+        android:textColor="@color/Tust_Black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_25"
+        android:layout_below="@id/textView21"
+        android:gravity="center"
+        android:id="@+id/network_note"
+        android:layout_marginStart="@dimen/sp_16"
+        android:layout_marginEnd="@dimen/sp_16"
+        android:layout_marginTop="@dimen/dp_12" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/netNoteText"
+            android:text="---请确保校园网链接---" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

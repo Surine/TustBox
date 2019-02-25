@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--主题色-->
     <color name="colorPrimary">#ffffff</color>
-    <!--<color name="colorPrimary2">#1a7ae1</color>-->
-    <color name="colorPrimary2">#ff0008</color>
+    <color name="colorPrimaryB">#1a7ae1</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+
+    <!--强调色-->
+    <color name="colorAccent">#1a7ae1</color>
+    <color name="colorAccentNormal">#FF4081</color>
+
+
     <color name="multiple_image_select_primaryDark">#0d6bb9</color>
-    <color name="colorPrimaryDark">#dcdbdb</color>
-    <color name="colorAccent1">#FF4081</color>
     <color name="Tust_RED">#ff0008</color>
-    <!--<color name="colorAccent">#1a7ae1</color>-->
-    <color name="colorAccent">#ff0008</color>
     <color name="Tust_Blue">#1a7ae1</color>
     <color name="Tust_White">#ffffff</color>
     <color name="Tust_Black">#000000</color>
@@ -73,4 +77,27 @@
 
 
     <color name="outofdateColor">#98bebebe</color>
+    <color name="pure_grey">#afe1e1e1</color>
+
+    <!--v5色系-->
+    <color name="v5_cc1">#df0404</color>
+    <color name="v5_cc2">#0d629b</color>
+    <color name="v5_cc3">#b99f09</color>
+    <color name="v5_cc4">#569707</color>
+    <color name="v5_cc5">#d15808</color>
+    <color name="v5_cc6">#0ca154</color>
+    <color name="v5_cc7">#0ca0a3</color>
+    <color name="v5_cc8">#c211ad</color>
+    <color name="v5_cc9">#1e1880</color>
+    <color name="v5_cc10">#b30c35</color>
+    <color name="v5_cc11">#75139c</color>
+    <color name="v5_cc12">#138f07</color>
+    <color name="v5_cc13">#a4145a</color>
+    <color name="v5_cc14">#b91148</color>
+    <color name="v5_cc15">#3d1496</color>
+    <color name="v5_cc16">#86051d</color>
+
+    <!--v5配置色-->
+    <color name="background">#ffffff</color>
+    <color name="textColor">#000000</color>
 </resources>

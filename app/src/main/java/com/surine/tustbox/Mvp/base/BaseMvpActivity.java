@@ -8,7 +8,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.surine.tustbox.Init.TustBaseActivity;
+import com.surine.tustbox.App.Init.TustBaseActivity;
 import com.surine.tustbox.R;
 
 /**

@@ -96,4 +96,15 @@
         <item>@color/taskB9</item>
         <item>@color/taskB10</item>
     </integer-array>
+
+    <!--首页标题-->
+    <string-array name="mainTab">
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+    </string-array>
+
+
 </resources>

@@ -3,17 +3,12 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimaryB</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textSize">13sp</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowContentTransitions">true</item>
+    </style>
 
-    </style>
-    <style name="myTransparent" parent="AppTheme">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
 
     <style name="ToolbarTitle">
         <item name="android:textSize">30sp</item>
@@ -29,7 +24,26 @@
 
     <style name="tabTitle">
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/colorPrimary2</item>
+        <item name="android:textColor">@color/colorPrimaryB</item>
     </style>
 
+
+    <!--首页底部栏-->
+    <style name="MainActivityBottomTab" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">?attr/colorAccent</item>
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabTextColor">#6b7984</item>
+        <item name="tabSelectedTextColor">@color/colorAccent</item>
+    </style>
+
+    <!--全屏背景半透明 dialog-->
+    <style name="transparentBgDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>
