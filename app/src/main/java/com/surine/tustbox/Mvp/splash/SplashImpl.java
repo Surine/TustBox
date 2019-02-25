@@ -3,14 +3,14 @@ package com.surine.tustbox.Mvp.splash;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.surine.tustbox.Bean.JwcUserInfo;
-import com.surine.tustbox.Data.FormData;
-import com.surine.tustbox.Data.UrlData;
+import com.surine.tustbox.Pojo.JwcUserInfo;
+import com.surine.tustbox.App.Data.FormData;
+import com.surine.tustbox.App.Data.UrlData;
 import com.surine.tustbox.Mvp.base.BaseCallBack;
-import com.surine.tustbox.Util.HttpUtil;
-import com.surine.tustbox.Util.LogUtil;
-import com.surine.tustbox.Util.SharedPreferencesUtil;
-import com.surine.tustbox.Util.TustBoxUtil;
+import com.surine.tustbox.Helper.Utils.HttpUtil;
+import com.surine.tustbox.Helper.Utils.LogUtil;
+import com.surine.tustbox.Helper.Utils.SharedPreferencesUtil;
+import com.surine.tustbox.Helper.Utils.TustBoxUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,20 +24,20 @@ import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.Response;
 
-import static com.surine.tustbox.Data.Constants.CHOOSE_WEEK;
-import static com.surine.tustbox.Data.Constants.ERROR_PSWD;
-import static com.surine.tustbox.Data.Constants.INFO_ERROR;
-import static com.surine.tustbox.Data.Constants.LOGIN_SAVE;
-import static com.surine.tustbox.Data.Constants.LOGIN_SAVE_TOKEN;
-import static com.surine.tustbox.Data.Constants.NON_REGISTER;
-import static com.surine.tustbox.Data.Constants.USER_EXIST;
-import static com.surine.tustbox.Data.FormData.JCODE;
-import static com.surine.tustbox.Data.FormData.USER_TYPE;
-import static com.surine.tustbox.Data.FormData.WEEK;
-import static com.surine.tustbox.Data.FormData.college_server;
-import static com.surine.tustbox.Data.FormData.face_server;
-import static com.surine.tustbox.Data.FormData.nick_name_server;
-import static com.surine.tustbox.Data.FormData.sign_server;
+import static com.surine.tustbox.App.Data.Constants.CHOOSE_WEEK;
+import static com.surine.tustbox.App.Data.Constants.ERROR_PSWD;
+import static com.surine.tustbox.App.Data.Constants.INFO_ERROR;
+import static com.surine.tustbox.App.Data.Constants.LOGIN_SAVE;
+import static com.surine.tustbox.App.Data.Constants.LOGIN_SAVE_TOKEN;
+import static com.surine.tustbox.App.Data.Constants.NON_REGISTER;
+import static com.surine.tustbox.App.Data.Constants.USER_EXIST;
+import static com.surine.tustbox.App.Data.FormData.JCODE;
+import static com.surine.tustbox.App.Data.FormData.USER_TYPE;
+import static com.surine.tustbox.App.Data.FormData.WEEK;
+import static com.surine.tustbox.App.Data.FormData.college_server;
+import static com.surine.tustbox.App.Data.FormData.face_server;
+import static com.surine.tustbox.App.Data.FormData.nick_name_server;
+import static com.surine.tustbox.App.Data.FormData.sign_server;
 
 /**
  * Created by Surine on 2018/9/14.

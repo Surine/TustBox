@@ -6,7 +6,7 @@
     android:background="@color/Tust_White"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="com.surine.tustbox.UI.EditUserInfoActivity">
+    tools:context="com.surine.tustbox.UI.Activity.EditUserInfoActivity">
     <include layout="@layout/toolbar"
         />
     <RelativeLayout

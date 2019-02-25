@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Tust_White"
-    tools:context="com.surine.tustbox.UI.SchZoneActivity">
+    tools:context="com.surine.tustbox.UI.Activity.SchZoneActivity">
     <include layout="@layout/toolbar" />
     <LinearLayout
         android:background="?android:attr/selectableItemBackground"

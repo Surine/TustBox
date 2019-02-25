@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:transitionName="backRelative"
+    android:id="@+id/classCard"
+    android:background="?attr/selectableItemBackground"
+    android:paddingBottom="20dp"
+    >
+    <LinearLayout
+        android:layout_height="55dp"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="@dimen/main_card_conent_margin_start"
+        >
+
+        <TextView
+            android:id="@+id/classInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="1/2"
+            android:visibility="gone"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <!--android:paddingStart="30dp"-->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="55dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:text="今日上的课程名称"
+            android:gravity="center_vertical"
+            android:textColor="@color/Tust_Black"
+            android:textSize="16sp"
+            android:id="@+id/className"
+            android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:id="@+id/xml_locate"
+                android:src="@drawable/location_v5_p12"
+                />
+
+            <TextView
+                android:id="@+id/classRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="5dp"
+                android:layout_toRightOf="@id/xml_locate"
+                android:gravity="center_vertical"
+                android:text="泰达西苑 8-211"
+                android:textSize="10sp" />
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="50dp"
+        android:layout_marginEnd="@dimen/main_card_conent_margin_start"
+        android:layout_width="wrap_content">
+
+    </LinearLayout>
+</LinearLayout>

@@ -13,16 +13,17 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;
 import com.lzy.ninegrid.preview.NineGridViewClickAdapter;
-import com.surine.tustbox.Bean.Action;
-import com.surine.tustbox.Data.FormData;
+import com.surine.tustbox.Adapter.Other.MyImageDisplayAdapter;
+import com.surine.tustbox.Pojo.Action;
+import com.surine.tustbox.App.Data.FormData;
 import com.surine.tustbox.R;
-import com.surine.tustbox.Util.SharedPreferencesUtil;
+import com.surine.tustbox.Helper.Utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.surine.tustbox.Data.Constants.HTTP;
-import static com.surine.tustbox.Data.Constants.PIC_CROP;
+import static com.surine.tustbox.App.Data.Constants.HTTP;
+import static com.surine.tustbox.App.Data.Constants.PIC_CROP;
 
 /**
  * Created by Surine on 2018/2/28.
@@ -107,15 +108,10 @@ public class ActionInMyPageAdapter extends BaseQuickAdapter<Action, BaseViewHold
                 info.setThumbnailUrl(ThumbnailUrl);
                 info.setBigImageUrl(BigImageCrop);
                 imageInfo.add(info);
-
             }
-            nineGridView.setAdapter((new NineGridViewClickAdapter(mContext, imageInfo)));
+            nineGridView.setAdapter((new MyImageDisplayAdapter(mContext, imageInfo)));
         }else{
-            nineGridView.setAdapter((new NineGridViewClickAdapter(mContext, null)));
-
+            nineGridView.setAdapter((new MyImageDisplayAdapter(mContext, null)));
         }
-
-
-
     }
 }

@@ -92,7 +92,7 @@
     <string name="surine_is_me">新世纪的Android爱好者，xiaxiaxia~</string>
     <string name="qq_number">点我复制QQ群：635622188</string>
     <string name="qq_is_copy">QQ已经复制到剪贴板</string>
-    <string name="welcome">初次见面，请多关照：</string>
+    <string name="welcome">点击下载小天盒子（暂只支持Android版）</string>
     <string name="more_share">我是一只盒子。</string>
     <string name="type">你要使用什么方式联系盒子呢？</string>
     <string name="what_do_you_want_to_say">想说点什么？</string>
@@ -111,7 +111,7 @@
     <string name="safe">安全</string>
     <string name="pswd">信息编码</string>
     <string name="pswd_summary">Base64</string>
-    <string name="nothing">什么都木有啊！！</string>
+    <string name="nothing">未选择图片~</string>
     <string name="about_gp">关于GP</string>
     <string name="info_gp">该平台是公司根据校园正版化（GP）项目在我国高校中的具体使用需求自行研发的软件管理平台系统,
                 同时也是我国第一套针对校园正版化软件如何正确有效安全使用的解决方案。\n
@@ -136,7 +136,7 @@
     <string name="school">校园</string>
     <string name="title_activity_today_card">TodayCardActivity</string>
     <string name="action_settings">Settings</string>
-    <string name="copyright">Copyright 2017-2018 surine.cn\nAll rights reserved</string>
+    <string name="copyright">Copyright 2017-2019 surine.cn\nAll rights reserved</string>
     <string name="score_helper">成绩助手</string>
     <string name="bus_helper">校车时刻表</string>
     <string name="network_error">网络（非校园网）未连接</string>
@@ -237,7 +237,7 @@
     <string name="api_error_msg">尴尬了，网络异常了。</string>
     <string name="mvp_notice">提示</string>
     <string name="mvp_login_jwc">正在登录教务处(请使用校园网)，请稍后……</string>
-    <string name="mvp_empty_field">帐号或者密码为空！</string>
+    <string name="mvp_empty_field">部分参数为空！</string>
     <string name="parse_error">课表解析失败，请稍后再试吧！</string>
     <string name="cookie_error">Cookies已失效，请重新登录一次！</string>
     <string name="parse_info">正在解析个人信息……</string>

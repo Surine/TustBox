@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent"
+    tools:context="com.surine.tustbox.UI.Activity.V5_AboutAppActivity">
+
+    <TextView
+        android:id="@+id/textView30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="140dp"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:text="TustBox"
+        android:textColor="@color/textColor"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView30"
+        android:layout_marginTop="6dp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/textView33"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignStart="@+id/version"
+        android:layout_below="@+id/version"
+        android:layout_marginTop="14dp"
+        android:text="基于你的无限创意~"
+        android:textColor="@color/textColor"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/l1"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView34"
+        android:layout_below="@+id/textView33"
+        android:layout_marginEnd="51dp"
+        android:layout_marginTop="24dp"
+        android:text="许可" />
+
+    <Button
+        android:id="@+id/a2"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/l1"
+        android:layout_alignBottom="@+id/l1"
+        android:layout_toEndOf="@+id/t3"
+        android:text="协议" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="17dp"
+        android:gravity="center"
+        android:text="@string/copyright"
+        android:textSize="8sp" />
+
+    <Button
+        android:id="@+id/t3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/l1"
+        android:layout_below="@+id/l1"
+        android:text="致谢" />
+
+    <Button
+        android:id="@+id/u4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/a2"
+        android:layout_toEndOf="@+id/t3"
+        android:text="更新" />
+</RelativeLayout>

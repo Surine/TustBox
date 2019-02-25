@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.surine.tustbox.Bean.ScoreInfo;
+import com.surine.tustbox.Pojo.ScoreInfo;
 import com.surine.tustbox.R;
 
 import java.util.ArrayList;

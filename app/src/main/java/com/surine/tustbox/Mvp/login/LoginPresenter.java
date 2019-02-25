@@ -8,8 +8,9 @@ import android.content.res.Resources;
 import com.surine.tustbox.Mvp.base.BaseCallBack;
 import com.surine.tustbox.Mvp.base.BasePresenter;
 import com.surine.tustbox.Mvp.base.DialogEvent;
+import com.surine.tustbox.Pojo.Cookies;
 import com.surine.tustbox.R;
-import com.surine.tustbox.UI.MainActivity;
+import com.surine.tustbox.UI.Activity.MainActivity;
 
 /**
  * Created by Surine on 2018/9/2.
@@ -30,7 +31,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
     }
 
     //登录教务处
-    public void startLogin(final String tustNumber, final String pswd) {
+    public void startLogin(final String tustNumber, final String pswd, String verifyCode,final String cookies) {
         //如果没有View引用就不加载数据
         if(!isViewAttached()){
             return;
@@ -38,12 +39,17 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
         if(tustNumber.isEmpty()||pswd.isEmpty()){
             getView().showToast(r.getString(R.string.mvp_empty_field));
+            return;
+        }
+
+        if(verifyCode.isEmpty()){
+            verifyCode = "";
         }
 
         //显示正在加载进度条
         getView().showLoading(r.getString(R.string.mvp_notice),r.getString(R.string.mvp_login_jwc));
 
-        loginImpl.loginJwc(tustNumber, pswd, new BaseCallBack<String>() {
+        loginImpl.loginJwc(tustNumber, pswd, verifyCode,cookies,new BaseCallBack<String>() {
             @Override
             public void onSuccess(String data) {
                 //调用view接口提示失败信息
@@ -364,5 +370,32 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         context.startActivity(intent);
         Activity activity = (Activity)context;
         activity.finish();
+    }
+
+    /**
+     * 加载验证码
+     * */
+    public void getVerifyCode(Context context) {
+        loginImpl.getVerifyCode(new BaseCallBack<Cookies>() {
+            @Override
+            public void onSuccess(Cookies data) {
+                getView().getVerifyData(data);
+            }
+
+            @Override
+            public void onFail(String msg) {
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 }

@@ -6,15 +6,11 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.jph.takephoto.model.TImage;
-import com.surine.tustbox.Bean.Task;
+import com.surine.tustbox.Pojo.Task;
 import com.surine.tustbox.R;
-import com.surine.tustbox.Util.TimeUtil;
+import com.surine.tustbox.Helper.Utils.TimeUtil;
 
-import java.sql.Time;
 import java.util.List;
-
-import static com.surine.tustbox.Util.TimeUtil.yMdHm;
 
 /**
  * Created by Surine on 2018/7/13.

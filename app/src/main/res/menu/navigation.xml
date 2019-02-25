@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/btmFirstPage"
+        android:icon="@drawable/ic_file_download_black_24dp"
+        android:title="首页"
+        />
+    <item
+        android:id="@+id/btmSchTabPage"
+        android:icon="@drawable/ic_file_download_black_24dp"
+        android:title="课表"
+        />
+    <item
+        android:id="@+id/btmTaskPage"
+        android:icon="@drawable/ic_file_download_black_24dp"
+        android:title="日程"
+        />
+    <item
+        android:id="@+id/btmBoxPage"
+        android:icon="@drawable/ic_file_download_black_24dp"
+        android:title="盒子"
+        />
+    <item
+        android:id="@+id/btmMsgPage"
+        android:icon="@drawable/ic_file_download_black_24dp"
+        android:title="动态"
+        />
+</menu>

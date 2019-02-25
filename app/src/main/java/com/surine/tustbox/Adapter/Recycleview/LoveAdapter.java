@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.surine.tustbox.Bean.Love;
+import com.surine.tustbox.Pojo.Love;
 import com.surine.tustbox.R;
 
 import java.util.List;

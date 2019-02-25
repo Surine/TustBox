@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:background="@color/Tust_White"
     android:layout_height="match_parent"
-    tools:context="com.surine.tustbox.UI.PanActivity">
-   <com.surine.tustbox.View.LittleProgramToolbar
+    tools:context="com.surine.tustbox.UI.Activity.PanActivity">
+   <com.surine.tustbox.UI.View.LittleProgramToolbar
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:id="@+id/toolbar_pan"

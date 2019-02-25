@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/Tust_White"
+    >
+  <ImageView
+      android:layout_width="match_parent"
+      android:layout_height="170dp"
+      android:src="@drawable/backsrc"
+      android:scaleType="centerCrop"
+      android:id="@+id/tustBoxHead" />
+
+  <View
+      android:id="@+id/view2"
+      android:layout_width="match_parent"
+      android:layout_height="100dp"
+      android:layout_alignBottom="@+id/tustBoxHead"
+      android:layout_alignParentStart="true"
+      android:background="@drawable/main_back_shade_white" />
+
+  <TextView
+      android:id="@+id/tustBoxName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentStart="true"
+      android:layout_alignTop="@+id/view2"
+      android:layout_marginStart="25dp"
+      android:layout_marginTop="35dp"
+      android:text="十八 · 二月"
+      android:textColor="@color/Tust_Black"
+      android:textSize="25sp"
+      android:textStyle="bold" />
+
+  <ImageView
+      android:id="@+id/mainSetting"
+      android:layout_width="35dp"
+      android:layout_height="35dp"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentTop="true"
+      android:layout_marginEnd="10dp"
+      android:background="?attr/selectableItemBackgroundBorderless"
+      android:padding="5dp"
+      android:layout_marginTop="30dp"
+      app:srcCompat="@drawable/ic_setting_black_24dp" />
+</RelativeLayout>

@@ -7,8 +7,8 @@ import com.surine.tustbox.Mvp.base.BaseCallBack;
 import com.surine.tustbox.Mvp.base.BasePresenter;
 import com.surine.tustbox.R;
 
-import static com.surine.tustbox.Data.Constants.ERROR_PSWD;
-import static com.surine.tustbox.Data.Constants.NON_REGISTER;
+import static com.surine.tustbox.App.Data.Constants.ERROR_PSWD;
+import static com.surine.tustbox.App.Data.Constants.NON_REGISTER;
 
 /**
  * Created by Surine on 2018/9/14.

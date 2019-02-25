@@ -10,14 +10,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.surine.tustbox.Bean.Comment;
-import com.surine.tustbox.Data.FormData;
+import com.surine.tustbox.Pojo.Comment;
+import com.surine.tustbox.App.Data.FormData;
 import com.surine.tustbox.R;
 
 import java.util.List;
 
-import static com.surine.tustbox.Data.Constants.HTTP;
-import static com.surine.tustbox.Data.Constants.PIC_CROP;
+import static com.surine.tustbox.App.Data.Constants.PIC_CROP;
 
 /**
  * Created by Surine on 2018/2/23.

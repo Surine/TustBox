@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.surine.tustbox.Bean.Student_info;
+import com.surine.tustbox.Pojo.Student_info;
 import com.surine.tustbox.R;
 
 import java.util.ArrayList;

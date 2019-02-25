@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.surine.tustbox.UI.DownloadPageActivity">
+    tools:context="com.surine.tustbox.UI.Activity.DownloadPageActivity">
 
-  <com.surine.tustbox.View.LittleProgramToolbar
+  <com.surine.tustbox.UI.View.LittleProgramToolbar
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:id="@+id/topbar"
-      ></com.surine.tustbox.View.LittleProgramToolbar>
+      ></com.surine.tustbox.UI.View.LittleProgramToolbar>
   <android.support.v7.widget.RecyclerView
       android:layout_width="match_parent"
       android:layout_height="match_parent"

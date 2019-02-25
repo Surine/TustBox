@@ -4,8 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.surine.tustbox.Bean.Action;
-import com.surine.tustbox.Bean.SchoolUrl;
+import com.surine.tustbox.Pojo.SchoolUrl;
 import com.surine.tustbox.R;
 
 import java.util.List;

@@ -34,9 +34,13 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        if(titles.get(position).equals("")){
+        if(titles.get(position) == null || titles.get(position).equals("")){
             return null;
         }
         return titles.get(position);
+    }
+
+    public List<String> getTitles(){
+        return titles;
     }
 }

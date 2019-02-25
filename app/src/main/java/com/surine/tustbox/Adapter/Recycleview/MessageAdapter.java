@@ -4,23 +4,20 @@ import android.annotation.SuppressLint;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.surine.tustbox.Bean.Action;
-import com.surine.tustbox.Bean.Message;
-import com.surine.tustbox.Data.Constants;
+import com.surine.tustbox.Pojo.Message;
 import com.surine.tustbox.R;
 
 import java.util.List;
 
-import static com.surine.tustbox.Data.Constants.COMMENT_ACTION;
-import static com.surine.tustbox.Data.Constants.LOVE_ACTION;
-import static com.surine.tustbox.Data.Constants.REPLY_AT_SOMEONE;
-import static com.surine.tustbox.Data.Constants.REPLY_COMMENT;
+import static com.surine.tustbox.App.Data.Constants.COMMENT_ACTION;
+import static com.surine.tustbox.App.Data.Constants.LOVE_ACTION;
+import static com.surine.tustbox.App.Data.Constants.REPLY_AT_SOMEONE;
+import static com.surine.tustbox.App.Data.Constants.REPLY_COMMENT;
 
 /**
  * Created by Surine on 2018/2/25.

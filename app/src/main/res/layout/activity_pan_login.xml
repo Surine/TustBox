@@ -4,11 +4,11 @@
     android:background="@color/Tust_White"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-   <com.surine.tustbox.View.LittleProgramToolbar
+   <com.surine.tustbox.UI.View.LittleProgramToolbar
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:id="@+id/topbar"
-       ></com.surine.tustbox.View.LittleProgramToolbar>
+       ></com.surine.tustbox.UI.View.LittleProgramToolbar>
     <RelativeLayout
         android:layout_below="@id/topbar"
         android:layout_width="match_parent"

@@ -1,8 +1,11 @@
 package com.surine.tustbox.Mvp.Dao;
 
-import com.surine.tustbox.Bean.JwcUserInfo;
+import com.surine.tustbox.Helper.Dao.CurdManager;
+import com.surine.tustbox.Pojo.JwcUserInfo;
 
 import org.litepal.crud.DataSupport;
+
+import java.util.List;
 
 /**
  * Created by Surine on 2018/9/2.
@@ -49,5 +52,10 @@ public class UserInfoDao implements CurdManager<JwcUserInfo> {
     @Override
     public boolean update(JwcUserInfo jwcUserInfo) {
         return jwcUserInfo.save();
+    }
+
+    @Override
+    public List<JwcUserInfo> selectAll() {
+        return null;
     }
 }

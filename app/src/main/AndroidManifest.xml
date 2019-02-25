@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
-        android:name=".Init.TustBoxApplication"
+        android:name=".App.Init.TustBoxApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -33,7 +33,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent" />
         <activity
-            android:name=".UI.SplashActivity"
+            android:name=".UI.Activity.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -43,12 +43,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UI.MainActivity"
-            android:label="首页"
+            android:name=".UI.Activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.LoginActivity"
+            android:name=".UI.Activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Mvp.login.LoginMvpActivity"
@@ -58,34 +57,31 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.CourseInfoActivity"
+            android:name=".UI.Activity.CourseInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.Box_info_Activty"
+            android:name=".UI.Activity.Box_info_Activty"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.SettingActivity"
+            android:name=".UI.Activity.PanLoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.PanLoginActivity"
+            android:name=".UI.Activity.NetWorkActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.NetWorkActivity"
+            android:name=".UI.Activity.V5_UserInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.UserInfoActivity"
+            android:name=".UI.Activity.EditCourseActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.EditCourseActivity"
+            android:name=".UI.Activity.ActionInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.ActionInfoActivity"
+            android:name=".UI.Activity.EmptyClassRoomActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.EmptyClassRoomActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".UI.ShortActivity"
+            android:name=".UI.Activity.ShortActivity"
             android:icon="@drawable/ic_short"
             android:label="一键登录校园网"
             android:screenOrientation="portrait"
@@ -100,7 +96,7 @@
         <!-- 参考：http://www.cnblogs.com/skywang12345/p/3264991.html -->
         <!-- 课程表周视图小部件 -->
         <receiver
-            android:name=".Widget.Main.WidgetProvider"
+            android:name=".UI.Widget.Main.WidgetProvider"
             android:label="课程表（周视图）">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -118,7 +114,7 @@
         </receiver>
 
         <service
-            android:name=".Widget.Main.WidgetService"
+            android:name=".UI.Widget.Main.WidgetService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
         <service
@@ -126,9 +122,15 @@
             android:enabled="true"
             android:exported="true" />
 
+        <!-- 腾讯X5内核初始化 -->
+        <service
+            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+            android:label="dexopt"
+            android:process=":dexopt" />
+
         <!-- 任务视图小部件 -->
         <receiver
-            android:name=".Widget.Task.TaskWidgetProvider"
+            android:name=".UI.Widget.Task.TaskWidgetProvider"
             android:label="任务视图">
             <intent-filter>
                 <action android:name="com.surine.tustbox.COLLECTION_VIEW_ACTION" />
@@ -142,37 +144,34 @@
         </receiver>
 
         <service
-            android:name=".Widget.Task.TaskWidgetService"
+            android:name=".UI.Widget.Task.TaskWidgetService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <activity
-            android:name=".UI.TodayCardActivity"
+            android:name=".UI.Activity.TodayCardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/myTransparent" />
         <activity
-            android:name=".UI.WebViewActivity"
+            android:name=".UI.Activity.V5_WebViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.SendActionActivity"
+            android:name=".UI.Activity.SendActionActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".UI.SchZoneActivity"
+            android:name=".UI.Activity.SchZoneActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.PanActivity"
+            android:name=".UI.Activity.PanActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.ScoreActiviy"
+            android:name=".UI.Activity.ScoreActiviy"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.ReplyInCommentActivity"
+            android:name=".UI.Activity.ReplyInCommentActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".UI.MessageActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".UI.EditUserInfoActivity" />
+        <activity android:name=".UI.Activity.EditUserInfoActivity" />
 
         <provider
             android:name="com.tencent.bugly.beta.utils.BuglyFileProvider"
@@ -197,19 +196,26 @@
                 tools:replace="android:resource" />
         </provider>
 
-        <activity android:name=".UI.CardActivity" />
+        <activity android:name=".UI.Activity.CardActivity" />
         <activity
-            android:name=".UI.AddTaskActivity"
+            android:name=".UI.Activity.AddTaskActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.TaskInfoActivity"
+            android:name=".UI.Activity.TaskInfoActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".UI.Activity.DownloadPageActivity" />
         <activity
-            android:name=".UI.NoticeActivity"
+            android:name=".UI.Activity.V5_VideoPlayActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".UI.Activity.V5_SettingActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".UI.DownloadPageActivity" />
-        <activity android:name=".UI.VideoPlayActivity"
-            android:screenOrientation="landscape"></activity>
+        <activity android:name=".UI.Activity.UIPictureActivity" />
+        <activity android:name=".UI.Activity.V5_AboutAppActivity" />
+        <activity android:name=".UI.Activity.V5_MessageActivity" />
+        <activity android:name=".UI.Activity.ImagePreViewActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.surine.tustbox.Mvp.login;
 
 import com.surine.tustbox.Mvp.base.BaseCallBack;
+import com.surine.tustbox.Pojo.Cookies;
 
 /**
  * Created by Surine on 2018/9/2.
@@ -12,9 +13,11 @@ public interface LoginModel {
      * 登录教务处
      * @param tustNumber 学号
      * @param pswd 密码
+     * @param verifyCode 验证码
      * @param baseCallBack 回调
+     * @param cookies Cookies
      * */
-    void loginJwc(String tustNumber, String pswd, BaseCallBack<String> baseCallBack);
+    void loginJwc(String tustNumber, String pswd,String verifyCode, String cookies, BaseCallBack<String> baseCallBack);
 
     /**
      * 取得课程表
@@ -56,4 +59,11 @@ public interface LoginModel {
      * @param baseCallBack 回调
      * */
     void getBackUp(String tustNumber, String pswd,BaseCallBack<String> baseCallBack);
+
+
+    /**
+     * 加载验证码
+     * @param baseCallBack 回调
+     * */
+    void getVerifyCode(BaseCallBack<Cookies> baseCallBack);
 }

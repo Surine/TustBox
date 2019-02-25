@@ -1,14 +1,12 @@
 package com.surine.tustbox.Adapter.Recycleview;
 
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.surine.tustbox.Bean.SchoolUrl;
-import com.surine.tustbox.Bean.Subject;
+import com.surine.tustbox.Pojo.Subject;
 import com.surine.tustbox.R;
 
 import java.util.List;

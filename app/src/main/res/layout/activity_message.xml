@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/Tust_White"
-    tools:context="com.surine.tustbox.UI.MessageActivity">
+    tools:context="com.surine.tustbox.UI.Activity.MessageActivity">
     <include layout="@layout/toolbar"
         />
     <include layout="@layout/recycleview"/>

@@ -4,20 +4,21 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
 
-import com.surine.tustbox.Bean.CourseInfoHelper;
-import com.surine.tustbox.Bean.JwcUserInfo;
-import com.surine.tustbox.Data.Constants;
-import com.surine.tustbox.Data.FormData;
-import com.surine.tustbox.Data.UrlData;
-import com.surine.tustbox.Manager.OkhttpManager;
-import com.surine.tustbox.Mvp.Dao.CourseInfoDao;
+import com.surine.tustbox.Pojo.Cookies;
+import com.surine.tustbox.Pojo.CourseInfoHelper;
+import com.surine.tustbox.Pojo.JwcUserInfo;
+import com.surine.tustbox.App.Data.Constants;
+import com.surine.tustbox.App.Data.FormData;
+import com.surine.tustbox.App.Data.UrlData;
+import com.surine.tustbox.Helper.Manager.OkhttpManager;
+import com.surine.tustbox.Helper.Dao.CourseInfoDao;
 import com.surine.tustbox.Mvp.Dao.UserInfoDao;
 import com.surine.tustbox.Mvp.base.BaseCallBack;
 import com.surine.tustbox.R;
-import com.surine.tustbox.Util.EncryptionUtil;
-import com.surine.tustbox.Util.LogUtil;
-import com.surine.tustbox.Util.SharedPreferencesUtil;
-import com.surine.tustbox.Util.TustBoxUtil;
+import com.surine.tustbox.Helper.Utils.EncryptionUtil;
+import com.surine.tustbox.Helper.Utils.LogUtil;
+import com.surine.tustbox.Helper.Utils.SharedPreferencesUtil;
+import com.surine.tustbox.Helper.Utils.TustBoxUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,9 +35,14 @@ import java.util.regex.Pattern;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.surine.tustbox.Data.Constants.colors;
+import static com.surine.tustbox.App.Data.Constants.colors;
+import static com.surine.tustbox.App.Data.FormData.JSESSIONID;
+import static com.surine.tustbox.App.Data.FormData.SET_COOKIE;
+import static com.surine.tustbox.App.Data.UrlData.login_post_url_new;
 
 /**
  * Created by Surine on 2018/9/2.
@@ -50,6 +56,7 @@ public class LoginImpl implements LoginModel{
     private Context context;
     private Resources r;
     private int tag = 0;
+    private String tempDataList;
 
 
     public LoginImpl(Context context) {
@@ -60,14 +67,25 @@ public class LoginImpl implements LoginModel{
     }
 
     @Override
-    public void loginJwc(final String tustNumber, final String pswd, final BaseCallBack<String> baseCallBack) {
+    public void loginJwc(final String tustNumber, final String pswd, final String verifyCode, String cookies, final BaseCallBack<String> baseCallBack) {
         //准备登录
         FormBody formBody = new FormBody.Builder()
                 .add(FormData.login_id_new, tustNumber)
                 .add(FormData.login_pswd_new, pswd)
-                .add(FormData.help_var_new, "error")
+                .add(FormData.login_captcha_new, verifyCode)
                 .build();
-        OkhttpManager.post(UrlData.login_post_url_new,formBody).enqueue(new Callback() {
+
+
+        //防止空指针发生异常
+        if(cookies == null)
+            cookies = "";
+
+        //构造请求
+        Request request = new Request.Builder()
+                .addHeader(JSESSIONID,cookies).post(formBody)
+                .url(login_post_url_new).build();
+
+        OkhttpManager.init().newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 baseCallBack.onError();
@@ -89,7 +107,6 @@ public class LoginImpl implements LoginModel{
                 baseCallBack.onComplete();
             }
         });
-
     }
 
     private void saveUserInfo(String tustNumber, String pswd) {
@@ -127,6 +144,7 @@ public class LoginImpl implements LoginModel{
         try {
             JSONObject jsonObject = new JSONObject(json);
             String dataList = jsonObject.getString("dateList");
+            tempDataList = dataList;
             LogUtil.d(TAG, dataList);
 
             /*json字符串最外层是方括号时：*/
@@ -165,11 +183,12 @@ public class LoginImpl implements LoginModel{
                 programPlanName = courseInfoJsonObject.getString("programPlanName");
 
                 //选择颜色
-                int slec_color = colors[i % 15];
-                if (slec_color == 0) {
-                    slec_color = colors[0];
+                //直男色，少女色？哈哈哈
+                int slecColor = colors[i % 15];
+                if (slecColor == 0) {
+                    slecColor = colors[0];
                 }
-                jwColor = slec_color;
+                jwColor = slecColor;
 
 
                 //判断是否两节课
@@ -263,6 +282,10 @@ public class LoginImpl implements LoginModel{
             callBack.onComplete();
 
         } catch (JSONException e) {
+            if(tempDataList.equals("[]")){
+                callBack.onSuccess("TAG"+tag);
+                return;
+            }
             callBack.onFail(r.getString(R.string.parse_error));
             e.printStackTrace();
             return;
@@ -416,6 +439,33 @@ public class LoginImpl implements LoginModel{
                 } catch (JSONException e) {
                     baseCallBack.onFail(context.getString(R.string.null_course_or_401));
                 }
+            }
+        });
+    }
+
+
+    //加载验证码
+    @Override
+    public void getVerifyCode(final BaseCallBack<Cookies> baseCallBack) {
+        OkhttpManager.get(UrlData.captchaUrl).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //获取验证码图片比特流
+                final byte[] picBt = response.body().bytes();
+                Headers headers = response.headers();
+                //获取验证码所携带的cookie
+               // String cookieMsg = headers.get(JSESSIONID);
+                String cookieMsg = headers.get(SET_COOKIE);
+
+                Cookies cookies = new Cookies();
+                cookies.setData(picBt);
+                cookies.setMsg(cookieMsg);
+                baseCallBack.onSuccess(cookies);
             }
         });
     }

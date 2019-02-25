@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--苏苏 TabLayout+ViewPager-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/background"
+    android:layout_height="match_parent"
+    tools:context="com.surine.tustbox.UI.Activity.V5_SettingActivity">
+
+    <com.surine.tustbox.UI.View.SuTabLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="50dp"
+        android:id="@+id/susuTab" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/susuTab" />
+</RelativeLayout>

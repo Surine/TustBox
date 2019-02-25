@@ -1,5 +1,6 @@
 package com.surine.tustbox.Adapter.Recycleview;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.os.Build;
 import android.support.annotation.LayoutRes;
@@ -8,8 +9,7 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.surine.tustbox.Bean.CourseInfoHelper;
-import com.surine.tustbox.Bean.Course_Info;
+import com.surine.tustbox.Pojo.CourseInfoHelper;
 import com.surine.tustbox.R;
 
 import java.util.List;
@@ -25,6 +25,7 @@ public class Course_new_adapter extends BaseQuickAdapter<CourseInfoHelper, BaseV
     }
 
 
+    @SuppressLint("ResourceType")
     @Override
     protected void convert(BaseViewHolder holder, CourseInfoHelper course_info) {
 
@@ -36,17 +37,15 @@ public class Course_new_adapter extends BaseQuickAdapter<CourseInfoHelper, BaseV
                 } catch (Resources.NotFoundException e) {
                     e.printStackTrace();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        holder.setBackgroundColor(R.id.item_course_relativelayout, mContext.getColor(R.color.colorPrimary2));
+                        holder.setBackgroundColor(R.id.item_course_relativelayout, mContext.getColor(R.color.colorPrimaryB));
                     }else{
-                        holder.setBackgroundColor(R.id.item_course_relativelayout, mContext.getResources().getColor(R.color.colorPrimary2));
+                        holder.setBackgroundColor(R.id.item_course_relativelayout, mContext.getResources().getColor(R.color.colorPrimaryB));
                     }
                     Toast.makeText(mContext,
                             "颜色加载错误，请重新登录", Toast.LENGTH_LONG).show();
                 }
                 holder.setText(R.id.loca_text, "@" + course_info.getTeachingBuildingName() + course_info.getClassroomName());
                 holder.addOnClickListener(R.id.item_course_relativelayout);
-
-
         }
     }
 }

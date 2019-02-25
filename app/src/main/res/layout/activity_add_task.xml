@@ -7,7 +7,7 @@
     android:background="@color/Tust_White"
     android:transitionName="mainEdit"
     android:id="@+id/mainBack"
-    tools:context="com.surine.tustbox.UI.AddTaskActivity">
+    tools:context="com.surine.tustbox.UI.Activity.AddTaskActivity">
   <include layout="@layout/toolbar"/>
   <EditText
       android:id="@+id/task_name_edit"

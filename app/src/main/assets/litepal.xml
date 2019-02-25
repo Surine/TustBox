@@ -4,12 +4,12 @@
     <version value="40" ></version>
 
     <list>
-        <mapping class="com.surine.tustbox.Bean.Student_info"></mapping>
-        <mapping class="com.surine.tustbox.Bean.ScoreInfo"></mapping>
-        <mapping class="com.surine.tustbox.Bean.Task"></mapping>
-        <mapping class="com.surine.tustbox.Bean.Course_Info"></mapping>
-        <mapping class="com.surine.tustbox.Bean.CourseInfoHelper"></mapping>
-        <mapping class="com.surine.tustbox.Bean.JwcUserInfo"></mapping>
-        <mapping class="com.surine.tustbox.Bean.ScoreInfoHelper"></mapping>
+        <mapping class="com.surine.tustbox.Pojo.Student_info"></mapping>
+        <mapping class="com.surine.tustbox.Pojo.ScoreInfo"></mapping>
+        <mapping class="com.surine.tustbox.Pojo.Task"></mapping>
+        <mapping class="com.surine.tustbox.Pojo.Course_Info"></mapping>
+        <mapping class="com.surine.tustbox.Pojo.CourseInfoHelper"></mapping>
+        <mapping class="com.surine.tustbox.Pojo.JwcUserInfo"></mapping>
+        <mapping class="com.surine.tustbox.Pojo.ScoreInfoHelper"></mapping>
     </list>
 </resources>
