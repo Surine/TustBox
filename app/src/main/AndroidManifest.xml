@@ -60,9 +60,6 @@
             android:name=".UI.Activity.CourseInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.Activity.Box_info_Activty"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".UI.Activity.PanLoginActivity"
             android:screenOrientation="portrait" />
         <activity

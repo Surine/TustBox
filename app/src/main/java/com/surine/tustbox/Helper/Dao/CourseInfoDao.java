@@ -1,7 +1,9 @@
 package com.surine.tustbox.Helper.Dao;
 
 import android.content.Context;
+import android.widget.Toast;
 
+import com.surine.tustbox.Helper.Utils.ToastUtil;
 import com.surine.tustbox.Pojo.CourseInfoHelper;
 import com.surine.tustbox.Helper.Utils.TimeUtil;
 import com.surine.tustbox.Helper.Utils.TustBoxUtil;
@@ -142,13 +144,22 @@ public class CourseInfoDao implements CurdManager<CourseInfoHelper> {
                             break;
                         }
                         if (courseInfoHelper.getStudyModeName().contains("正常") && !(courseInfoHelper.getCoureNumber().contains("WL"))) {
-                            mLastList.set((Integer.parseInt(courseInfoHelper.getClassDay()) - 1)
-                                    + (Op((Integer.parseInt(courseInfoHelper.getClassSessions()))) - 1) * 7, courseInfoHelper);
+                            try{
+                                mLastList.set((Integer.parseInt(courseInfoHelper.getClassDay()) - 1)
+                                        + (Op((Integer.parseInt(courseInfoHelper.getClassSessions()))) - 1) * 7, courseInfoHelper);
+                            }catch (Exception e){
+                                ToastUtil.show("课表加载错误，请联系开发者");
+                            }
+
                         }
                         //4节课
                         if (courseInfoHelper.getContinuingSession().contains("4")) {
+                            try{
                             mLastList.set((Integer.parseInt(courseInfoHelper.getClassDay()) - 1)
                                     + (Op((Integer.parseInt(courseInfoHelper.getClassSessions()))) - 1) * 7 + 7, courseInfoHelper);
+                            }catch (Exception e){
+                                ToastUtil.show("课表加载错误，请联系开发者");
+                            }
                         }
                     }
                 }

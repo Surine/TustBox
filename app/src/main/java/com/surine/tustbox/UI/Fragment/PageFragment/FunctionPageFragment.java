@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.surine.tustbox.Adapter.Recycleview.Box_new_adapter;
+import com.surine.tustbox.Helper.Utils.AppUtil;
 import com.surine.tustbox.Pojo.Box;
 import com.surine.tustbox.R;
 import com.surine.tustbox.UI.Activity.EmptyClassRoomActivity;
@@ -84,10 +85,13 @@ public class FunctionPageFragment extends Fragment {
         //空教室
         Box emptyClassRoom = new Box(R.drawable.home_v5, "空教室", null, R.color.Tust_more_color_1);
         Box pan = new Box(R.drawable.video_v5, "云盘(Beta)", null, R.color.Tust_more_color_1);
+
+        Box hey = new Box(R.drawable.heyu,"HeyU",null,R.color.trans_white);
         mboxs.add(score);
         mboxs.add(net);
         mboxs.add(emptyClassRoom);
         mboxs.add(pan);
+        mboxs.add(hey);
     }
 
 
@@ -119,6 +123,9 @@ public class FunctionPageFragment extends Fragment {
                     case 3:
                         intent.setClass(getActivity(), PanLoginActivity.class);
                         startActivity(intent);
+                        break;
+                    case 4:
+                        AppUtil.launchMiniProgramByWxAppId(getActivity(),"wx5f22b78c34909007","gh_7153347c2d45","/pages/index/index",0);
                         break;
                 }
 

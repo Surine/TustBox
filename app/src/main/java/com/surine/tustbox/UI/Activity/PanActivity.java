@@ -185,6 +185,9 @@ public class PanActivity extends TustBaseActivity {
                             //加载云盘根
                             FragmentTransaction tran = getSupportFragmentManager().beginTransaction();
                             tran.addToBackStack("");
+                            if(groupInfo.length() > 100){
+                                groupInfo = groupInfo.substring(0,99);
+                            }
                             tran.add(R.id.content, RootDirFragment.getInstance(groupInfo)).commit();
                         }
                     });
@@ -206,6 +209,10 @@ public class PanActivity extends TustBaseActivity {
             pathForSearch = event.getDir_name();
             loadNonRoot(rootIdForSearch, pathForSearch);
         } else if (event.getCode() == FunctionTag.PAN_DOWNLOAD) {
+            String dirName = event.getDir_name();
+            if(dirName.length() > 100){
+                dirName.substring(0,99);
+            }
             readyToDownload(event.getRoot_id(), event.getDir_name());
         }
     }

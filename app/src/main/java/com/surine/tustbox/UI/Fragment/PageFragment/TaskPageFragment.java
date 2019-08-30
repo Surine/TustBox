@@ -146,12 +146,12 @@ public class TaskPageFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getMessage(TaskCURD taskCURD) {
-        if (taskCURD.getTag() == taskCURD.DELETE) {
+        if (taskCURD.getTag() == TaskCURD.DELETE) {
             //删除
             deleteUI(taskCURD.getMessage());
-        } else if (taskCURD.getTag() == taskCURD.ADD) {
+        } else if (taskCURD.getTag() == TaskCURD.ADD) {
             addUI(taskCURD.getMessage());
-        } else if (taskCURD.getTag() == taskCURD.MODIFY) {
+        } else if (taskCURD.getTag() == TaskCURD.MODIFY) {
             modifyUI(taskCURD.getMessage());
         }
     }

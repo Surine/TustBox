@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.surine.tustbox.App.Data.FormData;
 import com.surine.tustbox.App.Data.UrlData;
 import com.surine.tustbox.Helper.Interface.UpdateUIListenter;
+import com.surine.tustbox.Helper.Utils.AppUtil;
 import com.surine.tustbox.Helper.Utils.HttpUtil;
 import com.surine.tustbox.Helper.Utils.JsonUtil;
 import com.surine.tustbox.Helper.Utils.RunOnUiThread;
@@ -56,7 +57,7 @@ public class HeaderBox {
         box1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.show("暂未开放！");
+                AppUtil.launchMiniProgramByWxAppId(context,"wx5f22b78c34909007","gh_7153347c2d45","/pages/index/index",0);
             }
         });
         box2.setOnClickListener(new View.OnClickListener() {

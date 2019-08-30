@@ -24,14 +24,15 @@
             <ImageView
                 android:layout_width="@dimen/dp_40"
                 android:layout_height="@dimen/dp_40"
-                android:src="@drawable/edit_v5"
+                android:src="@drawable/heyu"
+                android:padding="@dimen/dp_4"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="入学指南" />
+                android:text="HeyU校园" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/box2"

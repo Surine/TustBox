@@ -1,9 +1,11 @@
 package com.surine.tustbox.Helper.Utils;
 
 import android.content.ClipboardManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.widget.Toast;
@@ -99,4 +101,29 @@ public class AppUtil {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 打开微信小程序
+     *
+     * @param wxAppId       小程序绑定的APP的微信平台APPID
+     * @param miniProgramId 小程序的原始ID
+     * @param page          要打开的小程序页面
+     * @param miniType  正式版:0，测试版:1，体验版:2
+     */
+    public static void launchMiniProgramByWxAppId(Context context,String wxAppId, String miniProgramId, String page,int miniType) {
+        ContentResolver resolver =context.getContentResolver();
+        Uri uri = Uri.parse("content://com.tencent.mm.sdk.comm.provider/launchWXMiniprogram");
+        String[] selection = new String[]{wxAppId, miniProgramId, page, String.valueOf(miniType)};
+        Cursor cursor = null;
+        try {
+            cursor = resolver.query(uri, null, null, selection, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
 }
