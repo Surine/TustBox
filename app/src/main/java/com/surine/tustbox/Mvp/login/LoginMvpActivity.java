@@ -88,7 +88,6 @@ public class LoginMvpActivity extends BaseMvpActivity implements LoginView {
         //显示数据及cookie
         final byte[] picBt = (byte[]) cookies.getData();
         verifyCookie = cookies.getMsg();
-        LogUtil.d("曲奇"+verifyCookie);
         RunOnUiThread.updateUi(myContext, new UpdateUIListenter() {
             @Override
             public void update() {

@@ -346,7 +346,6 @@ public class ReplyInCommentActivity extends TustBaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String x = response.body().string();
-                Log.d("TAF", x);
                 try {
                     JSONObject jsonObject = new JSONObject(x);
                     if (jsonObject.getInt(FormData.JCODE) == 400) {

@@ -71,7 +71,7 @@ public class LoginImpl implements LoginModel{
         //准备登录
         FormBody formBody = new FormBody.Builder()
                 .add(FormData.login_id_new, tustNumber)
-                .add(FormData.login_pswd_new, pswd)
+                .add(FormData.login_pswd_new, EncryptionUtil.md5Decode32(pswd))
                 .add(FormData.login_captcha_new, verifyCode)
                 .build();
 

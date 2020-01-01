@@ -249,7 +249,7 @@ public class ScoreNewTermFragment extends Fragment {
         //构建表单
         FormBody formBody = new FormBody.Builder()
                 .add(FormData.login_id_new, tustNumber)
-                .add(FormData.login_pswd_new, id_card_pswd)
+                .add(FormData.login_pswd_new, EncryptionUtil.md5Decode32(id_card_pswd))
                 .add(FormData.login_captcha_new, myVerifyCodeString)
                 .build();
 

@@ -188,7 +188,6 @@ public class CommentFragment extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String x = response.body().string();
-                Log.d("TAG",x);
                 try {
                     JSONObject jsonObject = new JSONObject(x);
                     if(jsonObject.getInt(FormData.JCODE) == 400){

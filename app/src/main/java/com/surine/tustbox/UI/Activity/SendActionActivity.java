@@ -303,7 +303,6 @@ public class SendActionActivity extends TustBaseActivity {
                                 tokenFromServer = jsonObject.getString("token");
                                 if (tokenFromServer != null) {
                                     for (qiniupics = 0; qiniupics < data.size(); qiniupics++) {
-                                        Log.d("TAF", data.get(qiniupics));
                                         //TODO：图片压缩
                                         //TODO：多线程发送
                                         //七牛上传服务

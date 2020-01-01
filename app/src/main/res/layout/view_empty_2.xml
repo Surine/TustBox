@@ -3,24 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:gravity="center"
     android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="174dp"
-        app:srcCompat="@drawable/empty" />
-
-    <TextView
-        android:id="@+id/textView29"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_below="@+id/imageView5"
-        android:layout_marginTop="15dp"
-        android:text="空空，空空如也…"
-        android:textStyle="bold" />
+        android:layout_alignParentTop="true"
+        android:padding="60dp"
+        android:layout_marginBottom="30dp"
+        app:srcCompat="@drawable/empty" />
+
 </RelativeLayout>
